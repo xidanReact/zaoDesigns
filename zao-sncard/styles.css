@@ -443,8 +443,6 @@ html:not(.js) .atlas__zoom, html:not(.js) .atlas__hud { display: none; }
 .office__stname { font: 400 9.5px var(--font-mono); fill: var(--text-muted); paint-order: stroke; stroke: var(--bg-soft); stroke-width: 3px; stroke-linejoin: round; }
 .office__wlabel { paint-order: stroke; stroke: var(--bg-soft); stroke-width: 3px; }
 .office__building { fill: var(--bg); stroke: var(--accent); stroke-width: 1.5; stroke-linejoin: round; }
-.office__src { font-size: 12.5px; color: var(--text-muted); margin: -8px 0 12px; }
-.office__src a { text-decoration: underline; text-underline-offset: 2px; }
 .office__dot { fill: var(--accent); }
 .office__body { padding: 28px; display: grid; gap: 8px; align-content: start; justify-items: start; }
 .office__title { font-size: 24px; font-weight: 800; letter-spacing: -0.025em; }
