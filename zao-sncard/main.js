@@ -14,7 +14,9 @@
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-  const RM = mq('(prefers-reduced-motion: reduce)');
+  // Анимации включены всегда: системная настройка prefers-reduced-motion
+  // (часто выключена «анимация Windows» на рабочих ПК) намеренно игнорируется
+  const RM = false;
   const FINE = mq('(hover: hover) and (pointer: fine)');
   const SMALL = mq('(max-width: 640px)');
   const DESKTOP = () => mq('(min-width: 1025px)');
@@ -631,8 +633,8 @@
 
   /* =========================================================
      Слой анимаций: GSAP 3 + ScrollTrigger + CustomEase, Lenis.
-     Утилиты — из ../designs/main.js. Без библиотек или при
-     prefers-reduced-motion всё остаётся в финальном состоянии.
+     Утилиты — из ../designs/main.js. Без библиотек
+     всё остаётся в финальном состоянии.
      ========================================================= */
   const G = window.gsap;
   const ST = window.ScrollTrigger;

@@ -569,10 +569,6 @@ html:not(.js) .copy { display: none; }
   .dept { grid-column: 1 / -1; padding: 24px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .atlas__hint { transition: none; }
-}
-
 /* =========================================================
    Слой анимаций (состояния, которые выставляет JS)
    ========================================================= */
@@ -636,8 +632,3 @@ html:not(.js) .copy { display: none; }
 /* Схема транзакции: узел вспыхивает, когда до него доходит пакет */
 .flow__node .bp, .flow__node .bp-thin, .flow__node .screen { transition: stroke 200ms ease; }
 .flow__node.is-hot .bp, .flow__node.is-hot .screen { stroke: var(--accent); }
-
-@media (prefers-reduced-motion: reduce) {
-  .atlas__packets, .atlas__wave { display: none; }
-  .mk__svg, .mk__spec, .nav__bar { transition: none; }
-}
