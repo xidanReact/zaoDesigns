@@ -15,7 +15,9 @@
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const damp = (k, dt) => 1 - Math.exp(-k * dt); // lerp, не зависящий от fps
 
-  const RM = mq('(prefers-reduced-motion: reduce)');
+  // Анимации включены всегда: системная настройка prefers-reduced-motion
+  // (часто выключена «анимация Windows» на рабочих ПК) намеренно игнорируется
+  const RM = false;
   const FINE = mq('(hover: hover) and (pointer: fine)');
   const SMALL = mq('(max-width: 640px)');
   const G = window.gsap;

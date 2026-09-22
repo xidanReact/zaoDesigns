@@ -472,11 +472,6 @@ html:not(.js) .copy { display: none; }
   .cardlab__waves { right: -4%; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .verb::after { display: none; }
-  .hero__scene[data-verb="3"] .data, .card.is-live .mini-data, .scope-wave { animation: none !important; }
-}
-
 /* Skip-link: тень не выглядывает из-за края экрана, пока ссылка скрыта */
 .skip-link:not(:focus) { box-shadow: none; }
 
@@ -1080,7 +1075,4 @@ html:not(.js) .stepper { display: none; }
   .citem .qty { grid-area: qty; justify-self: start; }
   .citem__sum { grid-area: sum; min-width: 0; }
   .citem__del { grid-area: del; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .lightbox[open] { animation: none; }
 }

@@ -993,14 +993,3 @@ html:not(.js) .has-dd:focus-within .dd,
   .footer__grid { grid-template-columns: 1fr; gap: 40px; padding-bottom: 64px; }
   .footer__mark { width: 140vw; right: -30vw; bottom: 60px; }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .intro, .cursor, .drag-cursor, .scene__particles { display: none !important; }
-  .led, .srv-led--2 { animation: none !important; }
-  *, *::before, *::after {
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 1ms !important;
-    scroll-behavior: auto !important;
-  }
-}
