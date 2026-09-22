@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Изготовление пластиковых карт — Сибнефтекарт-сервис</title>
+  <meta name="description" content="Пластиковые карты со штрих-кодом, магнитной полосой и бесконтактные Mifare: цены по тиражам от 100 до 50 000 шт., требования к макету, примеры дизайна.">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
+  <!-- Дизайн-система: эталон в ../designs, здесь только новые компоненты -->
+  <link rel="stylesheet" href="../designs/styles.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="cards">
+
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+
+<!-- @sprite:start -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h3l1.5 4-2 1.3a10.5 10.5 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7a2 2 0 0 1 2.1-2.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="6" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4.5h2.4l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.3a1.5 1.5 0 0 0 1.4-1.1L20.5 8H6.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="19.5" r="1.4" fill="currentColor"/><circle cx="17" cy="19.5" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15 15l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10.5 10.5v6M13.5 10.5v6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6.5 3.5h7l4 4v13h-11z M13.5 3.5v4h4 M9 12h6M9 15h6M9 18h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+
+    <!-- Иконки категорий оборудования (контур, 32×32) -->
+    <symbol id="c-ctrl" viewBox="0 0 32 32"><rect x="4" y="10" width="24" height="15" rx="2"/><path d="M9 10V5.5M13 10V5.5M17 10V7.5M21 10V7.5 M8 15h7v6H8z"/><path class="ic-slot" d="M19 15h5"/><path class="ic-slot" d="M19 18h5"/><path class="ic-slot" d="M19 21h3"/></symbol>
+    <symbol id="c-conv" viewBox="0 0 32 32"><rect x="3" y="11" width="8" height="10" rx="1.5"/><path d="M21 11h8l-1.6 10h-4.8z M5.5 14.5h3M5.5 17.5h3"/><path class="ic-flow" d="M11 16h10 M17.5 13l3 3-3 3"/></symbol>
+    <symbol id="c-term" viewBox="0 0 32 32"><rect x="9" y="3.5" width="14" height="25" rx="2.5"/><rect class="ic-screen" x="12" y="7" width="8" height="6" rx="1"/><path class="ic-key" d="M12.5 17h1M16 17h1M19.5 17h1"/><path class="ic-key" d="M12.5 20.5h1M16 20.5h1M19.5 20.5h1"/><path class="ic-key" d="M12.5 24h1M16 24h1M19.5 24h1"/></symbol>
+    <symbol id="c-read" viewBox="0 0 32 32"><rect x="3.5" y="10" width="15" height="14" rx="2.5"/><path d="M7.5 17h7"/><path class="ic-wave" d="M22.5 12.5a6.5 6.5 0 0 1 0 9"/><path class="ic-wave ic-wave--2" d="M26 9.5a11 11 0 0 1 0 15"/></symbol>
+    <symbol id="c-modem" viewBox="0 0 32 32"><rect x="4" y="15" width="24" height="11" rx="2"/><path d="M21 15V5 M8.5 20.5h1M12 20.5h1M15.5 20.5h1"/><path class="ic-wave" d="M18 6.5a4.5 4.5 0 0 0 0 5 M24 6.5a4.5 4.5 0 0 1 0 5"/></symbol>
+    <symbol id="c-voice" viewBox="0 0 32 32"><path d="M4 13h5l10-6.5v19L9 19H4z M9 19l1.6 6.5h3.4L12.5 19.5"/><path class="ic-wave" d="M23 12.5a5 5 0 0 1 0 7"/><path class="ic-wave ic-wave--2" d="M26.5 9.5a9.5 9.5 0 0 1 0 13"/></symbol>
+    <symbol id="c-com" viewBox="0 0 32 32"><path d="M3 8h19v15H3z M7 23v3h11v-3 M22 5.5v22 M7 12h8M7 15.5h8M7 19h5"/><path class="ic-port" d="M22 9h5v4h-5"/><path class="ic-port" d="M22 15h5v4h-5"/></symbol>
+    <symbol id="c-scan" viewBox="0 0 32 32"><path d="M4 9V5h4M24 5h4v4M28 23v4h-4M8 27H4v-4"/><path class="ic-key" d="M9 10v12M12 10v12M15.5 10v12M18 10v12M21.5 10v12M24 10v12"/></symbol>
+    <symbol id="c-card" viewBox="0 0 32 32"><rect x="3.5" y="7" width="25" height="18" rx="2.5"/><rect class="ic-screen" x="7" y="12" width="6" height="5" rx="1"/><path d="M7 21h9"/><path class="ic-wave" d="M21 12.5a4 4 0 0 1 0 6"/><path class="ic-wave ic-wave--2" d="M24 10.5a7 7 0 0 1 0 10"/></symbol>
+    <symbol id="c-tbr" viewBox="0 0 32 32"><rect x="3.5" y="9" width="11" height="14" rx="2"/><path d="M7 13h4M7 16h4M7 19h2 M20 23h5v4.5h-5z M21.5 27.5V30M23.5 27.5V30"/><path class="ic-flow" d="M14.5 16h4.5a3.5 3.5 0 0 1 3.5 3.5V23"/></symbol>
+  </defs>
+</svg>
+<!-- @sprite:end -->
+
+<!-- @header:start -->
+<header class="header" id="header">
+  <div class="header__progress" aria-hidden="true"><span></span></div>
+  <div class="header__inner container">
+    <a class="brand" href="index.html" aria-label="Сибнефтекарт-сервис — на главную">
+      <svg class="brand__mark" viewBox="0 0 120 48" aria-hidden="true">
+        <path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square"/>
+      </svg>
+      <span class="brand__text">
+        <span class="brand__name">Сибнефтекарт-сервис</span>
+        <span class="brand__sub">общество с ограниченной ответственностью</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Главное меню">
+      <ul class="nav__list">
+        <li class="nav__item has-dd" data-nav="company">
+          <button class="nav__link nav__trigger" type="button" aria-expanded="false" aria-controls="dd-company">
+            О компании <svg class="nav__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </button>
+          <div class="dd" id="dd-company">
+            <ul class="dd__list">
+              <li><a class="dd__link" href="company.html">О компании <span class="dd__dot" aria-hidden="true"></span></a></li>
+              <li><a class="dd__link" href="company.html#actions">Направления деятельности <span class="dd__dot" aria-hidden="true"></span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav__item has-dd" data-nav="equipment">
+          <button class="nav__link nav__trigger" type="button" aria-expanded="false" aria-controls="dd-equipment">
+            Оборудование <svg class="nav__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </button>
+          <div class="dd dd--mega" id="dd-equipment">
+            <ul class="dd__list">
+              <li><a class="dd__link" href="equipment/kontrollery-upravleniya.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-ctrl"/></svg><span>Контроллеры управления ТРК</span><small class="mono">9</small></a></li>
+              <li><a class="dd__link" href="equipment/preobrazovateli-interfejsov.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-conv"/></svg><span>Преобразователи интерфейсов</span><small class="mono">9</small></a></li>
+              <li><a class="dd__link" href="equipment/pos-terminaly.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-term"/></svg><span>Терминалы СНК</span><small class="mono">3</small></a></li>
+              <li><a class="dd__link" href="equipment/schityvateli.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-read"/></svg><span>Считыватели карт</span><small class="mono">1</small></a></li>
+              <li><a class="dd__link" href="equipment/modemy-gprs.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-modem"/></svg><span>Модемы GPRS</span><small class="mono">1</small></a></li>
+              <li><a class="dd__link" href="equipment/gromkaya-svyaz.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-voice"/></svg><span>Громкая связь</span><small class="mono">3</small></a></li>
+              <li><a class="dd__link" href="equipment/rasshiriteli-som-portov.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-com"/></svg><span>Расширители СОМ портов</span><small class="mono">4</small></a></li>
+              <li><a class="dd__link" href="equipment/komplektatsiya-dlya-tbr.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-tbr"/></svg><span>Комплектация для ТБР</span><small class="mono">4</small></a></li>
+              <li class="dd__all"><a class="dd__link" href="equipment/index.html">Весь каталог <span class="dd__dot" aria-hidden="true"></span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav__item has-dd is-current" data-nav="cards">
+          <button class="nav__link nav__trigger" type="button" aria-expanded="false" aria-controls="dd-cards">
+            Изготовление карт <svg class="nav__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </button>
+          <div class="dd" id="dd-cards">
+            <ul class="dd__list">
+              <li><a class="dd__link" href="cards.html#rfid">Бесконтактные карты Mifare <span class="dd__dot" aria-hidden="true"></span></a></li>
+              <li><a class="dd__link" href="cards.html#examples">Примеры дизайна карт <span class="dd__dot" aria-hidden="true"></span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav__item has-dd" data-nav="docs">
+          <button class="nav__link nav__trigger" type="button" aria-expanded="false" aria-controls="dd-docs">
+            Документация <svg class="nav__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </button>
+          <div class="dd" id="dd-docs">
+            <ul class="dd__list">
+              <li><a class="dd__link" href="docs.html#equipment">Оборудование для АЗС <span class="dd__dot" aria-hidden="true"></span></a></li>
+              <li><a class="dd__link" href="docs.html#useful">Полезное <span class="dd__dot" aria-hidden="true"></span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav__item has-dd" data-nav="contacts">
+          <button class="nav__link nav__trigger" type="button" aria-expanded="false" aria-controls="dd-contacts">
+            Контакты <svg class="nav__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </button>
+          <div class="dd" id="dd-contacts">
+            <ul class="dd__list">
+              <li><a class="dd__link" href="contacts.html#main">Основные <span class="dd__dot" aria-hidden="true"></span></a></li>
+              <li><a class="dd__link" href="contacts.html#admin">Администрация <span class="dd__dot" aria-hidden="true"></span></a></li>
+              <li><a class="dd__link" href="contacts.html#adress">Местоположение на карте <span class="dd__dot" aria-hidden="true"></span></a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <a class="btn btn--outline btn--cart" href="cart.html" data-cart-link aria-label="Корзина">
+      <svg class="cart-ic" aria-hidden="true"><use href="#i-cart"/></svg>
+      <span class="btn--cart__label">Корзина</span>
+      <span class="cart-badge mono" data-cart-count hidden>0</span>
+    </a>
+
+    <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Открыть меню">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Мобильное меню -->
+<div class="mmenu" id="mobile-menu" hidden>
+  <div class="mmenu__inner container">
+    <ul class="mmenu__list">
+      <li>
+        <details class="mmenu__group">
+          <summary class="mmenu__link">О компании <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+          <a href="company.html">О компании</a>
+          <a href="company.html#actions">Направления деятельности</a>
+        </details>
+      </li>
+      <li>
+        <details class="mmenu__group">
+          <summary class="mmenu__link">Оборудование <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+          <a href="equipment/kontrollery-upravleniya.html">Контроллеры управления ТРК</a>
+          <a href="equipment/preobrazovateli-interfejsov.html">Преобразователи интерфейсов</a>
+          <a href="equipment/pos-terminaly.html">Терминалы СНК</a>
+          <a href="equipment/schityvateli.html">Считыватели карт</a>
+          <a href="equipment/modemy-gprs.html">Модемы GPRS</a>
+          <a href="equipment/gromkaya-svyaz.html">Громкая связь</a>
+          <a href="equipment/rasshiriteli-som-portov.html">Расширители СОМ портов</a>
+          <a href="equipment/komplektatsiya-dlya-tbr.html">Комплектация для ТБР</a>
+          <a href="equipment/index.html">Весь каталог</a>
+        </details>
+      </li>
+      <li>
+        <details class="mmenu__group" open>
+          <summary class="mmenu__link">Изготовление карт <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+          <a href="cards.html#rfid">Бесконтактные карты Mifare</a>
+          <a href="cards.html#examples">Примеры дизайна карт</a>
+        </details>
+      </li>
+      <li>
+        <details class="mmenu__group">
+          <summary class="mmenu__link">Документация <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+          <a href="docs.html#equipment">Оборудование для АЗС</a>
+          <a href="docs.html#useful">Полезное</a>
+        </details>
+      </li>
+      <li>
+        <details class="mmenu__group">
+          <summary class="mmenu__link">Контакты <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+          <a href="contacts.html#main">Основные</a>
+          <a href="contacts.html#admin">Администрация</a>
+          <a href="contacts.html#adress">Местоположение на карте</a>
+        </details>
+      </li>
+    </ul>
+    <div class="mmenu__foot">
+      <a class="btn btn--outline" href="cart.html"><svg class="cart-ic" aria-hidden="true"><use href="#i-cart"/></svg><span>Корзина</span><span class="cart-badge mono" data-cart-count hidden>0</span></a>
+      <a class="mmenu__phone mono" href="tel:+73822651145">+7 (3822) 65-11-45</a>
+    </div>
+  </div>
+</div>
+<!-- @header:end -->
+
+<main id="main">
+<section class="phead">
+  <div class="container">
+    <div class="phead__sheet">
+      <span class="phead__ticks" aria-hidden="true"></span>
+      <nav class="crumbs mono" aria-label="Навигационная цепочка">
+        <ol>
+          <li><a href="index.html">Главная</a></li>
+          <li aria-current="page">Изготовление карт</li>
+        </ol>
+      </nav>
+      <div class="phead__row">
+        <div class="phead__text">
+          <h1 class="phead__title">Изготовление пластиковых карт</h1>
+          <p class="phead__lead">Карты со&nbsp;штрих-кодом, магнитной полосой и&nbsp;бесконтактные Mifare&nbsp;1k с&nbsp;печатью по&nbsp;вашему макету. Тиражи от&nbsp;100 до&nbsp;50&nbsp;000&nbsp;штук.</p>
+        </div>
+        <dl class="phead__facts mono"><div><dt>Тираж</dt><dd>100 — 50 000</dd></div><div><dt>Цена от</dt><dd>7,64 ₽</dd></div></dl>
+      </div>
+      <span class="phead__stamp mono" aria-hidden="true">СНК · Карты · Лист 1</span>
+    </div>
+  </div>
+</section>
+
+<section class="prices" id="rfid" aria-labelledby="prices-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="h2" id="prices-title">Пластиковые карты с&nbsp;печатью</h2>
+      <p class="section-head__text">Стоимость одной карты с&nbsp;НДС 5&nbsp;%, руб., в&nbsp;зависимости от&nbsp;тиража. Бесконтактные карты Mifare&nbsp;— строки 3–7.</p>
+    </div>
+    <div class="prices__body">
+      <!-- gen:prices -->
+      <div class="ptable-wrap">
+        <table class="ptable">
+          <caption class="sr-only">Тираж / стоимость за карту с НДС 5%, руб.</caption>
+          <thead><tr><th scope="col" class="ptable__corner mono">Тираж, шт. →</th><th scope="col" class="mono">100</th><th scope="col" class="mono">200</th><th scope="col" class="mono">500</th><th scope="col" class="mono">1000</th><th scope="col" class="mono">2000</th><th scope="col" class="mono">5000</th><th scope="col" class="mono">10 000</th><th scope="col" class="mono">20 000</th><th scope="col" class="mono">30 000</th><th scope="col" class="mono">50 000</th></tr></thead>
+          <tbody>
+            <tr>
+              <th scope="row"><span class="ptable__n mono">1</span>Карты со штрих-кодом, 4+4</th>
+              <td class="mono" data-col="0">22,05</td>
+              <td class="mono" data-col="1">20,58</td>
+              <td class="mono" data-col="2">17,64</td>
+              <td class="mono" data-col="3">14</td>
+              <td class="mono" data-col="4">11,76</td>
+              <td class="mono" data-col="5">11,61</td>
+              <td class="mono" data-col="6">8,82</td>
+              <td class="mono" data-col="7">8,08</td>
+              <td class="mono" data-col="8">7,86</td>
+              <td class="mono" data-col="9">7,64</td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="ptable__n mono">2</span>Карты с магнитной полосой и номером</th>
+              <td class="mono" data-col="0">26,46</td>
+              <td class="mono" data-col="1">23,52</td>
+              <td class="mono" data-col="2">20,58</td>
+              <td class="mono" data-col="3">17,64</td>
+              <td class="mono" data-col="4">14,7</td>
+              <td class="mono" data-col="5">11,03</td>
+              <td class="mono" data-col="6">10,3</td>
+              <td class="mono" data-col="7">9,85</td>
+              <td class="mono" data-col="8">9,15</td>
+              <td class="mono" data-col="9">8,68</td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="ptable__n mono">3</span>Карты Mifare 1k, 13,56 МГц с печатной нумерацией</th>
+              <td class="mono" data-col="0">58,8</td>
+              <td class="mono" data-col="1">39,7</td>
+              <td class="mono" data-col="2">35,28</td>
+              <td class="mono" data-col="3">33,81</td>
+              <td class="mono" data-col="4">30,87</td>
+              <td class="mono" data-col="5">29,4</td>
+              <td class="mono" data-col="6">27,93</td>
+              <td class="mono" data-col="7">27,2</td>
+              <td class="mono" data-col="8">26,46</td>
+              <td class="mono" data-col="9">23,52</td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="ptable__n mono">4</span>Карты Mifare c ЛАКИРОВКОЙ 1+1, лак печать 4+4, нумерация входит в цену</th>
+              <td class="mono" data-col="0">73,5</td>
+              <td class="mono" data-col="1">58,8</td>
+              <td class="mono" data-col="2">47,04</td>
+              <td class="mono" data-col="3">44,1</td>
+              <td class="mono" data-col="4">39,69</td>
+              <td class="mono" data-col="5">36,75</td>
+              <td class="mono" data-col="6">33,81</td>
+              <td class="mono" data-col="7">33,08</td>
+              <td class="mono" data-col="8">32,34</td>
+              <td class="mono" data-col="9">28,93</td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="ptable__n mono">5</span>Карты Mifare на серебристой подложке + белила. Печать офсет 4+4, шелкография 2+2, нумерация входит в цену</th>
+              <td class="mono" data-col="0">88,2</td>
+              <td class="mono" data-col="1">66,15</td>
+              <td class="mono" data-col="2">55,86</td>
+              <td class="mono" data-col="3">51,45</td>
+              <td class="mono" data-col="4">48,51</td>
+              <td class="mono" data-col="5">47,04</td>
+              <td class="mono" data-col="6">42,63</td>
+              <td class="mono" data-col="7">41,16</td>
+              <td class="mono" data-col="8">38,22</td>
+              <td class="mono" data-col="9">36,75</td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="ptable__n mono">6</span>Под заказ чип оригинал Mifare plus SE, 1kb 7 buid цена</th>
+              <td class="mono" data-col="0"><span class="ptable__none" aria-label="нет цены">—</span></td>
+              <td class="mono" data-col="1"><span class="ptable__none" aria-label="нет цены">—</span></td>
+              <td class="mono" data-col="2"><span class="ptable__none" aria-label="нет цены">—</span></td>
+              <td class="mono" data-col="3"><span class="ptable__none" aria-label="нет цены">—</span></td>
+              <td class="mono" data-col="4">110</td>
+              <td class="mono" data-col="5">101,22</td>
+              <td class="mono" data-col="6">98,96</td>
+              <td class="mono" data-col="7"><span class="ptable__none" aria-label="нет цены">—</span></td>
+              <td class="mono" data-col="8"><span class="ptable__none" aria-label="нет цены">—</span></td>
+              <td class="mono" data-col="9"><span class="ptable__none" aria-label="нет цены">—</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="ptable__n mono">7</span>Под заказ чип оригинал Mifare plus SE, 2kb 7 buid</th>
+              <td class="mono" data-col="0"><span class="ptable__none" aria-label="нет цены">—</span></td>
+              <td class="mono" data-col="1"><span class="ptable__none" aria-label="нет цены">—</span></td>
+              <td class="mono" data-col="2"><span class="ptable__none" aria-label="нет цены">—</span></td>
+              <td class="mono" data-col="3"><span class="ptable__none" aria-label="нет цены">—</span></td>
+              <td class="mono" data-col="4">122,85</td>
+              <td class="mono" data-col="5">111,93</td>
+              <td class="mono" data-col="6">109,2</td>
+              <td class="mono" data-col="7"><span class="ptable__none" aria-label="нет цены">—</span></td>
+              <td class="mono" data-col="8"><span class="ptable__none" aria-label="нет цены">—</span></td>
+              <td class="mono" data-col="9"><span class="ptable__none" aria-label="нет цены">—</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="plist">
+        <label class="plist__label" for="tirage">Тираж</label>
+        <div class="select">
+          <select id="tirage" class="select__input mono" data-tirage><option value="0">100 шт.</option><option value="1">200 шт.</option><option value="2">500 шт.</option><option value="3">1000 шт.</option><option value="4" selected>2000 шт.</option><option value="5">5000 шт.</option><option value="6">10 000 шт.</option><option value="7">20 000 шт.</option><option value="8">30 000 шт.</option><option value="9">50 000 шт.</option></select>
+          <svg aria-hidden="true"><use href="#i-chevron"/></svg>
+        </div>
+        <ul class="plist__rows">
+            <li class="plist__row">
+              <span class="plist__name"><span class="ptable__n mono">1</span>Карты со штрих-кодом, 4+4</span>
+              <span class="plist__vals"><span class="plist__v mono" data-col="0" hidden>22,05 ₽</span><span class="plist__v mono" data-col="1" hidden>20,58 ₽</span><span class="plist__v mono" data-col="2" hidden>17,64 ₽</span><span class="plist__v mono" data-col="3" hidden>14 ₽</span><span class="plist__v mono" data-col="4">11,76 ₽</span><span class="plist__v mono" data-col="5" hidden>11,61 ₽</span><span class="plist__v mono" data-col="6" hidden>8,82 ₽</span><span class="plist__v mono" data-col="7" hidden>8,08 ₽</span><span class="plist__v mono" data-col="8" hidden>7,86 ₽</span><span class="plist__v mono" data-col="9" hidden>7,64 ₽</span></span>
+            </li>
+            <li class="plist__row">
+              <span class="plist__name"><span class="ptable__n mono">2</span>Карты с магнитной полосой и номером</span>
+              <span class="plist__vals"><span class="plist__v mono" data-col="0" hidden>26,46 ₽</span><span class="plist__v mono" data-col="1" hidden>23,52 ₽</span><span class="plist__v mono" data-col="2" hidden>20,58 ₽</span><span class="plist__v mono" data-col="3" hidden>17,64 ₽</span><span class="plist__v mono" data-col="4">14,7 ₽</span><span class="plist__v mono" data-col="5" hidden>11,03 ₽</span><span class="plist__v mono" data-col="6" hidden>10,3 ₽</span><span class="plist__v mono" data-col="7" hidden>9,85 ₽</span><span class="plist__v mono" data-col="8" hidden>9,15 ₽</span><span class="plist__v mono" data-col="9" hidden>8,68 ₽</span></span>
+            </li>
+            <li class="plist__row">
+              <span class="plist__name"><span class="ptable__n mono">3</span>Карты Mifare 1k, 13,56 МГц с печатной нумерацией</span>
+              <span class="plist__vals"><span class="plist__v mono" data-col="0" hidden>58,8 ₽</span><span class="plist__v mono" data-col="1" hidden>39,7 ₽</span><span class="plist__v mono" data-col="2" hidden>35,28 ₽</span><span class="plist__v mono" data-col="3" hidden>33,81 ₽</span><span class="plist__v mono" data-col="4">30,87 ₽</span><span class="plist__v mono" data-col="5" hidden>29,4 ₽</span><span class="plist__v mono" data-col="6" hidden>27,93 ₽</span><span class="plist__v mono" data-col="7" hidden>27,2 ₽</span><span class="plist__v mono" data-col="8" hidden>26,46 ₽</span><span class="plist__v mono" data-col="9" hidden>23,52 ₽</span></span>
+            </li>
+            <li class="plist__row">
+              <span class="plist__name"><span class="ptable__n mono">4</span>Карты Mifare c ЛАКИРОВКОЙ 1+1, лак печать 4+4, нумерация входит в цену</span>
+              <span class="plist__vals"><span class="plist__v mono" data-col="0" hidden>73,5 ₽</span><span class="plist__v mono" data-col="1" hidden>58,8 ₽</span><span class="plist__v mono" data-col="2" hidden>47,04 ₽</span><span class="plist__v mono" data-col="3" hidden>44,1 ₽</span><span class="plist__v mono" data-col="4">39,69 ₽</span><span class="plist__v mono" data-col="5" hidden>36,75 ₽</span><span class="plist__v mono" data-col="6" hidden>33,81 ₽</span><span class="plist__v mono" data-col="7" hidden>33,08 ₽</span><span class="plist__v mono" data-col="8" hidden>32,34 ₽</span><span class="plist__v mono" data-col="9" hidden>28,93 ₽</span></span>
+            </li>
+            <li class="plist__row">
+              <span class="plist__name"><span class="ptable__n mono">5</span>Карты Mifare на серебристой подложке + белила. Печать офсет 4+4, шелкография 2+2, нумерация входит в цену</span>
+              <span class="plist__vals"><span class="plist__v mono" data-col="0" hidden>88,2 ₽</span><span class="plist__v mono" data-col="1" hidden>66,15 ₽</span><span class="plist__v mono" data-col="2" hidden>55,86 ₽</span><span class="plist__v mono" data-col="3" hidden>51,45 ₽</span><span class="plist__v mono" data-col="4">48,51 ₽</span><span class="plist__v mono" data-col="5" hidden>47,04 ₽</span><span class="plist__v mono" data-col="6" hidden>42,63 ₽</span><span class="plist__v mono" data-col="7" hidden>41,16 ₽</span><span class="plist__v mono" data-col="8" hidden>38,22 ₽</span><span class="plist__v mono" data-col="9" hidden>36,75 ₽</span></span>
+            </li>
+            <li class="plist__row">
+              <span class="plist__name"><span class="ptable__n mono">6</span>Под заказ чип оригинал Mifare plus SE, 1kb 7 buid цена</span>
+              <span class="plist__vals"><span class="plist__v mono" data-col="0" hidden>нет цены</span><span class="plist__v mono" data-col="1" hidden>нет цены</span><span class="plist__v mono" data-col="2" hidden>нет цены</span><span class="plist__v mono" data-col="3" hidden>нет цены</span><span class="plist__v mono" data-col="4">110 ₽</span><span class="plist__v mono" data-col="5" hidden>101,22 ₽</span><span class="plist__v mono" data-col="6" hidden>98,96 ₽</span><span class="plist__v mono" data-col="7" hidden>нет цены</span><span class="plist__v mono" data-col="8" hidden>нет цены</span><span class="plist__v mono" data-col="9" hidden>нет цены</span></span>
+            </li>
+            <li class="plist__row">
+              <span class="plist__name"><span class="ptable__n mono">7</span>Под заказ чип оригинал Mifare plus SE, 2kb 7 buid</span>
+              <span class="plist__vals"><span class="plist__v mono" data-col="0" hidden>нет цены</span><span class="plist__v mono" data-col="1" hidden>нет цены</span><span class="plist__v mono" data-col="2" hidden>нет цены</span><span class="plist__v mono" data-col="3" hidden>нет цены</span><span class="plist__v mono" data-col="4">122,85 ₽</span><span class="plist__v mono" data-col="5" hidden>111,93 ₽</span><span class="plist__v mono" data-col="6" hidden>109,2 ₽</span><span class="plist__v mono" data-col="7" hidden>нет цены</span><span class="plist__v mono" data-col="8" hidden>нет цены</span><span class="plist__v mono" data-col="9" hidden>нет цены</span></span>
+            </li>
+        </ul>
+      </div>
+      <!-- /gen:prices -->
+    </div>
+  </div>
+</section>
+
+<section class="layout-req" aria-labelledby="req-title">
+  <div class="container req__grid">
+    <div class="req__draw">
+      <svg class="req__svg" viewBox="0 0 760 380" role="img" aria-labelledby="req-svg-t">
+        <title id="req-svg-t">Чертёж макета карты: лицевая сторона с полями под вырубку и оборот с магнитной полосой</title>
+        <!-- Лицевая сторона: масштаб 4 px = 1 мм -->
+        <text class="bp-label" x="40" y="28">ЛИЦЕВАЯ СТОРОНА</text>
+        <rect class="req__bleed" x="40" y="60" width="368" height="240" rx="2"/>
+        <rect class="bp fill-w" x="52" y="72" width="344" height="216" rx="13"/>
+        <rect class="bp-soft-dash" x="64" y="84" width="320" height="192" rx="6"/>
+        <path class="req__emb" d="M52 152H396"/>
+        <text class="bp-label bp-label--sm" x="70" y="146">ЭМБОССИРОВАНИЕ — НИЖЕ ЛИНИИ</text>
+        <text class="bp-label bp-label--sm" x="70" y="104">ЗНАЧИМЫЕ ЭЛЕМЕНТЫ — ВНУТРИ ПУНКТИРА</text>
+        <g class="dim">
+          <path d="M40 44H408 M40 38v12 M408 38v12"/>
+          <path d="M40 44l8-3v6z M408 44l-8-3v6z" class="dim-arrow"/>
+          <path d="M52 322H396 M52 316v12 M396 316v12"/>
+          <path d="M52 322l8-3v6z M396 322l-8-3v6z" class="dim-arrow"/>
+          <path d="M424 60V300 M418 60h12 M418 300h12"/>
+          <path d="M424 60l-3 8h6z M424 300l-3-8h6z" class="dim-arrow"/>
+          <path d="M18 72V288 M12 72h12 M12 288h12"/>
+          <path d="M18 72l-3 8h6z M18 288l-3-8h6z" class="dim-arrow"/>
+          <path d="M404 72V152 M398 152h12"/>
+        </g>
+        <text class="bp-coord req__dimt" x="224" y="40" text-anchor="middle">92 мм · макет</text>
+        <text class="bp-coord req__dimt" x="224" y="342" text-anchor="middle">86 мм · готовая карта</text>
+        <text class="bp-coord req__dimt" transform="translate(440 180) rotate(90)" text-anchor="middle">60 мм</text>
+        <text class="bp-coord req__dimt" transform="translate(8 180) rotate(-90)" text-anchor="middle">54 мм</text>
+        <text class="bp-coord" x="410" y="116">20 мм</text>
+        <text class="bp-coord" x="56" y="68">3 мм</text>
+
+        <!-- Оборот -->
+        <text class="bp-label" x="488" y="28">ОБОРОТ</text>
+        <rect class="bp fill-w" x="488" y="72" width="248" height="156" rx="10"/>
+        <rect class="req__stripe" x="488" y="86" width="248" height="36"/>
+        <text class="bp-label bp-label--sm" x="500" y="150">МАГНИТНАЯ ПОЛОСА</text>
+        <g class="dim">
+          <path d="M748 72V86 M742 86h12 M748 86V122 M742 122h12 M742 72h12"/>
+        </g>
+        <text class="bp-coord" x="488" y="252">полоса 12,7 мм · 5 мм от верхнего края</text>
+      </svg>
+    </div>
+    <div class="req__text">
+      <h2 class="h2" id="req-title">Требования к&nbsp;макету для печати на&nbsp;пластике</h2>
+      <ul class="req__list">
+        <li>Макет пластиковой карты должен быть сверстан в&nbsp;формате CDR, PSD, AI, PDF в&nbsp;цветовом пространстве CMYK. Размер макета карты должен быть 92&nbsp;мм&nbsp;×&nbsp;60&nbsp;мм, по&nbsp;3&nbsp;мм с&nbsp;каждой стороны под вырубку (размер готовой пластиковой карты 86&nbsp;мм&nbsp;×&nbsp;54&nbsp;мм).</li>
+        <li>Все значимые элементы расположены в&nbsp;3&nbsp;мм от&nbsp;края готовой карты; эмбоссирование не&nbsp;менее чем в&nbsp;20&nbsp;мм от&nbsp;верхнего края готовой карты; магнитная полоса на&nbsp;обороте карты вверху в&nbsp;5&nbsp;мм от&nbsp;края (размер магнитной полосы 90&nbsp;мм&nbsp;×&nbsp;12&nbsp;мм), ширина магнитной полосы 12,7&nbsp;мм.</li>
+        <li>Все шрифты должны быть переведены в&nbsp;кривые или растрированы.</li>
+        <li>Растровые изображения принимаются в&nbsp;форматах TIF, BMP, JPG, с&nbsp;разрешением не&nbsp;менее 300&nbsp;dpi, в&nbsp;цветовом пространстве CMYK.</li>
+        <li>Элементы, которые должны печататься красками, замешанными по&nbsp;PANTONE, должны быть указаны в&nbsp;макете отдельно, с&nbsp;выноской индекса цвета по&nbsp;вееру PANTONE formula guide coated/uncoated.</li>
+        <li>Файл не&nbsp;должен содержать эффектов линз и&nbsp;теней, их&nbsp;необходимо отделить и&nbsp;преобразовать в&nbsp;растр.</li>
+        <li>Элементы, выполняемые тиснением фольгой, эмбоссированием, полосы для подписи, стираемая панель должны быть выполнены отдельно от&nbsp;основного изображения и&nbsp;окрашены в&nbsp;чёрный цвет.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="examples" id="examples" aria-labelledby="ex-title">
+  <div class="container">
+    <div class="section-head section-head--row">
+      <div class="section-head__col">
+        <h2 class="h2" id="ex-title">Примеры дизайна карт</h2>
+        <p class="section-head__text">Карты, которые мы изготовили для клиентов.</p>
+      </div>
+      <p class="examples__count mono">35 макетов</p>
+    </div>
+    <!-- gen:examples -->
+      <ul class="gallery" data-lightbox>
+        <li><button class="gallery__item" type="button" data-index="0" data-src="img/cards/barrel.jpg" data-w="448" data-h="276" aria-label="Открыть пример 1: Barrel"><img src="img/cards/barrel.jpg" width="448" height="276" alt="Пример дизайна карты: Barrel" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="1" data-src="img/cards/chern.jpg" data-w="448" data-h="274" aria-label="Открыть пример 2: chern"><img src="img/cards/chern.jpg" width="448" height="274" alt="Пример дизайна карты: chern" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="2" data-src="img/cards/ayrika.jpg" data-w="448" data-h="281" aria-label="Открыть пример 3: Ayrika"><img src="img/cards/ayrika.jpg" width="448" height="281" alt="Пример дизайна карты: Ayrika" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="3" data-src="img/cards/azs-h1.jpg" data-w="448" data-h="276" aria-label="Открыть пример 4: AZS H1"><img src="img/cards/azs-h1.jpg" width="448" height="276" alt="Пример дизайна карты: AZS H1" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="4" data-src="img/cards/azs-sibir.jpg" data-w="448" data-h="282" aria-label="Открыть пример 5: AZS Sibir"><img src="img/cards/azs-sibir.jpg" width="448" height="282" alt="Пример дизайна карты: AZS Sibir" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="5" data-src="img/cards/club-card.jpg" data-w="448" data-h="305" aria-label="Открыть пример 6: club card"><img src="img/cards/club-card.jpg" width="448" height="305" alt="Пример дизайна карты: club card" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="6" data-src="img/cards/draev.jpg" data-w="448" data-h="247" aria-label="Открыть пример 7: Draev"><img src="img/cards/draev.jpg" width="448" height="247" alt="Пример дизайна карты: Draev" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="7" data-src="img/cards/expert.jpg" data-w="448" data-h="282" aria-label="Открыть пример 8: Expert"><img src="img/cards/expert.jpg" width="448" height="282" alt="Пример дизайна карты: Expert" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="8" data-src="img/cards/forus.jpg" data-w="448" data-h="283" aria-label="Открыть пример 9: Forus"><img src="img/cards/forus.jpg" width="448" height="283" alt="Пример дизайна карты: Forus" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="9" data-src="img/cards/gaznp.jpg" data-w="448" data-h="266" aria-label="Открыть пример 10: gaznp"><img src="img/cards/gaznp.jpg" width="448" height="266" alt="Пример дизайна карты: gaznp" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="10" data-src="img/cards/gazprom.jpg" data-w="448" data-h="282" aria-label="Открыть пример 11: GazProm"><img src="img/cards/gazprom.jpg" width="448" height="282" alt="Пример дизайна карты: GazProm" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="11" data-src="img/cards/gloster.jpg" data-w="448" data-h="274" aria-label="Открыть пример 12: Gloster"><img src="img/cards/gloster.jpg" width="448" height="274" alt="Пример дизайна карты: Gloster" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="12" data-src="img/cards/irtush.jpg" data-w="448" data-h="289" aria-label="Открыть пример 13: Irtush"><img src="img/cards/irtush.jpg" width="448" height="289" alt="Пример дизайна карты: Irtush" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="13" data-src="img/cards/kkg-d.jpg" data-w="495" data-h="302" aria-label="Открыть пример 14: kkg d"><img src="img/cards/kkg-d.jpg" width="495" height="302" alt="Пример дизайна карты: kkg d" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="14" data-src="img/cards/knp.jpg" data-w="655" data-h="410" aria-label="Открыть пример 15: knp"><img src="img/cards/knp.jpg" width="655" height="410" alt="Пример дизайна карты: knp" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="15" data-src="img/cards/koksa.jpg" data-w="448" data-h="268" aria-label="Открыть пример 16: Koksa"><img src="img/cards/koksa.jpg" width="448" height="268" alt="Пример дизайна карты: Koksa" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="16" data-src="img/cards/likesotrudnik.jpg" data-w="448" data-h="284" aria-label="Открыть пример 17: LikeSotrudnik"><img src="img/cards/likesotrudnik.jpg" width="448" height="284" alt="Пример дизайна карты: LikeSotrudnik" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="17" data-src="img/cards/matrix.jpg" data-w="497" data-h="305" aria-label="Открыть пример 18: matrix"><img src="img/cards/matrix.jpg" width="497" height="305" alt="Пример дизайна карты: matrix" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="18" data-src="img/cards/nika.jpg" data-w="491" data-h="295" aria-label="Открыть пример 19: nika"><img src="img/cards/nika.jpg" width="491" height="295" alt="Пример дизайна карты: nika" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="19" data-src="img/cards/ntk.jpg" data-w="448" data-h="276" aria-label="Открыть пример 20: NTK"><img src="img/cards/ntk.jpg" width="448" height="276" alt="Пример дизайна карты: NTK" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="20" data-src="img/cards/poil-d.jpg" data-w="448" data-h="281" aria-label="Открыть пример 21: poil d"><img src="img/cards/poil-d.jpg" width="448" height="281" alt="Пример дизайна карты: poil d" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="21" data-src="img/cards/posp.jpg" data-w="316" data-h="195" aria-label="Открыть пример 22: posp"><img src="img/cards/posp.jpg" width="316" height="195" alt="Пример дизайна карты: posp" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="22" data-src="img/cards/prostor.jpg" data-w="448" data-h="275" aria-label="Открыть пример 23: Prostor"><img src="img/cards/prostor.jpg" width="448" height="275" alt="Пример дизайна карты: Prostor" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="23" data-src="img/cards/region.jpg" data-w="448" data-h="289" aria-label="Открыть пример 24: Region"><img src="img/cards/region.jpg" width="448" height="289" alt="Пример дизайна карты: Region" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="24" data-src="img/cards/rusneft.jpg" data-w="448" data-h="277" aria-label="Открыть пример 25: RusNeft"><img src="img/cards/rusneft.jpg" width="448" height="277" alt="Пример дизайна карты: RusNeft" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="25" data-src="img/cards/snc.jpg" data-w="494" data-h="301" aria-label="Открыть пример 26: snc"><img src="img/cards/snc.jpg" width="494" height="301" alt="Пример дизайна карты: snc" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="26" data-src="img/cards/technos.jpg" data-w="647" data-h="402" aria-label="Открыть пример 27: technos"><img src="img/cards/technos.jpg" width="647" height="402" alt="Пример дизайна карты: technos" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="27" data-src="img/cards/tehnoservice.jpg" data-w="448" data-h="281" aria-label="Открыть пример 28: TehnoService"><img src="img/cards/tehnoservice.jpg" width="448" height="281" alt="Пример дизайна карты: TehnoService" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="28" data-src="img/cards/tobolsk.jpg" data-w="448" data-h="247" aria-label="Открыть пример 29: Tobolsk"><img src="img/cards/tobolsk.jpg" width="448" height="247" alt="Пример дизайна карты: Tobolsk" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="29" data-src="img/cards/topline.jpg" data-w="448" data-h="278" aria-label="Открыть пример 30: TopLine"><img src="img/cards/topline.jpg" width="448" height="278" alt="Пример дизайна карты: TopLine" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="30" data-src="img/cards/tzk-ygol.jpg" data-w="448" data-h="286" aria-label="Открыть пример 31: TZK Ygol"><img src="img/cards/tzk-ygol.jpg" width="448" height="286" alt="Пример дизайна карты: TZK Ygol" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="31" data-src="img/cards/vip-d.jpg" data-w="661" data-h="410" aria-label="Открыть пример 32: vip d"><img src="img/cards/vip-d.jpg" width="661" height="410" alt="Пример дизайна карты: vip d" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="32" data-src="img/cards/vip-t.jpg" data-w="660" data-h="408" aria-label="Открыть пример 33: vip t"><img src="img/cards/vip-t.jpg" width="660" height="408" alt="Пример дизайна карты: vip t" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="33" data-src="img/cards/yanacaq.jpg" data-w="448" data-h="276" aria-label="Открыть пример 34: YANACAQ"><img src="img/cards/yanacaq.jpg" width="448" height="276" alt="Пример дизайна карты: YANACAQ" loading="lazy" decoding="async"></button></li>
+        <li><button class="gallery__item" type="button" data-index="34" data-src="img/cards/yralgaz.jpg" data-w="448" data-h="280" aria-label="Открыть пример 35: YralGaz"><img src="img/cards/yralgaz.jpg" width="448" height="280" alt="Пример дизайна карты: YralGaz" loading="lazy" decoding="async"></button></li>
+      </ul>
+      <!-- /gen:examples -->
+  </div>
+</section>
+
+<dialog class="lightbox" id="lightbox" aria-label="Пример дизайна карты">
+  <div class="lightbox__frame">
+    <img class="lightbox__img" src="" alt="">
+    <p class="lightbox__cap mono"></p>
+  </div>
+  <button class="lightbox__btn lightbox__btn--prev" type="button" data-lb="-1" aria-label="Предыдущий пример"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  <button class="lightbox__btn lightbox__btn--next" type="button" data-lb="1" aria-label="Следующий пример"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  <button class="lightbox__close" type="button" data-lb-close aria-label="Закрыть"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+</dialog>
+
+<section class="cta" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta__box">
+      <svg class="cta__dim" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 12H1000 M0 4v16 M1000 4v16"/>
+      </svg>
+      <h2 class="cta__title" id="cta-title">Обсудим вашу задачу?</h2>
+      <p class="cta__text">Подберём оборудование для вашей АЗС или нефтебазы и&nbsp;ответим по&nbsp;ремонту.</p>
+      <a class="btn btn--primary btn--lg magnetic" href="mailto:sncard-service@sncard.ru"><span>Написать нам</span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- @footer:start -->
+<footer class="footer">
+  <svg class="footer__mark" viewBox="0 0 120 48" aria-hidden="true">
+    <path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37"/>
+  </svg>
+  <div class="container footer__grid">
+    <div class="fcol">
+      <h2 class="fcol__title">Контактная информация</h2>
+      <ul class="contacts">
+        <li><svg aria-hidden="true"><use href="#i-pin"/></svg><span>634009, г. Томск, ул. Розы Люксембург, д. 55</span></li>
+        <li><svg aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:sncard-service@sncard.ru">sncard-service@sncard.ru</a></li>
+        <li><svg aria-hidden="true"><use href="#i-phone"/></svg><span><a href="tel:+73822651145">+7 (3822) 65-11-45</a><small>многоканальный</small></span></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h2 class="fcol__title">Правовая информация</h2>
+      <ul class="legal">
+        <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        <li><a href="cookies.html">Политика использования Cookies</a></li>
+      </ul>
+      <h2 class="fcol__title fcol__title--gap">Разделы</h2>
+      <ul class="legal">
+        <li><a href="company.html">О компании</a></li>
+        <li><a href="cards.html">Изготовление карт</a></li>
+        <li><a href="docs.html">Документация</a></li>
+        <li><a href="cart.html">Корзина</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h2 class="fcol__title">Оборудование</h2>
+      <ul class="legal legal--cols">
+        <li><a href="equipment/kontrollery-upravleniya.html">Контроллеры управления ТРК</a></li>
+        <li><a href="equipment/preobrazovateli-interfejsov.html">Преобразователи интерфейсов</a></li>
+        <li><a href="equipment/pos-terminaly.html">Терминалы СНК</a></li>
+        <li><a href="equipment/schityvateli.html">Считыватели карт</a></li>
+        <li><a href="equipment/modemy-gprs.html">Модемы GPRS</a></li>
+        <li><a href="equipment/gromkaya-svyaz.html">Громкая связь</a></li>
+        <li><a href="equipment/rasshiriteli-som-portov.html">Расширители СОМ портов</a></li>
+        <li><a href="equipment/komplektatsiya-dlya-tbr.html">Комплектация для ТБР</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container footer__bottom-inner">
+      <span>© ООО «Сибнефтекарт-сервис», 2026</span>
+      <span class="mono">Группа компаний «Сибнефтекарт» · 56°29′ с. ш. · 84°57′ в. д.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="cursor" aria-hidden="true"><span class="cursor__ring"></span><span class="cursor__dot"></span></div>
+<!-- @footer:end -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/CustomEase.min.js" defer></script>
+<!-- Lenis отсутствует на cdnjs, поэтому jsDelivr с закреплённой версией (как в designs/) -->
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js" defer></script>
+<script src="js/site.js" defer></script>
+<script src="js/motion.js" defer></script>
+<script src="js/pages.js" defer></script>
+</body>
+</html>
