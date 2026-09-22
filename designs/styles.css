@@ -36,7 +36,10 @@
 
 /* ---------- База ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; }
+html {
+  -webkit-text-size-adjust: 100%; scroll-padding-top: 80px;
+  scrollbar-gutter: stable; /* место под полосу прокрутки всегда занято: блокировка скролла (интро, меню) не сдвигает вёрстку */
+}
 body {
   margin: 0;
   background-color: var(--bg);
@@ -136,7 +139,7 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 /* Интро будет показано: закрываем страницу с первого кадра, пока грузятся скрипты
    (класс ставит инлайн-скрипт в <head>), знак и подсказка появятся вместе с анимацией */
 html.intro-pending .intro { display: grid; }
-html.intro-pending:has(#intro) { overflow: hidden; } /* без полосы прокрутки, пока интро на странице */
+html.intro-pending:has(#intro) { overflow: hidden; } /* скролл заблокирован, пока интро на странице */
 html.intro-pending .intro:not(.is-on) .intro__mark,
 html.intro-pending .intro:not(.is-on) .intro__hint { visibility: hidden; }
 .intro__cols { position: absolute; inset: 0; display: flex; }
