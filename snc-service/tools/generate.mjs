@@ -87,7 +87,7 @@ function header(r, page, here = '') {
       dd = `          <div class="dd dd--mega" id="dd-${n.key}">
             <ul class="dd__list">
 ${CATS.map(c => `              <li><a class="dd__link" href="${catUrl(r, c.slug)}"${cur(`equipment/${c.slug}.html`)}><svg class="dd__ic" aria-hidden="true"><use href="#${catMeta[c.slug].icon}"/></svg><span>${esc(c.title)}</span><small class="mono">${byCat(c.slug).length}</small></a></li>`).join('\n')}
-              <li class="dd__all"><a class="dd__link" href="${r}equipment/index.html"${cur('equipment/index.html')}>Весь каталог ${DOT}</a></li>
+              <li class="dd__all"><a class="dd__link" href="${r}equipment/index.html"${cur('equipment/index.html')}><span>Весь каталог</span><small class="mono">${PRODUCTS.length}</small></a></li>
             </ul>
           </div>`;
     } else {
