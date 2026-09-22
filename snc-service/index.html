@@ -5,7 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Сибнефтекарт-сервис — оборудование для автоматизации АЗС и нефтебаз</title>
   <meta name="description" content="ООО «Сибнефтекарт-сервис», Томск: разработка, мелкосерийное производство, поставка и ремонт оборудования для автоматизации АЗС и нефтебаз, изготовление пластиковых карт.">
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    document.documentElement.classList.add('js');
+    // Интро на первом визите: закрываем страницу сразу, чтобы она не мелькала до запуска анимации
+    try {
+      if (sessionStorage.getItem('snc-service-intro') !== '1') {
+        document.documentElement.classList.add('intro-pending');
+        // Страховка: если скрипты не запустили интро, не держим страницу закрытой
+        setTimeout(function () { if (!document.querySelector('.intro.is-on')) document.documentElement.classList.remove('intro-pending'); }, 5000);
+      }
+    } catch (e) { /* storage недоступен */ }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
@@ -224,7 +234,7 @@
       <div class="hero__grid">
         <div class="hero__text">
           <p class="eyebrow mono"><span class="eyebrow__dot" aria-hidden="true"></span>ОБОРУДОВАНИЕ ДЛЯ АВТОМАТИЗАЦИИ АЗС И НЕФТЕБАЗ · ТОМСК</p>
-          <h1 class="hero__title">Оборудование для <span class="u-mark">автоматизации АЗС<svg class="u-mark__line" viewBox="0 0 300 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2 6 H298" /></svg></span> и&nbsp;нефтебаз</h1>
+          <h1 class="hero__title">Оборудование  <span class="u-mark">автоматизации АЗС<svg class="u-mark__line" viewBox="0 0 300 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2 6 H298" /></svg></span> и&nbsp;нефтебаз</h1>
           <p class="hero__lead">Контроллеры ТРК, преобразователи интерфейсов, терминалы и&nbsp;считыватели карт&nbsp;— разрабатываем, выпускаем мелкими сериями, поставляем и&nbsp;ремонтируем сами.</p>
 
           <ol class="verbs mono" aria-label="Что мы делаем">

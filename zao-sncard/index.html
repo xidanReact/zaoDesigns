@@ -5,7 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Сибнефтекарт — АЗС, принимающие топливные карты СНК</title>
   <meta name="description" content="АО «НПФ «Сибнефтекарт», Томск — процессинг топливных карт с 1993 года. Карта АЗС, где принимают топливные карты СНК и Партнёров.">
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    document.documentElement.classList.add('js');
+    // Интро на первом визите: закрываем страницу сразу, чтобы она не мелькала до запуска анимации
+    try {
+      if (sessionStorage.getItem('snk-intro') !== '1') {
+        document.documentElement.classList.add('intro-pending');
+        // Страховка: если скрипты не запустили интро, не держим страницу закрытой
+        setTimeout(function () { if (!document.querySelector('.intro.is-on')) document.documentElement.classList.remove('intro-pending'); }, 5000);
+      }
+    } catch (e) { /* storage недоступен */ }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">

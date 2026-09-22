@@ -133,6 +133,12 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   cursor: pointer;
 }
 .intro.is-on { display: grid; }
+/* Интро будет показано: закрываем страницу с первого кадра, пока грузятся скрипты
+   (класс ставит инлайн-скрипт в <head>), знак и подсказка появятся вместе с анимацией */
+html.intro-pending .intro { display: grid; }
+html.intro-pending:has(#intro) { overflow: hidden; } /* без полосы прокрутки, пока интро на странице */
+html.intro-pending .intro:not(.is-on) .intro__mark,
+html.intro-pending .intro:not(.is-on) .intro__hint { visibility: hidden; }
 .intro__cols { position: absolute; inset: 0; display: flex; }
 .intro__cols i {
   position: relative; flex: 1;
