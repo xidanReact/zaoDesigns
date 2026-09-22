@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1440">
+  <title>СНК · UI kit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ---------- Раскладка UI kit (для импорта через html.to.design) ---------- */
+    body.kit { background: var(--bg-soft); }
+    .kit-wrap { width: 1440px; margin: 0 auto; padding: 80px; display: flex; flex-direction: column; gap: 40px; }
+    .kit-section {
+      background: var(--bg); border: 1px solid var(--line); border-radius: 20px;
+      padding: 48px; display: flex; flex-direction: column; gap: 32px;
+    }
+    .kit-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+    .kit-head p { color: var(--text-muted); font-size: 15.5px; max-width: 640px; margin-top: 8px; }
+    .kit-num { font: 400 12px var(--font-mono); color: var(--text-muted); }
+    .kit-sub { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+    .kit-row { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+    .kit-row--center { align-items: center; }
+    .kit-cell { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+    .kit-cap { font: 400 11px/1.4 var(--font-mono); color: var(--text-muted); }
+    .kit-block { display: flex; flex-direction: column; gap: 20px; }
+    .kit-canvas {
+      padding: 32px; border-radius: 12px; border: 1px dashed var(--blueprint-soft);
+      background-color: var(--bg);
+      background-image: radial-gradient(circle at 1px 1px, var(--blueprint-soft) 1px, transparent 1.2px);
+      background-size: 24px 24px;
+    }
+
+    /* Обложка */
+    .kit-cover { display: flex; flex-direction: column; gap: 24px; padding: 72px 64px; }
+    .kit-cover svg { width: 200px; height: auto; }
+    .kit-cover h1 { font-size: 88px; font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
+    .kit-cover p { font-size: 19px; color: var(--text-muted); max-width: 820px; }
+    .kit-meta { display: flex; gap: 32px; font: 400 12px var(--font-mono); color: var(--text-muted); }
+
+    /* Цвета */
+    .swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+    .swatch { display: flex; flex-direction: column; gap: 8px; }
+    .swatch__chip { height: 96px; border-radius: 12px; border: 1px solid var(--line); }
+    .swatch b { font-size: 14px; font-weight: 700; }
+    .swatch span { font: 400 11px/1.4 var(--font-mono); color: var(--text-muted); }
+
+    /* Типографика */
+    .type-row { display: grid; grid-template-columns: 280px 1fr; gap: 32px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--line); }
+    .type-row:last-child { border-bottom: 0; }
+
+    /* Отступы / радиусы / тени */
+    .space-row { display: flex; align-items: center; gap: 24px; }
+    .space-row .kit-cap { width: 110px; }
+    .space-bar { height: 16px; background: var(--accent); border-radius: 2px; }
+    .radius-box { width: 128px; height: 84px; background: var(--surface); border: 1px solid var(--blueprint); }
+    .shadow-box { width: 200px; height: 100px; background: var(--bg); border-radius: 12px; }
+
+    /* Иконки */
+    .icon-tile { width: 88px; height: 88px; border: 1px solid var(--line); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+    .icon-tile svg { width: 28px; height: 28px; color: var(--text); }
+
+    /* Эмуляция состояний (html.to.design не видит :hover/:focus) */
+    .btn--primary.is-hover { background: var(--accent-hover); }
+    .btn--outline.is-hover { box-shadow: inset 0 0 0 1.5px var(--text); }
+    .btn--ghost.is-hover { color: var(--text); background: rgba(31, 41, 51, .05); }
+    .btn.is-pressed { scale: .97; }
+    .btn.is-disabled { opacity: .4; }
+    .btn.is-focus { box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent); }
+    .btn--outline.is-focus { box-shadow: inset 0 0 0 1.5px var(--blueprint), 0 0 0 3px var(--bg), 0 0 0 5px var(--accent); }
+    .btn--lk.is-hover .lock__shackle { transform: none; }
+    .nav__link.is-hover { background: var(--surface); }
+    .nav__link.is-focus { box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent); }
+    .dd__link.is-hover { background: var(--bg-soft); }
+    .dd__link.is-hover svg { color: var(--accent); transform: translateX(3px); }
+    .kit .dd--static { position: static; visibility: visible; opacity: 1; transform: none; }
+    .kit .chip-spec { position: static; opacity: 1; transform: none; }
+    .kit .stamp { position: static; }
+    .card.is-hover { border-color: var(--accent); box-shadow: var(--shadow-md); }
+    .card.is-hover .card__arrow { color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+    .card.is-hover .card__link { border-color: var(--accent); }
+    .card.is-hover .card__spot { opacity: 1; }
+    .card__spot {
+      position: absolute; left: 0; top: 0; z-index: -1; pointer-events: none;
+      width: 640px; height: 640px; margin: -320px 0 0 -320px;
+      background: radial-gradient(closest-side, rgba(213, 221, 230, .6), rgba(213, 221, 230, 0));
+      opacity: 0;
+    }
+    .ncard.is-hover { border-color: var(--blueprint); }
+    .ncard.is-hover .ncard__more { color: var(--accent); }
+    .link-more.is-hover { border-color: var(--accent); }
+    .field.is-focus .field__input { border-color: var(--text); box-shadow: 0 0 0 3px rgba(211, 47, 47, .14); }
+    .field.is-focus .field__label { transform: translateY(-10px) scale(.75); }
+    .field--demo { width: 420px; }
+    .data--hot { stroke: var(--accent); }
+    .pipe--hot { stroke: var(--accent); }
+    .node-demo--hot .bp { stroke: var(--accent); }
+
+    /* Шапка и меню в контексте UI kit */
+    .kit .header { position: relative; top: auto; z-index: 2; }
+    .kit-header-frame { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--bg); }
+    .kit-header-frame--open { overflow: visible; padding-bottom: 180px; background: var(--bg-soft); }
+    .kit-header-frame--open .header { border-radius: 12px 12px 0 0; }
+    .kit-mobile { width: 390px; border: 1px solid var(--line); border-radius: 20px; overflow: hidden; background: var(--bg); }
+    .kit-mobile .header__inner { height: 64px; gap: 12px; padding-inline: 16px; }
+    .kit-mobile .nav, .kit-mobile .btn--lk, .kit-mobile .brand__sub { display: none; }
+    .kit-mobile .burger { display: block; }
+    .kit-mobile .brand__mark { width: 54px; }
+    .kit-mobile .brand__name { font-size: 16px; }
+    .kit .mmenu--static { position: relative; inset: auto; height: 600px; }
+    .kit .mmenu--static .mmenu__inner { padding-inline: 16px; }
+
+    .kit .metrics { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .kit .bento { grid-auto-rows: minmax(240px, auto); }
+    .kit .news-row { display: flex; gap: 24px; }
+    .kit .marquee { border: 1px solid var(--line); border-radius: 12px; }
+    .kit .cta { padding: 0; }
+    .kit .footer { border-radius: 12px; border: 1px solid var(--line); padding-top: 56px; }
+    .kit .footer__grid { padding-bottom: 56px; }
+    .kit .system-demo { display: grid; grid-template-columns: 420px 1fr; gap: 48px; align-items: start; }
+  </style>
+</head>
+<body class="kit">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V8" stroke="#D5DDE6" stroke-width="1.2"/></pattern>
+  </defs>
+</svg>
+
+<div class="kit-wrap">
+
+  <!-- 00 Обложка -->
+  <section class="kit-section kit-cover">
+    <svg viewBox="0 0 120 48" aria-hidden="true"><path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square"/></svg>
+    <h1>Сибнефтекарт · UI kit</h1>
+    <p>Главная страница, концепция «Живая схема»: светлый инженерный чертёж, красный — единственный акцент. Токены и компоненты совпадают с designs/styles.css; состояния hover/focus показаны отдельными экземплярами.</p>
+    <div class="kit-meta"><span>Manrope · JetBrains Mono</span><span>Сетка 12 колонок · 1320 + 60</span><span>Кривая 0.22, 1, 0.36, 1</span><span>2026</span></div>
+  </section>
+
+  <!-- 01 Цвет -->
+  <section class="kit-section">
+    <div class="kit-head"><div><h2 class="h2">Цвет</h2><p>Строго светлая тема. Красный используется дозированно: основная кнопка, подчёркивание в H1, пакеты данных, активные состояния.</p></div><span class="kit-num">01</span></div>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch__chip" style="background:#FFFFFF"></div><b>Фон</b><span>#FFFFFF · --bg</span></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#F7F8FA"></div><b>Фон мягкий</b><span>#F7F8FA · --bg-soft</span></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#F1F3F6"></div><b>Поверхность</b><span>#F1F3F6 · --surface</span></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#EEF1F5"></div><b>Поверхность 2</b><span>#EEF1F5 · --surface-2</span></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#E3E7EC"></div><b>Линия</b><span>#E3E7EC · --line</span></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#DDE3EA"></div><b>Водяной знак</b><span>#DDE3EA · обводка</span></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#1F2933"></div><b>Текст</b><span>#1F2933 · --text</span></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#5B6773"></div><b>Текст вторичный</b><span>#5B6773 · --text-muted</span></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#D32F2F"></div><b>Акцент</b><span>#D32F2F · --accent</span></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#B82727"></div><b>Акцент hover</b><span>#B82727 · --accent-hover</span></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#9FB0C3"></div><b>Чертёж</b><span>#9FB0C3 · --blueprint</span></div>
+      <div class="swatch"><div class="swatch__chip" style="background:#D5DDE6"></div><b>Чертёж мягкий</b><span>#D5DDE6 · --blueprint-soft</span></div>
+    </div>
+  </section>
+
+  <!-- 02 Типографика -->
+  <section class="kit-section">
+    <div class="kit-head"><div><h2 class="h2">Типографика</h2><p>Manrope 500–800 с плотным трекингом на крупных кеглях. JetBrains Mono — только обозначения на схеме, нумерация и даты.</p></div><span class="kit-num">02</span></div>
+    <div>
+      <div class="type-row"><span class="kit-cap">Display / H1<br>Manrope 800 · 58/1.05 · −3.8%</span><span style="font-size:58px;font-weight:800;line-height:1.05;letter-spacing:-0.038em">Оборудование и ПО для АЗС</span></div>
+      <div class="type-row"><span class="kit-cap">Display / CTA<br>Manrope 800 · 88/1 · −4.5%</span><span style="font-size:88px;font-weight:800;line-height:1;letter-spacing:-0.045em">Обсудим задачу?</span></div>
+      <div class="type-row"><span class="kit-cap">Display / Metric<br>Manrope 800 · 76/1 · −4.5%</span><span style="font-size:76px;font-weight:800;line-height:1;letter-spacing:-0.045em">1200<span style="color:var(--accent);font-size:.6em">+</span></span></div>
+      <div class="type-row"><span class="kit-cap">Heading / H2<br>Manrope 800 · 48/1.08 · −3.2%</span><span class="h2">Как работает система</span></div>
+      <div class="type-row"><span class="kit-cap">Heading / Card XL<br>Manrope 800 · 32/1.2 · −2.5%</span><span style="font-size:32px;font-weight:800;line-height:1.2;letter-spacing:-0.025em">Оборудование для АЗС</span></div>
+      <div class="type-row"><span class="kit-cap">Heading / Card<br>Manrope 800 · 24/1.2 · −2.5%</span><span style="font-size:24px;font-weight:800;line-height:1.2;letter-spacing:-0.025em">Программное обеспечение</span></div>
+      <div class="type-row"><span class="kit-cap">Heading / Marquee<br>Manrope 800 · 34/1.2 · −3%</span><span style="font-size:34px;font-weight:800;letter-spacing:-0.03em">Автоматизация АЗС</span></div>
+      <div class="type-row"><span class="kit-cap">Heading / Step<br>Manrope 800 · 21/1.25 · −2%</span><span class="step__title">Хранение и учёт</span></div>
+      <div class="type-row"><span class="kit-cap">Body / Lead<br>Manrope 500 · 19/1.55</span><span class="hero__lead">Разрабатываем технику и программы, которые связывают резервуары, колонки, кассу и офис.</span></div>
+      <div class="type-row"><span class="kit-cap">Body / Default<br>Manrope 500 · 17/1.6</span><span>Основной текст страницы для описаний и абзацев.</span></div>
+      <div class="type-row"><span class="kit-cap">Body / Small<br>Manrope 500 · 15.5/1.55</span><span style="font-size:15.5px;color:var(--text-muted)">Второстепенный текст карточек и подписей к метрикам.</span></div>
+      <div class="type-row"><span class="kit-cap">UI / Button · Nav<br>Manrope 700 16 · 600 15.5</span><span style="font-size:16px;font-weight:700">Связаться с нами &nbsp;·&nbsp; <span style="font-weight:600;font-size:15.5px">О компании</span></span></div>
+      <div class="type-row"><span class="kit-cap">Mono / Label<br>JetBrains Mono 400 · 12 · +4%</span><span class="mono" style="font-size:12px;letter-spacing:.04em;color:var(--text-muted)">АВТОМАТИЗАЦИЯ АЗС И НЕФТЕБАЗ · ТОМСК · 12.09.2026</span></div>
+      <div class="type-row"><span class="kit-cap">Mono / Caption<br>JetBrains Mono 400 · 11 · +4%</span><span class="mono" style="font-size:11px;letter-spacing:.04em;color:var(--text-muted)">ТРК-01 · Р-02 · КТ-01 · СРВ-01 · НБ-01</span></div>
+    </div>
+  </section>
+
+  <!-- 03 Отступы, радиусы, тени -->
+  <section class="kit-section">
+    <div class="kit-head"><div><h2 class="h2">Отступы, радиусы, тени</h2><p>Отступ между колонками 24 (на мобильном 16), поля страницы clamp(16px, 4vw, 60px), вертикальный ритм секций 120 / 80. Тени только очень мягкие.</p></div><span class="kit-num">03</span></div>
+    <div class="kit-row" style="gap:64px">
+      <div class="kit-block">
+        <span class="kit-sub">Отступы</span>
+        <div class="space-row"><span class="kit-cap">4</span><span class="space-bar" style="width:4px"></span></div>
+        <div class="space-row"><span class="kit-cap">8</span><span class="space-bar" style="width:8px"></span></div>
+        <div class="space-row"><span class="kit-cap">12</span><span class="space-bar" style="width:12px"></span></div>
+        <div class="space-row"><span class="kit-cap">16</span><span class="space-bar" style="width:16px"></span></div>
+        <div class="space-row"><span class="kit-cap">24 · gap</span><span class="space-bar" style="width:24px"></span></div>
+        <div class="space-row"><span class="kit-cap">32</span><span class="space-bar" style="width:32px"></span></div>
+        <div class="space-row"><span class="kit-cap">48</span><span class="space-bar" style="width:48px"></span></div>
+        <div class="space-row"><span class="kit-cap">60 · gutter</span><span class="space-bar" style="width:60px"></span></div>
+        <div class="space-row"><span class="kit-cap">88 · header</span><span class="space-bar" style="width:88px"></span></div>
+        <div class="space-row"><span class="kit-cap">120 · секция</span><span class="space-bar" style="width:120px"></span></div>
+      </div>
+      <div class="kit-block">
+        <span class="kit-sub">Радиусы</span>
+        <div class="kit-row">
+          <div class="kit-cell"><div class="radius-box" style="border-radius:4px"></div><span class="kit-cap">4 · лист</span></div>
+          <div class="kit-cell"><div class="radius-box" style="border-radius:8px"></div><span class="kit-cap">8 · --r-sm</span></div>
+          <div class="kit-cell"><div class="radius-box" style="border-radius:12px"></div><span class="kit-cap">12 · --r-md</span></div>
+          <div class="kit-cell"><div class="radius-box" style="border-radius:20px"></div><span class="kit-cap">20 · --r-lg</span></div>
+          <div class="kit-cell"><div class="radius-box" style="border-radius:999px"></div><span class="kit-cap">999 · кнопки</span></div>
+        </div>
+        <span class="kit-sub" style="margin-top:24px">Тени</span>
+        <div class="kit-row kit-canvas" style="gap:40px">
+          <div class="kit-cell"><div class="shadow-box" style="box-shadow:var(--shadow-sm)"></div><span class="kit-cap">--shadow-sm · схема</span></div>
+          <div class="kit-cell"><div class="shadow-box" style="box-shadow:var(--shadow-md)"></div><span class="kit-cap">--shadow-md · меню, чипы, hover</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Иконки и логотип -->
+  <section class="kit-section">
+    <div class="kit-head"><div><h2 class="h2">Логотип и иконки</h2><p>Монограмма «СНК» — красная, #D32F2F. Иконки контурные, 1.4–1.6px, цвет наследуется от текста.</p></div><span class="kit-num">04</span></div>
+    <div class="kit-row kit-row--center" style="gap:48px">
+      <div class="kit-cell">
+        <a class="brand" href="#"><svg class="brand__mark" viewBox="0 0 120 48" aria-hidden="true"><path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square"/></svg><span class="brand__text"><span class="brand__name">Сибнефтекарт</span><span class="brand__sub">акционерное общество «Научно-производственная фирма»</span></span></a>
+        <span class="kit-cap">Логотип в шапке</span>
+      </div>
+      <div class="kit-cell"><svg viewBox="0 0 120 48" style="width:180px;height:auto" aria-hidden="true"><path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square"/></svg><span class="kit-cap">Монограмма, штрих 5</span></div>
+    </div>
+    <div class="kit-row">
+      <div class="kit-cell"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="kit-cap">arrow</span></div>
+      <div class="kit-cell"><div class="icon-tile"><svg viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="kit-cap">chevron</span></div>
+      <div class="kit-cell"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="5" y="11" width="14" height="9.5" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 15v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div><span class="kit-cap">lock</span></div>
+      <div class="kit-cell"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div><span class="kit-cap">pin</span></div>
+      <div class="kit-cell"><div class="icon-tile"><svg viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div><span class="kit-cap">mail</span></div>
+      <div class="kit-cell"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M6.6 3.5h3l1.5 4-2 1.3a10.5 10.5 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7a2 2 0 0 1 2.1-2.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div><span class="kit-cap">phone</span></div>
+      <div class="kit-cell"><div class="icon-tile"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="kit-cap">check</span></div>
+      <div class="kit-cell"><div class="icon-tile"><svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="5" width="12" height="22" rx="2"/><rect x="10.5" y="8" width="7" height="5" rx="1"/><path d="M20 13h3v7a2 2 0 0 0 4 0v-9l-3-3 M5 27h18"/></g></svg></div><span class="kit-cap">dispenser</span></div>
+      <div class="kit-cell"><div class="icon-tile"><svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="24" height="17" rx="2"/><path d="M11 27h10M16 23v4 M10 12l-3 3 3 3M22 12l3 3-3 3M18 11l-4 8"/></g></svg></div><span class="kit-cap">code</span></div>
+      <div class="kit-cell"><div class="icon-tile"><svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11v15h9V11 M18 11v15h9V11"/><ellipse cx="9.5" cy="11" rx="4.5" ry="1.8"/><ellipse cx="22.5" cy="11" rx="4.5" ry="1.8"/><path d="M3 26h26 M14 21h4"/></g></svg></div><span class="kit-cap">tanks</span></div>
+      <div class="kit-cell"><div class="icon-tile"><svg viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="3.5"/><circle cx="6" cy="7" r="2.5"/><circle cx="26" cy="8" r="2.5"/><circle cx="7" cy="25" r="2.5"/><circle cx="25" cy="25" r="2.5"/><path d="M8 9l5.5 4.5M24 10l-5.5 4M9 23l4.5-4.5M23 23l-4.5-4.5"/></g></svg></div><span class="kit-cap">network</span></div>
+    </div>
+  </section>
+
+  <!-- 05 Кнопки -->
+  <section class="kit-section">
+    <div class="kit-head"><div><h2 class="h2">Кнопки</h2><p>Pill-кнопки. Нажатие — scale 0.97, фокус — красное кольцо 2px с отступом 3px. Красные кнопки на сайте магнитные.</p></div><span class="kit-num">05</span></div>
+    <div class="kit-block">
+      <span class="kit-sub">Primary</span>
+      <div class="kit-row kit-row--center">
+        <div class="kit-cell"><a class="btn btn--primary" href="#"><span>Связаться с нами</span></a><span class="kit-cap">default</span></div>
+        <div class="kit-cell"><a class="btn btn--primary is-hover" href="#"><span>Связаться с нами</span></a><span class="kit-cap">hover</span></div>
+        <div class="kit-cell"><a class="btn btn--primary is-pressed" href="#"><span>Связаться с нами</span></a><span class="kit-cap">pressed</span></div>
+        <div class="kit-cell"><a class="btn btn--primary is-focus" href="#"><span>Связаться с нами</span></a><span class="kit-cap">focus</span></div>
+        <div class="kit-cell"><a class="btn btn--primary is-disabled" href="#"><span>Связаться с нами</span></a><span class="kit-cap">disabled</span></div>
+        <div class="kit-cell"><a class="btn btn--primary btn--lg" href="#"><span>Связаться с нами</span></a><span class="kit-cap">large · CTA</span></div>
+      </div>
+    </div>
+    <div class="kit-block">
+      <span class="kit-sub">Outline</span>
+      <div class="kit-row kit-row--center">
+        <div class="kit-cell"><a class="btn btn--outline" href="#"><span>Направления деятельности</span></a><span class="kit-cap">default</span></div>
+        <div class="kit-cell"><a class="btn btn--outline is-hover" href="#"><span>Направления деятельности</span></a><span class="kit-cap">hover</span></div>
+        <div class="kit-cell"><a class="btn btn--outline is-focus" href="#"><span>Направления деятельности</span></a><span class="kit-cap">focus</span></div>
+        <div class="kit-cell"><a class="btn btn--outline is-disabled" href="#"><span>Направления деятельности</span></a><span class="kit-cap">disabled</span></div>
+      </div>
+      <div class="kit-row kit-row--center">
+        <div class="kit-cell"><a class="btn btn--outline btn--lk" href="#"><svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path class="lock__shackle" d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="5" y="11" width="14" height="9.5" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 15v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Личный кабинет</span></a><span class="kit-cap">ЛК · замок открыт</span></div>
+        <div class="kit-cell"><a class="btn btn--outline btn--lk is-hover" href="#"><svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path class="lock__shackle" d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="5" y="11" width="14" height="9.5" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 15v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Личный кабинет</span></a><span class="kit-cap">ЛК hover · дужка защёлкнута</span></div>
+      </div>
+    </div>
+    <div class="kit-block">
+      <span class="kit-sub">Ghost, ссылки, кнопка подписки</span>
+      <div class="kit-row kit-row--center">
+        <div class="kit-cell"><button class="btn btn--ghost" type="button">Отменить</button><span class="kit-cap">ghost</span></div>
+        <div class="kit-cell"><button class="btn btn--ghost is-hover" type="button">Отменить</button><span class="kit-cap">ghost hover</span></div>
+        <div class="kit-cell"><a class="link-more" href="#">Все новости <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="kit-cap">ссылка</span></div>
+        <div class="kit-cell"><a class="link-more is-hover" href="#">Все новости <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span class="kit-cap">ссылка hover</span></div>
+      </div>
+      <div class="kit-row kit-row--center">
+        <div class="kit-cell"><button class="btn btn--primary btn--submit" type="button" data-state="idle"><span class="bstate bstate--idle">Подписаться</span><span class="bstate bstate--loading"><i class="spinner"></i></span><span class="bstate bstate--success"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg>Вы подписаны</span></button><span class="kit-cap">idle</span></div>
+        <div class="kit-cell"><button class="btn btn--primary btn--submit" type="button" data-state="loading"><span class="bstate bstate--idle">Подписаться</span><span class="bstate bstate--loading"><i class="spinner"></i></span><span class="bstate bstate--success"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg>Вы подписаны</span></button><span class="kit-cap">loading</span></div>
+        <div class="kit-cell"><button class="btn btn--primary btn--submit" type="button" data-state="success"><span class="bstate bstate--idle">Подписаться</span><span class="bstate bstate--loading"><i class="spinner"></i></span><span class="bstate bstate--success"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg>Вы подписаны</span></button><span class="kit-cap">success</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Навигация -->
+  <section class="kit-section">
+    <div class="kit-head"><div><h2 class="h2">Навигация</h2><p>Шапка 88px, при скролле 64px; сверху красная полоса прогресса чтения. Выпадающие меню — белые карточки, radius 12, мягкая тень.</p></div><span class="kit-num">06</span></div>
+
+    <div class="kit-block">
+      <span class="kit-sub">Пункты меню</span>
+      <div class="kit-row kit-row--center">
+        <div class="kit-cell"><a class="nav__link" href="#">Новости</a><span class="kit-cap">default</span></div>
+        <div class="kit-cell"><a class="nav__link is-hover" href="#">Новости</a><span class="kit-cap">hover</span></div>
+        <div class="kit-cell"><a class="nav__link is-focus" href="#">Новости</a><span class="kit-cap">focus</span></div>
+        <div class="kit-cell"><button class="nav__link nav__trigger" type="button" aria-expanded="false">О компании <svg class="nav__chev" aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="kit-cap">с меню</span></div>
+        <div class="kit-cell"><button class="nav__link nav__trigger is-hover" type="button" aria-expanded="true">О компании <svg class="nav__chev" aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="kit-cap">открыто</span></div>
+      </div>
+    </div>
+
+    <div class="kit-block">
+      <span class="kit-sub">Выпадающее меню</span>
+      <div class="kit-row">
+        <div class="kit-cell">
+          <div class="dd dd--static"><ul class="dd__list">
+            <li><a class="dd__link" href="#">История компании <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="dd__link is-hover" href="#">Акционерам <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+          </ul></div>
+          <span class="kit-cap">О компании · второй пункт hover</span>
+        </div>
+        <div class="kit-cell">
+          <div class="dd dd--static"><ul class="dd__list">
+            <li><a class="dd__link" href="#">Отдел по работе с клиентами <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="dd__link" href="#">Администрация <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+            <li><a class="dd__link" href="#">Местоположение на карте <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+          </ul></div>
+          <span class="kit-cap">Контакты</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="kit-block">
+      <span class="kit-sub">Шапка · desktop</span>
+      <div class="kit-header-frame">
+        <header class="header">
+          <div class="header__progress" aria-hidden="true"><span style="transform:scaleX(0)"></span></div>
+          <div class="header__inner container">
+            <a class="brand" href="#"><svg class="brand__mark" viewBox="0 0 120 48" aria-hidden="true"><path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square"/></svg><span class="brand__text"><span class="brand__name">Сибнефтекарт</span><span class="brand__sub">акционерное общество «Научно-производственная фирма»</span></span></a>
+            <nav class="nav" aria-label="Главное меню"><ul class="nav__list">
+              <li class="nav__item"><a class="nav__link" href="#">Новости</a></li>
+              <li class="nav__item"><button class="nav__link nav__trigger" type="button">О компании <svg class="nav__chev" aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+              <li class="nav__item"><button class="nav__link nav__trigger" type="button">Контакты <svg class="nav__chev" aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+              <li class="nav__item"><a class="nav__link" href="#">Сеть АЗС</a></li>
+            </ul></nav>
+            <a class="btn btn--outline btn--lk" href="#"><svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path class="lock__shackle" d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="5" y="11" width="14" height="9.5" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 15v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Личный кабинет</span></a>
+          </div>
+        </header>
+      </div>
+      <span class="kit-cap">88px · в начале страницы</span>
+
+      <div class="kit-header-frame kit-header-frame--open">
+        <header class="header is-compact">
+          <div class="header__progress" aria-hidden="true"><span style="transform:scaleX(.42)"></span></div>
+          <div class="header__inner container">
+            <a class="brand" href="#"><svg class="brand__mark" viewBox="0 0 120 48" aria-hidden="true"><path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square"/></svg><span class="brand__text"><span class="brand__name">Сибнефтекарт</span><span class="brand__sub">акционерное общество «Научно-производственная фирма»</span></span></a>
+            <nav class="nav" aria-label="Главное меню"><ul class="nav__list">
+              <li class="nav__item"><a class="nav__link" href="#">Новости</a></li>
+              <li class="nav__item"><button class="nav__link nav__trigger" type="button">О компании <svg class="nav__chev" aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+              <li class="nav__item has-dd is-open"><button class="nav__link nav__trigger is-hover" type="button" aria-expanded="true">Контакты <svg class="nav__chev" aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <div class="dd"><ul class="dd__list">
+                  <li><a class="dd__link is-hover" href="#">Отдел по работе с клиентами <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+                  <li><a class="dd__link" href="#">Администрация <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+                  <li><a class="dd__link" href="#">Местоположение на карте <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+                </ul></div>
+              </li>
+              <li class="nav__item"><a class="nav__link" href="#">Сеть АЗС</a></li>
+            </ul></nav>
+            <a class="btn btn--outline btn--lk" href="#"><svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><path class="lock__shackle" d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="5" y="11" width="14" height="9.5" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 15v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Личный кабинет</span></a>
+          </div>
+        </header>
+      </div>
+      <span class="kit-cap">64px · после скролла, прогресс чтения 42%, меню «Контакты» открыто</span>
+    </div>
+
+    <div class="kit-block">
+      <span class="kit-sub">Шапка и меню · mobile 390</span>
+      <div class="kit-row">
+        <div class="kit-cell">
+          <div class="kit-mobile">
+            <header class="header"><div class="header__inner">
+              <a class="brand" href="#"><svg class="brand__mark" viewBox="0 0 120 48" aria-hidden="true"><path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square"/></svg><span class="brand__text"><span class="brand__name">Сибнефтекарт</span></span></a>
+              <button class="burger" type="button" aria-expanded="false" aria-label="Открыть меню"><span></span><span></span></button>
+            </div></header>
+          </div>
+          <span class="kit-cap">закрыто</span>
+        </div>
+        <div class="kit-cell">
+          <div class="kit-mobile">
+            <header class="header"><div class="header__inner">
+              <a class="brand" href="#"><svg class="brand__mark" viewBox="0 0 120 48" aria-hidden="true"><path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square"/></svg><span class="brand__text"><span class="brand__name">Сибнефтекарт</span></span></a>
+              <button class="burger" type="button" aria-expanded="true" aria-label="Закрыть меню"><span></span><span></span></button>
+            </div></header>
+            <div class="mmenu mmenu--static"><div class="mmenu__inner">
+              <ul class="mmenu__list">
+                <li><a class="mmenu__link" href="#">Новости</a></li>
+                <li><details class="mmenu__group" open><summary class="mmenu__link">О компании <svg aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><a href="#">История компании</a><a href="#">Акционерам</a></details></li>
+                <li><details class="mmenu__group"><summary class="mmenu__link">Контакты <svg aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary></details></li>
+                <li><a class="mmenu__link" href="#">Сеть АЗС</a></li>
+              </ul>
+              <div class="mmenu__foot"><a class="btn btn--outline" href="#">Личный кабинет</a><a class="mmenu__phone mono" href="#">+7 (382-2) 65-10-70</a></div>
+            </div></div>
+          </div>
+          <span class="kit-cap">полноэкранное светлое меню</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 Метки и схема -->
+  <section class="kit-section">
+    <div class="kit-head"><div><h2 class="h2">Метки и элементы схемы</h2><p>Чертёжный словарь: линии 1.5px цвета #9FB0C3, заливки белые или #F1F3F6, подписи моно-шрифтом. При hover узел и связанные линии краснеют, рядом выезжает чип спецификации.</p></div><span class="kit-num">07</span></div>
+    <div class="kit-row kit-row--center" style="gap:40px">
+      <div class="kit-cell"><p class="eyebrow mono"><span class="eyebrow__dot"></span>АВТОМАТИЗАЦИЯ АЗС И НЕФТЕБАЗ · ТОМСК</p><span class="kit-cap">моно-метка hero</span></div>
+      <div class="kit-cell"><div class="kit-row"><span class="tag">Компания</span><span class="tag">Продукты</span><span class="tag">Выставки</span></div><span class="kit-cap">тег новости</span></div>
+      <div class="kit-cell"><div class="stamp mono"><span>СНК-АЗС-001</span><span>Схема автоматизации</span><span>Лист 1</span></div><span class="kit-cap">штамп листа</span></div>
+    </div>
+    <div class="kit-row" style="gap:40px">
+      <div class="kit-cell">
+        <dl class="legend">
+          <div><dt><svg viewBox="0 0 32 8"><path d="M0 4h32" stroke="#9FB0C3" stroke-width="6"/><path d="M0 4h32" stroke="#fff" stroke-width="3"/></svg></dt><dd>Трубопровод</dd></div>
+          <div><dt><svg viewBox="0 0 32 8"><path d="M0 4h32" stroke="#9FB0C3" stroke-width="1.5" stroke-dasharray="4 3"/></svg></dt><dd>Линия данных</dd></div>
+          <div><dt><svg viewBox="0 0 32 8"><circle cx="16" cy="4" r="2.6" fill="#D32F2F"/></svg></dt><dd>Пакет данных</dd></div>
+        </dl>
+        <span class="kit-cap">условные обозначения</span>
+      </div>
+      <div class="kit-cell"><div class="chip-spec"><b>ТРК-01 / ТРК-02</b><span>Тип: заглушка</span><span>Рукава: 0 × 0</span><span>Интерфейс: —</span></div><span class="kit-cap">чип спецификации</span></div>
+    </div>
+    <div class="kit-row kit-canvas" style="gap:56px">
+      <div class="kit-cell">
+        <svg width="220" height="120" viewBox="0 0 220 120">
+          <path class="pipe-outer" d="M10 90H120V30H210"/><path class="pipe-inner" d="M10 90H120V30H210"/>
+          <circle class="packet" cx="70" cy="90" r="3"/>
+        </svg>
+        <span class="kit-cap">трубопровод + пакет</span>
+      </div>
+      <div class="kit-cell">
+        <svg width="220" height="120" viewBox="0 0 220 120">
+          <path class="data" d="M10 90H120V30H210"/><circle class="packet" cx="160" cy="30" r="3"/>
+        </svg>
+        <span class="kit-cap">линия данных</span>
+      </div>
+      <div class="kit-cell">
+        <svg width="220" height="120" viewBox="0 0 220 120">
+          <path class="data data--hot" d="M10 90H120V30H210"/><circle class="packet" cx="120" cy="60" r="3"/>
+        </svg>
+        <span class="kit-cap">линия данных · подсветка</span>
+      </div>
+      <div class="kit-cell">
+        <svg width="160" height="140" viewBox="0 0 160 140">
+          <g class="node-demo">
+            <rect class="bp fill-w" x="52" y="10" width="56" height="110" rx="4"/>
+            <rect class="screen" x="60" y="22" width="40" height="24" rx="2"/>
+            <text class="digits" x="80" y="38" text-anchor="middle">24.35</text>
+            <path class="bp" d="M108 60h6v22h-6"/><path class="bp-thin" d="M60 70h36M60 80h36"/>
+            <rect class="bp fill-w" x="44" y="120" width="72" height="6"/>
+          </g>
+        </svg>
+        <span class="kit-cap">узел ТРК · default</span>
+      </div>
+      <div class="kit-cell">
+        <svg width="160" height="140" viewBox="0 0 160 140">
+          <g class="node-demo node-demo--hot">
+            <rect class="bp fill-w" x="52" y="10" width="56" height="110" rx="4"/>
+            <rect class="screen" x="60" y="22" width="40" height="24" rx="2"/>
+            <text class="digits" x="80" y="38" text-anchor="middle">26.45</text>
+            <path class="bp" d="M108 60h6v22h-6"/><path class="bp-thin" d="M60 70h36M60 80h36"/>
+            <rect class="bp fill-w" x="44" y="120" width="72" height="6"/>
+          </g>
+        </svg>
+        <span class="kit-cap">узел ТРК · hover</span>
+      </div>
+      <div class="kit-cell">
+        <svg width="240" height="120" viewBox="0 0 240 120">
+          <rect x="0" y="20" width="240" height="8" fill="url(#hatch)"/><path class="bp" d="M0 20H240"/>
+          <rect class="bp fill-w" x="20" y="44" width="200" height="64" rx="32"/>
+          <rect x="21" y="76" width="198" height="31" rx="15" class="fuel"/><path class="level-line" d="M28 76H212"/>
+          <text class="bp-label" x="120" y="100" text-anchor="middle">Р-01</text>
+        </svg>
+        <span class="kit-cap">резервуар в разрезе</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 Форма -->
+  <section class="kit-section">
+    <div class="kit-head"><div><h2 class="h2">Форма подписки</h2><p>Поле с плавающим лейблом, кастомный чекбокс. При ошибке валидации поле вздрагивает и показывает, как исправить.</p></div><span class="kit-num">08</span></div>
+    <div class="kit-row" style="gap:32px">
+      <div class="kit-cell"><div class="field field--demo"><input class="field__input" type="email" placeholder=" "><label class="field__label">Электронная почта</label></div><span class="kit-cap">пустое</span></div>
+      <div class="kit-cell"><div class="field field--demo is-focus"><input class="field__input" type="email" placeholder=" "><label class="field__label">Электронная почта</label></div><span class="kit-cap">фокус</span></div>
+      <div class="kit-cell"><div class="field field--demo"><input class="field__input" type="email" placeholder=" " value="name@company.ru"><label class="field__label">Электронная почта</label></div><span class="kit-cap">заполнено</span></div>
+      <div class="kit-cell"><div class="field field--demo is-invalid"><input class="field__input" type="email" placeholder=" " value="name@company"><label class="field__label">Электронная почта</label><span class="field__err">Проверьте адрес: в нём должны быть «@» и домен, например name@company.ru</span></div><span class="kit-cap">ошибка</span></div>
+    </div>
+    <div class="kit-row" style="gap:48px">
+      <div class="kit-cell"><label class="check"><input type="checkbox"><span class="check__box"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span><span class="check__text">Соглашаюсь получать рекламно-информационные сообщения</span></label><span class="kit-cap">чекбокс</span></div>
+      <div class="kit-cell"><label class="check"><input type="checkbox" checked><span class="check__box"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span><span class="check__text">Соглашаюсь получать рекламно-информационные сообщения</span></label><span class="kit-cap">отмечен</span></div>
+      <div class="kit-cell"><label class="check is-invalid"><input type="checkbox"><span class="check__box"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span><span class="check__text">Соглашаюсь получать рекламно-информационные сообщения</span></label><span class="kit-cap">ошибка</span></div>
+    </div>
+  </section>
+
+  <!-- 09 Шаги и метрики -->
+  <section class="kit-section">
+    <div class="kit-head"><div><h2 class="h2">Шаги и метрики</h2><p>Шаги сцены «Как работает система»: активный подсвечен, рядом красная шкала прогресса. Метрики — числа-заглушки с одометром.</p></div><span class="kit-num">09</span></div>
+    <div class="system-demo">
+      <div class="steps">
+        <div class="steps__bar" aria-hidden="true"><span style="transform:scaleY(.45)"></span></div>
+        <ol class="steps__list">
+          <li class="step"><span class="step__num mono">01</span><div><h3 class="step__title">Хранение и учёт</h3><p class="step__text">Резервуарный парк: остатки топлива видны в любой момент. Текст-заглушка.</p></div></li>
+          <li class="step is-active"><span class="step__num mono">02</span><div><h3 class="step__title">Отпуск топлива</h3><p class="step__text">Колонка отпускает топливо и передаёт данные дальше. Текст-заглушка.</p></div></li>
+          <li class="step"><span class="step__num mono">03</span><div><h3 class="step__title">Расчёт с клиентом</h3><p class="step__text">Касса принимает оплату и закрывает операцию. Текст-заглушка.</p></div></li>
+        </ol>
+      </div>
+      <div class="kit-block">
+        <div class="metrics"><ul class="metrics__grid" style="grid-template-columns:repeat(2,1fr)">
+          <li class="metric"><span class="metric__num">25<span class="metric__suf">+</span></span><span class="metric__label">лет на рынке</span></li>
+          <li class="metric"><span class="metric__num">1200<span class="metric__suf">+</span></span><span class="metric__label">объектов автоматизировано</span></li>
+        </ul></div>
+        <span class="kit-cap">числа — заглушки, реальные значения подставить в data-target</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 Карточки направлений -->
+  <section class="kit-section">
+    <div class="kit-head"><div><h2 class="h2">Карточки направлений</h2><p>Bento 12 колонок. Hover: рамка и стрелка краснеют, мягкий светлый spotlight за курсором, tilt до 4° (только мышь).</p></div><span class="kit-num">10</span></div>
+    <div class="bento">
+      <a class="card card--xl" href="#">
+        <div class="card__top"><span class="card__num mono">01</span><svg class="card__icon" aria-hidden="true" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="5" width="12" height="22" rx="2"/><rect x="10.5" y="8" width="7" height="5" rx="1"/><path d="M20 13h3v7a2 2 0 0 0 4 0v-9l-3-3 M5 27h18"/></g></svg></div>
+        <div class="card__art" aria-hidden="true">
+          <svg viewBox="0 0 520 220">
+            <path class="bp-soft-line" d="M0 170H520"/><rect x="0" y="170" width="520" height="8" fill="url(#hatch)"/>
+            <rect class="bp fill-w" x="40" y="186" width="180" height="30" rx="15"/><rect class="bp fill-w" x="250" y="186" width="180" height="30" rx="15"/>
+            <path class="pipe-outer" d="M130 186V150H300V120"/><path class="pipe-inner" d="M130 186V150H300V120"/>
+            <rect class="bp fill-w" x="270" y="30" width="60" height="120" rx="5"/><rect class="screen" x="280" y="42" width="40" height="24" rx="2"/>
+            <text class="digits" x="300" y="58" text-anchor="middle">24.35</text>
+            <path class="bp" d="M330 80h6v24h-6"/><path class="bp-thin" d="M336 96c14 8 14 30 6 46"/>
+            <path class="data" d="M330 50H460V100"/><rect class="bp fill-w" x="430" y="100" width="60" height="50" rx="4"/>
+            <circle class="led" cx="478" cy="138" r="2.5"/><circle class="packet" cx="200" cy="150" r="3"/>
+          </svg>
+        </div>
+        <h3 class="card__title">Оборудование для АЗС</h3>
+        <p class="card__text">Текст-заглушка: краткое описание направления в одну-две строки.</p>
+        <span class="card__arrow"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      <a class="card" href="#"><div class="card__top"><span class="card__num mono">02</span><svg class="card__icon" aria-hidden="true" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="24" height="17" rx="2"/><path d="M11 27h10M16 23v4 M10 12l-3 3 3 3M22 12l3 3-3 3M18 11l-4 8"/></g></svg></div><h3 class="card__title">Программное обеспечение</h3><p class="card__text">Текст-заглушка: краткое описание направления.</p><span class="card__arrow"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="card is-hover" href="#"><span class="card__spot" style="transform:translate(210px,110px)"></span><div class="card__top"><span class="card__num mono">03</span><svg class="card__icon" aria-hidden="true" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11v15h9V11 M18 11v15h9V11"/><ellipse cx="9.5" cy="11" rx="4.5" ry="1.8"/><ellipse cx="22.5" cy="11" rx="4.5" ry="1.8"/><path d="M3 26h26 M14 21h4"/></g></svg></div><h3 class="card__title">Автоматизация нефтебаз</h3><p class="card__text">Текст-заглушка: краткое описание направления.</p><span class="card__arrow"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="card card--wide" href="#">
+        <div class="card__row">
+          <div><div class="card__top"><span class="card__num mono">04</span><svg class="card__icon" aria-hidden="true" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" r="3.5"/><circle cx="6" cy="7" r="2.5"/><circle cx="26" cy="8" r="2.5"/><circle cx="7" cy="25" r="2.5"/><circle cx="25" cy="25" r="2.5"/><path d="M8 9l5.5 4.5M24 10l-5.5 4M9 23l4.5-4.5M23 23l-4.5-4.5"/></g></svg></div><h3 class="card__title">Сеть АЗС</h3><p class="card__text">Текст-заглушка: станции, где работают наши решения.</p><span class="card__link">Смотреть станции на карте</span></div>
+          <svg class="card__net" viewBox="0 0 260 140" aria-hidden="true">
+            <path class="bp-thin bp-dash" d="M130 70L60 30M130 70L210 34M130 70L200 112M130 70L48 110M60 30L20 72M210 34L248 80M200 112L248 80"/>
+            <circle class="net-hub" cx="130" cy="70" r="9"/><circle class="net-node" cx="60" cy="30" r="5"/><circle class="net-node" cx="210" cy="34" r="5"/><circle class="net-node" cx="200" cy="112" r="5"/><circle class="net-node" cx="48" cy="110" r="5"/><circle class="net-node" cx="20" cy="72" r="5"/><circle class="net-node" cx="248" cy="80" r="5"/>
+          </svg>
+        </div>
+        <span class="card__arrow"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+    </div>
+    <span class="kit-cap">03 — состояние hover</span>
+  </section>
+
+  <!-- 11 Новости -->
+  <section class="kit-section">
+    <div class="kit-head"><div><h2 class="h2">Карточки новостей</h2><p>Горизонтальный ряд с drag-scroll и инерцией; над рядом курсор «Тяни».</p></div><span class="kit-num">11</span></div>
+    <div class="news-row">
+      <div class="ncard"><div class="ncard__meta"><time class="mono">12.09.2026</time><span class="tag">Компания</span></div><h3 class="ncard__title"><a href="#">Заголовок новости-заглушки в две строки для проверки макета</a></h3><span class="ncard__more">Читать</span></div>
+      <div class="ncard is-hover"><div class="ncard__meta"><time class="mono">28.08.2026</time><span class="tag">Продукты</span></div><h3 class="ncard__title"><a href="#">Заголовок-заглушка: короткая новость</a></h3><span class="ncard__more">Читать</span></div>
+      <div class="ncard"><div class="ncard__meta"><time class="mono">14.08.2026</time><span class="tag">Выставки</span></div><h3 class="ncard__title"><a href="#">Заголовок новости-заглушки, который занимает три строки и проверяет перенос</a></h3><span class="ncard__more">Читать</span></div>
+      <div class="kit-cell" style="align-self:center"><div class="drag-cursor mono is-on" style="position:static;margin:0">Тяни</div><span class="kit-cap">курсор над рядом</span></div>
+    </div>
+    <span class="kit-cap">вторая карточка — hover</span>
+  </section>
+
+  <!-- 12 Блоки страницы -->
+  <section class="kit-section">
+    <div class="kit-head"><div><h2 class="h2">Блоки страницы</h2><p>Бегущая строка под hero, финальный CTA и светлый футер с заголовками колонок и красной линией 40px.</p></div><span class="kit-num">12</span></div>
+    <div class="marquee"><div class="marquee__track"><div class="marquee__group"><span>Автоматизация АЗС</span><i></i><span>Нефтебазы</span><i></i><span>Программное обеспечение</span><i></i><span>Оборудование</span><i></i><span>Томск</span><i></i></div></div></div>
+    <div class="cta"><div class="cta__box">
+      <svg class="cta__dim" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true"><path d="M0 12H1000 M0 4v16 M1000 4v16"/></svg>
+      <h2 class="cta__title">Обсудим вашу задачу?</h2>
+      <p class="cta__text">Расскажите об объекте — подберём оборудование и программы под ваши процессы.</p>
+      <a class="btn btn--primary btn--lg" href="#"><span>Связаться с нами</span></a>
+    </div></div>
+    <footer class="footer">
+      <div class="container footer__grid">
+        <div class="fcol"><h2 class="fcol__title">Контактная информация</h2>
+          <ul class="contacts">
+            <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><span>634009, г. Томск, ул. Розы Люксембург, д. 55</span></li>
+            <li><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><a href="#">zao.sncard@sncard.ru</a></li>
+            <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6.6 3.5h3l1.5 4-2 1.3a10.5 10.5 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7a2 2 0 0 1 2.1-2.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span><a href="#">+7 (382-2) 65-10-70</a><small>многоканальный</small></span></li>
+          </ul>
+        </div>
+        <div class="fcol"><h2 class="fcol__title">Правовая информация</h2>
+          <ul class="legal"><li><a href="#">Политика конфиденциальности</a></li><li><a href="#">Политика использования Cookies</a></li><li><a href="#">Согласие на получение новостных сообщений</a></li></ul>
+        </div>
+        <div class="fcol fcol--form"><h2 class="fcol__title">Рассылка АО «НПФ «Сибнефтекарт»</h2>
+          <div class="subscribe">
+            <div class="field"><input class="field__input" type="email" placeholder=" "><label class="field__label">Электронная почта</label></div>
+            <label class="check"><input type="checkbox"><span class="check__box"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span><span class="check__text">Соглашаюсь получать рекламно-информационные сообщения</span></label>
+            <div class="subscribe__actions"><button class="btn btn--primary btn--submit" type="button" data-state="idle"><span class="bstate bstate--idle">Подписаться</span><span class="bstate bstate--loading"><i class="spinner"></i></span><span class="bstate bstate--success"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg>Вы подписаны</span></button><button class="btn btn--ghost" type="button">Отменить</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom"><div class="container footer__bottom-inner"><span>© АО «НПФ «Сибнефтекарт», 2026</span><span class="mono">56°29′ с. ш. · 84°57′ в. д.</span></div></div>
+    </footer>
+  </section>
+
+</div>
+</body>
+</html>
