@@ -1,0 +1,645 @@
+/* =========================================================
+   СНК · zao.sncard.ru — главная
+   Наследует ../designs/styles.css (токены, шапка, кнопки, новости,
+   CTA, футер). Здесь — только новые компоненты сайта.
+   ========================================================= */
+
+:root {
+  --panel-w: 400px;
+  --z-map-ui: 600; /* выше панелей Leaflet (до 400), ниже шапки не нужно — шапка вне секции */
+}
+
+/* =========================================================
+   2. Карта АЗС — лист съёмки
+   ========================================================= */
+.atlas {
+  position: relative;
+  height: calc(100svh - var(--header-h));
+  min-height: 640px;
+  max-height: 1080px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+  overflow: hidden;
+  isolation: isolate;
+}
+.atlas__anchor { position: absolute; top: 0; }
+
+.atlas__stage { position: absolute; inset: 0; }
+.atlas__map {
+  position: absolute; inset: 0; z-index: 0;
+  background-color: var(--surface);
+  background-image: radial-gradient(circle at 1px 1px, var(--blueprint-soft) 1px, transparent 1.2px);
+  background-size: 24px 24px;
+}
+
+/* Leaflet под палитру чертежа */
+.atlas .leaflet-container { font-family: var(--font-sans); background: transparent; outline: none; }
+.atlas .leaflet-pane > svg { max-width: none; max-height: none; } /* designs/ задаёт svg { max-width: 100% } */
+
+/* Подложка-чертёж */
+.bm-region { fill: var(--bg); fill-opacity: .92; stroke: none; }
+.bm-border { fill: none; stroke: var(--blueprint); stroke-width: 1.1; stroke-dasharray: 7 3 1.5 3; stroke-linecap: round; }
+.bm-river { fill: none; stroke: var(--blueprint); stroke-opacity: .55; stroke-width: 1; stroke-linejoin: round; stroke-linecap: round; }
+.bm-river--main { stroke-width: 2.2; stroke-opacity: .6; }
+.bm-road { fill: none; stroke: var(--blueprint-soft); stroke-width: 1; stroke-linejoin: round; }
+.bm-road--main { stroke-width: 1.8; }
+.bm-place { background: none; border: 0; }
+.bm-place::before { content: ""; position: absolute; inset: 0; background: var(--bg); box-shadow: inset 0 0 0 1.2px var(--text-muted); }
+.bm-place span { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); white-space: nowrap; font: 500 11.5px var(--font-sans); color: var(--text-muted); text-shadow: 0 0 3px var(--bg), 0 0 3px var(--bg); }
+.bm-label { background: none; border: 0; pointer-events: none; }
+.bm-label span { position: absolute; left: 0; top: 0; white-space: nowrap; font: italic 400 11px var(--font-mono); color: var(--blueprint); text-shadow: 0 0 3px var(--bg-soft), 0 0 3px var(--bg-soft); }
+.bm-label--region span { font: 700 13px var(--font-sans); font-style: normal; color: var(--text-muted); letter-spacing: .02em; opacity: .8; }
+.atlas .leaflet-control-attribution {
+  background: rgba(255, 255, 255, .8); color: var(--text-muted);
+  font: 400 10.5px/1.6 var(--font-mono); padding: 0 8px; border-radius: 6px 0 0 0;
+}
+.atlas .leaflet-control-attribution a { color: var(--text-muted); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Линии связи с процессинговым центром */
+.mk-link { stroke: var(--blueprint); stroke-width: 1.25; stroke-dasharray: 4 5; fill: none; transition: stroke var(--t-ui) ease; }
+.mk-link.is-hot { stroke: var(--accent); stroke-width: 1.5; }
+.mk-link.is-off { opacity: .25; }
+
+/* Маркеры */
+.mk { position: relative; width: 36px; height: 36px; }
+.mk__svg { width: 36px; height: 36px; overflow: visible; }
+.mk__ring { fill: var(--bg); stroke: var(--blueprint); stroke-width: 1.5; transition: stroke var(--t-ui) ease; }
+.mk__glyph { fill: none; stroke: var(--text); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; transition: stroke var(--t-ui) ease; }
+.mk__label {
+  position: absolute; left: 40px; top: 50%; transform: translateY(-50%);
+  display: grid; line-height: 1.25;
+  padding: 3px 8px;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, .9);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: 500 12px var(--font-sans); color: var(--text);
+  pointer-events: none;
+  transition: border-color var(--t-ui) ease;
+}
+.mk__label small { font: 400 10.5px var(--font-mono); color: var(--text-muted); }
+.leaflet-marker-icon.mk-icon { background: none; border: 0; }
+.leaflet-marker-icon.mk-icon:focus-visible { outline: none; }
+.leaflet-marker-icon.mk-icon:focus-visible .mk__ring { stroke: var(--accent); stroke-width: 2.5; }
+.mk-icon.is-hot .mk__ring, .mk-icon.is-active .mk__ring { stroke: var(--accent); stroke-width: 2; }
+.mk-icon.is-hot .mk__glyph, .mk-icon.is-active .mk__glyph { stroke: var(--accent); }
+.mk-icon.is-hot .mk__label, .mk-icon.is-active .mk__label { border-color: var(--accent); }
+.mk-icon.is-off { opacity: .28; }
+.mk-icon.is-off .mk__label { display: none; }
+
+/* Выноска: значок разведён с соседом, линия ведёт к настоящей точке */
+.mk__body { position: absolute; inset: 0; }
+.mk__leader { position: absolute; left: 0; top: 0; width: 36px; height: 36px; overflow: visible; display: none; pointer-events: none; }
+.mk__leader line { stroke: var(--text-muted); stroke-width: 1; }
+.has-leader .mk__leader { display: block; }
+.has-leader .mk::before { /* настоящая точка */
+  content: ""; position: absolute; left: 15px; top: 15px; width: 6px; height: 6px; border-radius: 999px;
+  background: var(--bg); box-shadow: inset 0 0 0 1.5px var(--text-muted);
+}
+.mk-icon.is-hot .mk__leader line, .mk-icon.is-active .mk__leader line { stroke: var(--accent); }
+
+/* Процессинговый центр */
+.mk--hub .mk__hub { fill: var(--bg); stroke: var(--accent); stroke-width: 2; }
+.mk--hub .mk__hub-in { fill: var(--accent); }
+.mk--hub .mk__hub-halo { fill: none; stroke: var(--accent); stroke-opacity: .25; stroke-width: 1; }
+.mk--hub .mk__label { font-weight: 700; }
+.mk-icon.lbl-left .mk__label { left: auto; right: 40px; text-align: right; }
+.mk-icon.lbl-top .mk__label { left: 50%; top: auto; bottom: 40px; transform: translateX(-50%); text-align: center; }
+.mk-icon.lbl-bottom .mk__label { left: 50%; top: 40px; transform: translateX(-50%); text-align: center; }
+.atlas__fail {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  max-width: 280px; text-align: center; color: var(--text-muted); font-size: 15px;
+}
+@media (min-width: 1025px) { .atlas__fail { left: calc(50% + var(--panel-w) / 2); } }
+
+/* Координатная рамка листа */
+.atlas__frame {
+  position: absolute; inset: 14px; z-index: 450;
+  border: 1px solid var(--blueprint-soft);
+  pointer-events: none;
+}
+.atlas__frame::before { /* лёгкая точечная сетка поверх подложки */
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, rgba(159, 176, 195, .35) 1px, transparent 1.2px);
+  background-size: 24px 24px;
+}
+.atlas__ticks { position: absolute; }
+.atlas__ticks--x { left: 0; right: 0; bottom: -14px; height: 14px; }
+.atlas__ticks--y { top: 0; bottom: 0; right: -14px; width: 14px; }
+.tick { position: absolute; font: 400 10px/1 var(--font-mono); color: var(--text-muted); white-space: nowrap; }
+.tick::before { content: ""; position: absolute; background: var(--blueprint); }
+.atlas__ticks--x .tick { top: 0; transform: translateX(-50%); padding-top: 3px; }
+.atlas__ticks--x .tick::before { left: 50%; top: -6px; width: 1px; height: 6px; }
+.atlas__ticks--x .tick span { position: absolute; left: 6px; bottom: 18px; background: rgba(255,255,255,.85); padding: 1px 3px; }
+.atlas__ticks--y .tick { left: 0; transform: translateY(-50%); }
+.atlas__ticks--y .tick::before { top: 50%; left: -6px; width: 6px; height: 1px; }
+.atlas__ticks--y .tick span { position: absolute; right: 20px; top: -14px; background: rgba(255,255,255,.85); padding: 1px 3px; }
+.gridline { position: absolute; background: rgba(159, 176, 195, .28); }
+.gridline--x { top: 0; bottom: 0; width: 1px; }
+.gridline--y { left: 0; right: 0; height: 1px; }
+
+/* Панель */
+.atlas__panel {
+  position: absolute; z-index: var(--z-map-ui);
+  left: max(var(--gutter), calc((100vw - 1320px) / 2)); top: 32px; bottom: 32px;
+  width: var(--panel-w);
+  display: flex; flex-direction: column;
+  background: rgba(255, 255, 255, .94);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  backdrop-filter: saturate(160%) blur(14px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.atlas__head { padding: 28px 28px 20px; display: grid; gap: 10px; }
+.atlas__title {
+  font-size: clamp(28px, 2.4vw, 36px); line-height: 1.06; font-weight: 800;
+  letter-spacing: -0.035em; text-wrap: balance;
+}
+.atlas__lead { color: var(--text-muted); font-size: 16px; line-height: 1.45; }
+.atlas__count { color: var(--text); font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.atlas__tools { padding: 0 28px 16px; display: grid; gap: 14px; border-bottom: 1px solid var(--line); }
+html:not(.js) .atlas__tools { display: none; }
+
+
+.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.filters__label { flex-basis: 100%; font-size: 13px; color: var(--text-muted); margin-bottom: 2px; }
+.filters__row { display: contents; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 34px; padding: 0 13px;
+  border-radius: 999px;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+  font-size: 14px; font-weight: 700; color: var(--text);
+  transition: box-shadow var(--t-ui) ease, color var(--t-ui) ease, background-color var(--t-ui) ease, scale 140ms ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+.chip--fuel { font: 500 13.5px var(--font-mono); min-width: 48px; justify-content: center; }
+.chip:hover { box-shadow: inset 0 0 0 1.5px var(--blueprint); }
+.chip:active { scale: .96; }
+.chip[aria-pressed="true"] { color: var(--accent-hover); background: rgba(211, 47, 47, .06); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.chip .lg { transform: scale(.8); }
+.chip--card {
+  flex-basis: 100%;
+  height: auto; min-height: 48px; padding: 9px 16px 9px 12px;
+  border-radius: var(--r-md);
+  text-align: left; gap: 12px;
+}
+.chip--card .lg { transform: none; }
+.chip__text { display: grid; gap: 1px; font-size: 14px; font-weight: 700; line-height: 1.3; }
+.chip__text small { font-size: 12.5px; font-weight: 500; color: var(--text-muted); }
+.chip[aria-pressed="true"] .chip__text small { color: var(--accent-hover); }
+
+.atlas__list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 8px 12px 16px; scrollbar-width: thin; scrollbar-color: var(--blueprint-soft) transparent; }
+.atlas__shown { font-size: 11.5px; color: var(--text-muted); padding: 8px 16px 6px; }
+.atlas__shown:empty { display: none; }
+.atlas__empty { display: grid; gap: 14px; justify-items: start; padding: 16px; color: var(--text-muted); font-size: 15px; }
+.atlas__empty[hidden] { display: none; }
+
+/* Список АЗС */
+.stations { display: grid; gap: 2px; }
+.station { position: relative; border-radius: var(--r-md); transition: background-color var(--t-ui) ease; }
+.station[hidden] { display: none; }
+.station__btn {
+  width: 100%; text-align: left;
+  display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px; align-items: start;
+  padding: 14px 16px 14px 12px;
+  border-radius: var(--r-md);
+}
+.station:hover, .station.is-hot { background: var(--bg-soft); }
+.station.is-active { background: var(--bg-soft); box-shadow: inset 2px 0 0 var(--accent); }
+.station__btn:focus-visible { outline-offset: -2px; }
+.station__icon { width: 36px; height: 36px; margin-top: -2px; }
+.station__svg { width: 36px; height: 36px; overflow: visible; }
+.station__main { display: grid; gap: 2px; min-width: 0; }
+.station__name { font-size: 16.5px; font-weight: 800; letter-spacing: -0.015em; line-height: 1.3; }
+.station__num { font: 400 12px var(--font-mono); color: var(--text-muted); margin-left: 6px; letter-spacing: 0; }
+.station__addr { font-size: 14px; color: var(--text-muted); line-height: 1.45; }
+.station__fuel { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 6px; }
+.station__fuel span {
+  font: 500 11px/1 var(--font-mono); color: var(--text);
+  padding: 4px 5px; border-radius: 4px; background: var(--surface);
+}
+.station__more { padding: 0 16px 16px 60px; display: grid; gap: 10px; font-size: 14px; color: var(--text-muted); }
+.station__more[hidden] { display: none; }
+.station__row { display: grid; grid-template-columns: 76px 1fr; gap: 8px; }
+.station__row dt { font: 400 11.5px/1.7 var(--font-mono); color: var(--text-muted); }
+.station__row dd { color: var(--text); font-weight: 600; }
+.station__approx { font-size: 13px; }
+.station__actions { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px; }
+.station__actions .btn { --h: 40px; padding: 0 16px; font-size: 14.5px; }
+.station__actions .btn svg { width: 18px; height: 18px; }
+
+/* без JS */
+.stations--static .station { display: grid; gap: 2px; padding: 12px 16px; }
+.stations--static .station__meta { font-size: 12px; color: var(--text-muted); }
+
+/* Легенда */
+.legend-card {
+  position: absolute; z-index: var(--z-map-ui);
+  right: 32px; bottom: 64px;
+  width: 300px;
+  background: rgba(255, 255, 255, .94);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+}
+.legend-card__sum {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; cursor: pointer; list-style: none;
+  font-size: 14px; font-weight: 700;
+}
+.legend-card__sum::-webkit-details-marker { display: none; }
+.legend-card__sum svg { width: 16px; height: 16px; color: var(--text-muted); transition: transform 200ms var(--ease); }
+.legend-card[open] .legend-card__sum svg { transform: rotate(180deg); }
+.legend-card__list { display: grid; gap: 10px; padding: 2px 16px 16px; font-size: 13px; line-height: 1.4; color: var(--text-muted); }
+.legend-card__list li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; }
+
+/* Значки легенды (используются и в фильтрах) */
+.lg { position: relative; display: inline-block; width: 22px; height: 22px; flex-shrink: 0; }
+.lg--st { border-radius: 999px; background: var(--bg); box-shadow: inset 0 0 0 1.5px var(--blueprint); }
+.lg--st::after { content: ""; position: absolute; inset: 7px; border-radius: 2px; box-shadow: inset 0 0 0 1.3px var(--text); }
+.lg--hub { border-radius: 999px; background: radial-gradient(circle, var(--accent) 0 3px, var(--bg) 3.5px); box-shadow: inset 0 0 0 2px var(--accent); }
+.lg--card { /* пластиковая карта RFID */
+  width: 24px; height: 16px; margin-inline: -1px;
+  border-radius: 3px; background: var(--bg); box-shadow: inset 0 0 0 1.5px var(--blueprint);
+}
+.lg--card::before { /* чип */
+  content: ""; position: absolute; left: 4px; top: 4px; width: 6px; height: 5px; border-radius: 1px;
+  box-shadow: inset 0 0 0 1.2px var(--text);
+}
+.lg--card::after { /* полоса */
+  content: ""; position: absolute; left: 4px; right: 4px; bottom: 3px; height: 1.2px; background: var(--text-muted);
+}
+.chip[aria-pressed="true"] .lg--card { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.lg--link { height: 2px; background: repeating-linear-gradient(90deg, var(--blueprint) 0 4px, transparent 4px 9px); }
+
+/* HUD: масштаб и координаты */
+.atlas__hud {
+  position: absolute; z-index: var(--z-map-ui);
+  right: 32px; bottom: 26px;
+  display: flex; align-items: center; gap: 12px;
+  pointer-events: none;
+}
+.atlas__coords {
+  font-size: 11.5px; color: var(--text-muted); font-variant-numeric: tabular-nums;
+  padding: 5px 10px; border-radius: 999px; background: rgba(255, 255, 255, .88); border: 1px solid var(--line);
+}
+.scalebar { display: inline-flex; align-items: center; gap: 8px; padding: 5px 10px; border-radius: 999px; background: rgba(255, 255, 255, .88); border: 1px solid var(--line); }
+.scalebar i {
+  display: block; width: var(--sw, 80px); height: 7px;
+  border: 1px solid var(--text-muted); border-top: 0;
+}
+.scalebar b { font-size: 11.5px; font-weight: 400; color: var(--text-muted); }
+
+/* Масштаб */
+.atlas__zoom {
+  position: absolute; z-index: var(--z-map-ui);
+  right: 32px; top: 32px;
+  display: grid;
+  background: rgba(255, 255, 255, .94);
+  border: 1px solid var(--line); border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.zbtn {
+  width: 44px; height: 44px;
+  font: 500 22px/1 var(--font-sans); color: var(--text);
+  transition: background-color var(--t-ui) ease, color var(--t-ui) ease;
+}
+.zbtn + .zbtn { border-top: 1px solid var(--line); }
+.zbtn:hover { background: var(--bg-soft); color: var(--accent); }
+.zbtn:focus-visible { outline-offset: -3px; }
+html:not(.js) .atlas__zoom, html:not(.js) .atlas__hud { display: none; }
+
+/* Подсказка «Ctrl + колесо» */
+.atlas__hint {
+  position: absolute; z-index: var(--z-map-ui);
+  left: calc(50% + var(--panel-w) / 2); top: 32px; transform: translateX(-50%);
+  padding: 9px 16px; border-radius: 999px;
+  background: rgba(255, 255, 255, .96); border: 1px solid var(--line); box-shadow: var(--shadow-md);
+  font-size: 14px; font-weight: 600; color: var(--text);
+  pointer-events: none;
+  opacity: 0; transition: opacity 200ms ease;
+}
+.atlas__hint.is-on { opacity: 1; }
+
+/* =========================================================
+   3. О компании
+   ========================================================= */
+.company { padding: 120px 0; border-bottom: 1px solid var(--line); }
+.company__intro {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap);
+  align-items: center;
+}
+.company__text { grid-column: 1 / span 6; display: grid; gap: 20px; }
+.company__title { max-width: 12em; margin-bottom: 8px; }
+.company__lead { color: var(--text-muted); font-size: 18px; line-height: 1.6; max-width: 34em; }
+
+.flow { grid-column: 7 / span 6; margin: 0; display: grid; gap: 14px; }
+.flow__svg {
+  width: 100%; height: auto;
+  padding: 16px 12px 4px;
+  background-color: var(--bg);
+  background-image: radial-gradient(circle at 1px 1px, var(--blueprint-soft) 1px, transparent 1.2px);
+  background-size: 20px 20px;
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  overflow: visible;
+}
+.flow__cap { font-size: 14.5px; color: var(--text-muted); line-height: 1.5; max-width: 40em; }
+
+.company__metrics { margin: 96px 0; border-block: 1px solid var(--line); }
+
+.history {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap);
+  align-items: start;
+}
+.history__side { grid-column: 1 / span 4; position: sticky; top: calc(64px + 32px); display: grid; gap: 12px; }
+.history__title { font-size: clamp(28px, 2.6vw, 38px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+.history__note { color: var(--text-muted); font-size: 16.5px; max-width: 20em; }
+
+.timeline { grid-column: 5 / span 8; position: relative; }
+.timeline::before { /* рельс */
+  content: ""; position: absolute; left: 5px; top: 14px; bottom: 14px; width: 1.5px;
+  background: var(--line);
+}
+.timeline::after { /* прогресс рельса: --rail выставляет JS на этапе анимаций */
+  content: ""; position: absolute; left: 5px; top: 14px; bottom: 14px; width: 1.5px;
+  background: var(--accent); transform-origin: 50% 0; transform: scaleY(var(--rail, 0));
+}
+.tl {
+  position: relative;
+  display: grid; grid-template-columns: 172px minmax(0, 1fr); gap: 24px;
+  padding: 22px 0 22px 40px;
+  border-bottom: 1px solid var(--line);
+}
+.tl:last-child { border-bottom: 0; }
+.tl::before { /* узел */
+  content: ""; position: absolute; left: 1px; top: 33px; width: 10px; height: 10px;
+  background: var(--bg); box-shadow: inset 0 0 0 1.5px var(--blueprint);
+  transform: rotate(45deg);
+}
+.tl--key::before { background: var(--accent); box-shadow: none; }
+.tl__year {
+  font-size: 28px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.tl--key .tl__year { color: var(--accent); }
+.tl__text { color: var(--text-muted); font-size: 16.5px; line-height: 1.6; max-width: 38em; padding-top: 4px; }
+.tl--key .tl__text { color: var(--text); }
+.tl--gap { padding-block: 6px; border-bottom-style: dashed; }
+.tl--gap::before { display: none; }
+.tl--gap .tl__year { font-size: 18px; color: var(--blueprint); }
+
+/* =========================================================
+   4. Новости — дополнение к карточке из designs/
+   ========================================================= */
+.news { border-bottom: 1px solid var(--line); }
+/* Лента в границах контейнера: карточки за его край не выходят, а скрываются.
+   4px внутреннего отступа — чтобы кольцо фокуса карточки не обрезалось. */
+.news .news__viewport {
+  --edge: max(var(--gutter), calc((100% - 1320px) / 2));
+  margin-inline: calc(var(--edge) - 4px);
+  padding: 4px;
+  scroll-padding-inline: 4px;
+}
+.ncard__meta { margin-bottom: 28px; }
+.ncard__text { margin-top: 12px; color: var(--text-muted); font-size: 15px; line-height: 1.55; }
+
+/* =========================================================
+   5. Контакты
+   ========================================================= */
+.reach { padding: 120px 0; }
+.reach__grid {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap);
+}
+
+.office {
+  grid-column: 1 / span 7;
+  display: grid; grid-template-rows: auto 1fr;
+  background: var(--bg);
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.office__plan {
+  height: 260px;
+  background-color: var(--bg-soft);
+  background-image: radial-gradient(circle at 1px 1px, var(--blueprint-soft) 1px, transparent 1.2px);
+  background-size: 20px 20px;
+  border-bottom: 1px solid var(--line);
+}
+.office__plan svg { width: 100%; height: 100%; }
+.office__water path { fill: var(--blueprint-soft); fill-opacity: .55; stroke: var(--blueprint); stroke-opacity: .5; stroke-width: 1; }
+.office__buildings { fill: var(--surface-2); stroke: var(--blueprint-soft); stroke-width: .8; stroke-linejoin: round; }
+.office__minor path { fill: none; stroke: var(--line); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.office__streets path { fill: none; stroke: var(--blueprint-soft); stroke-linecap: round; stroke-linejoin: round; }
+.office__streets .st-1 { stroke-width: 2.4; }
+.office__streets .st-2 { stroke-width: 3.6; }
+.office__street--main { fill: none; stroke: var(--blueprint); stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; }
+.office__stname { font: 400 9.5px var(--font-mono); fill: var(--text-muted); paint-order: stroke; stroke: var(--bg-soft); stroke-width: 3px; stroke-linejoin: round; }
+.office__wlabel { paint-order: stroke; stroke: var(--bg-soft); stroke-width: 3px; }
+.office__building { fill: var(--bg); stroke: var(--accent); stroke-width: 1.5; stroke-linejoin: round; }
+.office__src { font-size: 12.5px; color: var(--text-muted); margin: -8px 0 12px; }
+.office__src a { text-decoration: underline; text-underline-offset: 2px; }
+.office__dot { fill: var(--accent); }
+.office__body { padding: 28px; display: grid; gap: 8px; align-content: start; justify-items: start; }
+.office__title { font-size: 24px; font-weight: 800; letter-spacing: -0.025em; }
+.office__addr { font-size: 17px; }
+.office__coords { font-size: 12.5px; color: var(--text-muted); margin-bottom: 12px; }
+
+.reach__lines { grid-column: 8 / span 5; display: grid; gap: var(--gap); grid-auto-rows: 1fr; }
+.line-card {
+  position: relative;
+  display: grid; align-content: center; gap: 6px;
+  padding: 24px 76px 24px 28px;
+  background: var(--bg);
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  transition: border-color var(--t-ui) ease;
+}
+.line-card__label { font-size: 14px; color: var(--text-muted); }
+.line-card__value {
+  font-size: clamp(20px, 1.8vw, 26px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.2;
+  overflow-wrap: anywhere;
+  transition: color var(--t-ui) ease;
+}
+a.line-card__value:hover { color: var(--accent); }
+.line-card--link:hover { border-color: var(--accent); }
+.line-card--link:hover .card__arrow { color: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); }
+.line-card--link .card__arrow { top: 50%; bottom: auto; margin-top: -22px; }
+
+.copy {
+  position: absolute; right: 20px; top: 50%; margin-top: -22px;
+  width: 44px; height: 44px; border-radius: 999px;
+  display: grid; place-items: center;
+  box-shadow: inset 0 0 0 1.5px var(--line);
+  color: var(--text-muted);
+  transition: box-shadow var(--t-ui) ease, color var(--t-ui) ease, scale 140ms ease-out;
+}
+.copy:hover { color: var(--text); box-shadow: inset 0 0 0 1.5px var(--blueprint); }
+.copy:active { scale: .94; }
+.copy svg { grid-area: 1 / 1; width: 20px; height: 20px; transition: opacity 160ms ease, transform 200ms var(--ease); }
+.copy__done { opacity: 0; transform: scale(.6); color: var(--accent); }
+.copy.is-done .copy__icon { opacity: 0; transform: scale(.6); }
+.copy.is-done .copy__done { opacity: 1; transform: none; }
+html:not(.js) .copy { display: none; }
+
+.dept {
+  grid-column: span 6;
+  display: grid; gap: 18px; align-content: start;
+  padding: 28px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+}
+.dept__title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+.dept__people { display: grid; gap: 14px; }
+.dept__people li { display: grid; gap: 2px; padding-left: 14px; border-left: 1.5px solid var(--blueprint-soft); }
+.dept__name { font-size: 16.5px; font-weight: 700; }
+.dept__role { font-size: 14.5px; color: var(--text-muted); }
+.dept__phone { justify-self: start; font-size: 13.5px; color: var(--text-muted); border-bottom: 1px solid var(--blueprint-soft); transition: color var(--t-ui) ease, border-color var(--t-ui) ease; }
+.dept__phone:hover { color: var(--accent); border-color: var(--accent); }
+
+/* =========================================================
+   Адаптив
+   ========================================================= */
+@media (max-width: 1200px) {
+  :root { --panel-w: 360px; }
+}
+
+@media (max-width: 1024px) {
+  .atlas { height: auto; min-height: 0; max-height: none; overflow: visible; }
+  .atlas__stage { position: relative; height: 62svh; min-height: 420px; overflow: hidden; }
+  .atlas__panel {
+    position: relative; left: auto; top: auto; bottom: auto; width: auto;
+    background: var(--bg);
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    border: 0; border-top: 1px solid var(--line); border-radius: 0; box-shadow: none;
+    overflow: visible;
+  }
+  .atlas__head, .atlas__tools { padding-inline: var(--gutter); }
+  .atlas__head { padding-top: 32px; }
+  .atlas__list { overflow: visible; padding: 8px calc(var(--gutter) - 12px) 32px; }
+  .stations { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 12px; }
+  .atlas__hint { left: 50%; top: 16px; }
+  .atlas__zoom { right: 24px; top: 24px; }
+  .legend-card { right: 24px; bottom: 60px; }
+  .atlas__hud { right: 24px; bottom: 22px; }
+
+  .company__text, .flow { grid-column: 1 / -1; }
+  .company__intro { row-gap: 48px; }
+  .company__metrics { grid-template-columns: repeat(2, 1fr); }
+  .company__metrics .metric:nth-child(3) { border-left: 0; }
+  .company__metrics .metric:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .company__metrics .metric:nth-child(3)::before { display: none; }
+  .history__side, .timeline { grid-column: 1 / -1; }
+  .history__side { position: static; margin-bottom: 24px; }
+
+  .office, .reach__lines { grid-column: 1 / -1; }
+  .reach__lines { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; }
+  .line-card--link { grid-column: 1 / -1; }
+}
+
+@media (max-width: 640px) {
+  .atlas__stage { height: 58svh; min-height: 360px; }
+  .atlas__frame { inset: 8px; }
+  .atlas__ticks--x { bottom: -8px; height: 8px; }
+  .atlas__ticks--y { right: -8px; width: 8px; }
+  .atlas__ticks span { display: none; }
+  .atlas__title { font-size: clamp(28px, 8vw, 34px); }
+  .atlas__head { padding-top: 28px; }
+  .stations { grid-template-columns: 1fr; }
+  .station__more { padding-left: 16px; }
+  .legend-card { left: 16px; right: 16px; bottom: 16px; width: auto; }
+  .atlas__hud { display: none; }
+  .atlas__zoom { right: 16px; top: 16px; }
+  .mk__label small { display: none; }
+
+  .company, .reach { padding: 80px 0; }
+  .company__lead { font-size: 17px; }
+  .company__metrics { margin: 64px 0; }
+  .tl { grid-template-columns: 1fr; gap: 6px; padding-left: 32px; }
+  .tl__year { font-size: 24px; }
+  .tl::before { top: 31px; }
+
+  .office__plan { height: 200px; }
+  .office__body { padding: 24px; }
+  .reach__lines { grid-template-columns: 1fr; }
+  .line-card { padding: 20px 72px 20px 24px; }
+  .dept { grid-column: 1 / -1; padding: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atlas__hint { transition: none; }
+}
+
+/* =========================================================
+   Слой анимаций (состояния, которые выставляет JS)
+   ========================================================= */
+
+/* Индикатор активного пункта меню: перетекает между пунктами */
+.nav__list { position: relative; }
+.nav__bar {
+  position: absolute; left: 0; bottom: -2px;
+  width: 100px; height: 2px; border-radius: 2px;
+  background: var(--accent);
+  transform-origin: 0 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 320ms var(--ease), opacity 200ms ease;
+}
+.nav__bar.is-on { opacity: 1; }
+.nav__link[aria-current] { color: var(--text); }
+
+/* Волна проявления карты от офиса */
+.atlas__wave { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 440; pointer-events: none; overflow: visible; }
+.atlas__wave circle { fill: rgba(211, 47, 47, .025); stroke: var(--accent); stroke-width: 1.25; }
+
+/* Пакеты данных: АЗС → процессинг */
+.atlas__packets { position: absolute; inset: 0; z-index: 430; pointer-events: none; overflow: hidden; opacity: 0; }
+.pkt {
+  position: absolute; left: -2.5px; top: -2.5px;
+  width: 5px; height: 5px; border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, .12);
+  will-change: transform, opacity;
+}
+
+/* Пульс центра при приходе транзакции */
+.mk__pulse {
+  position: absolute; left: 6px; top: 6px; width: 24px; height: 24px; border-radius: 999px;
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+  opacity: 0; pointer-events: none;
+}
+
+/* Значок АЗС реагирует на наведение и выбор */
+.mk__svg { transition: scale 180ms var(--ease); }
+.mk-icon.is-hot .mk__body .mk__svg, .mk-icon.is-active .mk__body .mk__svg { scale: 1.1; }
+.mk-icon { transition: opacity 250ms ease; }
+
+/* Спецификация в подписи: раскрывается при наведении и выборе */
+.mk__spec { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 200ms var(--ease), opacity 160ms ease; }
+.mk__spec > span { overflow: hidden; font: 400 11px/1.45 var(--font-sans); color: var(--text-muted); white-space: normal; max-width: 220px; }
+.mk-icon.is-hot .mk__spec, .mk-icon.is-active .mk__spec { grid-template-rows: 1fr; opacity: 1; }
+.mk-icon.is-hot .mk__spec > span, .mk-icon.is-active .mk__spec > span { padding-top: 3px; }
+.mk-icon.is-hot .mk__label, .mk-icon.is-active .mk__label { white-space: normal; width: max-content; max-width: 240px; }
+
+.mk-link { transition: stroke var(--t-ui) ease, opacity 250ms ease; }
+.atlas__hint { transform: translate(-50%, -4px); transition: opacity 200ms ease, transform 200ms var(--ease); }
+.atlas__hint.is-on { transform: translate(-50%, 0); }
+
+/* Узлы истории отмечаются, когда рельс их проходит */
+.tl::before { transition: box-shadow 200ms ease, background-color 200ms ease; }
+.tl.is-on::before { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.tl--key.is-on::before { box-shadow: none; }
+
+/* Схема транзакции: узел вспыхивает, когда до него доходит пакет */
+.flow__node .bp, .flow__node .bp-thin, .flow__node .screen { transition: stroke 200ms ease; }
+.flow__node.is-hot .bp, .flow__node.is-hot .screen { stroke: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .atlas__packets, .atlas__wave { display: none; }
+  .mk__svg, .mk__spec, .nav__bar { transition: none; }
+}
