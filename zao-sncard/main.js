@@ -94,11 +94,12 @@
   /* =========================================================
      2. Карта АЗС
      ========================================================= */
+  /* Блока карты нет на внутренних страницах (news.html) — всё ниже включается только с ним */
   const DATA = window.SNK;
   const atlas = $('#map');
-  const stage = $('.atlas__stage', atlas);
-  const panel = $('.atlas__panel', atlas);
-  const list = $('#station-list');
+  const stage = atlas && $('.atlas__stage', atlas);
+  const panel = atlas && $('.atlas__panel', atlas);
+  const list = atlas && $('#station-list');
   const SIDES = ['right', 'left', 'top', 'bottom']; // стороны подписи у значка
   const CARD_FULL = { ibutton: 'электронные таблетки iButton', rfid: 'бесконтактные карты RFID' };
   const fuelName = f => (/^\d+$/.test(f) ? `АИ-${f}` : f);
@@ -217,7 +218,7 @@
     FX.flipPlay?.(before);
   }
 
-  $('[data-reset]').addEventListener('click', () => {
+  $('[data-reset]')?.addEventListener('click', () => {
     state.cards.clear();
     $$('.chip', atlas).forEach(c => c.setAttribute('aria-pressed', 'false'));
     applyFilters();
@@ -662,21 +663,28 @@
     bar.className = 'nav__bar'; bar.setAttribute('aria-hidden', 'true');
     navList.appendChild(bar);
     const links = $$('.nav__link', navList);
-    const secs = links.map(a => $(a.getAttribute('href')));
+    // На внутренних страницах пункты ведут на index.html#… — следить не за чем,
+    // индикатор просто встаёт под текущий раздел (aria-current="page")
+    const secs = links.map(a => {
+      const href = a.getAttribute('href') || '';
+      return href.startsWith('#') ? $(href) : null;
+    });
     let cur = null;
     const place = a => {
       const lr = navList.getBoundingClientRect(), r = a.getBoundingClientRect();
       bar.style.transform = `translateX(${(r.left - lr.left + 14).toFixed(1)}px) scaleX(${((r.width - 28) / 100).toFixed(3)})`;
     };
     const jump = a => { bar.style.transition = 'none'; place(a); void bar.offsetWidth; bar.style.transition = ''; };
-    const move = a => {
+    const move = (a, mark = true) => {
       if (a === cur) return;
       const first = !cur;
       cur = a;
-      links.forEach(l => (l === a ? l.setAttribute('aria-current', 'location') : l.removeAttribute('aria-current')));
+      if (mark) links.forEach(l => (l === a ? l.setAttribute('aria-current', 'location') : l.removeAttribute('aria-current')));
       first ? jump(a) : place(a);
       bar.classList.add('is-on');
     };
+    const current = links.find(a => a.getAttribute('aria-current') === 'page');
+    if (current) move(current, false);
     const spy = new IntersectionObserver(es => es.forEach(e => {
       if (e.isIntersecting) { const i = secs.indexOf(e.target); if (i > -1) move(links[i]); }
     }), { rootMargin: '-40% 0px -55% 0px' });
@@ -876,6 +884,7 @@
   // Единственный оркестрованный момент: волна от офиса проявляет лист,
   // АЗС зажигаются в тот момент, когда до них доходит фронт
   function mapReveal() {
+    if (!atlas) return G.timeline(); // страница без карты: пустая раскадровка
     const head = $('.atlas__title', atlas);
     const panelParts = [$('.atlas__lead', atlas), $('.atlas__tools', atlas), ...$$('.station', atlas).filter(li => !li.hidden)].filter(Boolean);
     const tl = G.timeline({ paused: true, defaults: { ease: EASE } });
@@ -1051,7 +1060,7 @@
   }
 
   function sectionReveals() {
-    $$('.company__title, .history__title, #news-title, #reach-title').forEach(h => {
+    $$('.company__title, .history__title, #news-title, #reach-title, .phead__title').forEach(h => {
       const tw = lineReveal(h, { duration: 0.8 });
       tw.pause();
       ST.create({ trigger: h, start: 'top 88%', once: true, onEnter: () => tw.play() });
@@ -1076,11 +1085,13 @@
     }
 
     const cta = $('.cta__box');
-    const tl = G.timeline({ paused: true, defaults: { ease: EASE } });
-    tl.fromTo('.cta__dim', { scaleX: 0 }, { scaleX: 1, duration: 0.9, transformOrigin: '50% 50%' }, 0)
-      .add(lineReveal($('.cta__title'), { duration: 0.9 }), 0.1)
-      .fromTo(['.cta__text', '.cta__box .btn'], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 }, 0.35);
-    ST.create({ trigger: cta, start: 'top 75%', once: true, onEnter: () => tl.play() });
+    if (cta) {
+      const tl = G.timeline({ paused: true, defaults: { ease: EASE } });
+      tl.fromTo('.cta__dim', { scaleX: 0 }, { scaleX: 1, duration: 0.9, transformOrigin: '50% 50%' }, 0)
+        .add(lineReveal($('.cta__title'), { duration: 0.9 }), 0.1)
+        .fromTo(['.cta__text', '.cta__box .btn'], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 }, 0.35);
+      ST.create({ trigger: cta, start: 'top 75%', once: true, onEnter: () => tl.play() });
+    }
   }
 
   /* ---------- Новости: drag-scroll с инерцией, курсор «Тяни» (из designs/) ---------- */
