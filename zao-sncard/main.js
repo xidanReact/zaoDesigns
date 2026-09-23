@@ -304,7 +304,7 @@
     map.on('zoomend', byZoom);
     map.whenReady(byZoom);
     map.setMaxBounds(L.latLngBounds(B.bounds).pad(0.05));
-    map.attributionControl.addAttribution('Подложка: <a href="https://www.naturalearthdata.com/">Natural Earth</a>');
+    map.attributionControl.addAttribution('Подложка: <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a>');
   }
 
   /* ---------- Leaflet ---------- */
