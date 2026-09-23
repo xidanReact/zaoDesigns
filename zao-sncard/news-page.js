@@ -1,8 +1,8 @@
 /* =========================================================
    СНК · zao.sncard.ru — страница «Все новости».
    Разметка статическая (собрана из news.js), здесь только поведение:
-   фильтр по темам, подсветка новости, на которую ведёт ссылка с главной.
-   Без JS страница остаётся полным списком новостей.
+   фильтр по темам, «Показать ещё», подсветка новости, на которую
+   ведёт ссылка с главной. Без JS страница остаётся полным списком новостей.
    ========================================================= */
 (() => {
   'use strict';
@@ -10,46 +10,43 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-  const feed = $('.nfeed');
-  if (!feed) return;
+  const box = $('.nlist__items');
+  if (!box) return;
 
-  const chips = $$('.nfilter__chip');
-  const items = $$('.nitem', feed);
-  const years = $$('.nyear', feed);
-  const shown = $('.nfilter__shown');
+  const tabs = $$('.nfilter__tab');
+  const items = $$('.nblock', box);
+  const more = $('.nlist__more .btn');
   const empty = $('.nlist__empty');
-  const plural = (n, [one, few, many]) => {
-    const a = n % 10, b = n % 100;
-    return (a === 1 && b !== 11) ? one : (a >= 2 && a <= 4 && (b < 10 || b >= 20)) ? few : many;
-  };
+  const STEP = 12;
+  let tag = 'all', limit = STEP;
 
-  function apply(tag) {
+  function render() {
     let n = 0;
-    items.forEach(li => {
-      const ok = tag === 'all' || li.dataset.tag === tag;
-      li.hidden = !ok;
-      if (ok) n++;
-    });
-    // Год остаётся, только если под ним что-то осталось
-    years.forEach(y => {
-      let has = false;
-      for (let el = y.nextElementSibling; el && !el.classList.contains('nyear'); el = el.nextElementSibling) {
-        if (el.classList.contains('nitem') && !el.hidden) { has = true; break; }
-      }
-      y.hidden = !has;
+    items.forEach(el => {
+      const match = tag === 'all' || el.dataset.tag === tag;
+      el.hidden = !(match && n < limit);
+      if (match) n++;
     });
     if (empty) empty.hidden = n > 0;
-    if (shown) {
-      shown.textContent = tag === 'all'
-        ? ''
-        : `${n} ${plural(n, ['запись', 'записи', 'записей'])} по теме «${tag}» из ${items.length}`;
+    if (more) {
+      more.hidden = n <= limit;
+      more.textContent = `Показать ещё ${Math.min(STEP, n - limit)}`;
     }
   }
 
-  chips.forEach(chip => chip.addEventListener('click', () => {
-    const tag = chip.dataset.newsTag;
-    chips.forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
-    apply(tag);
+  function select(value) {
+    tag = value;
+    limit = STEP;
+    tabs.forEach(t => {
+      const on = t.dataset.newsTag === value;
+      t.classList.toggle('is-current', on);
+      t.setAttribute('aria-pressed', String(on));
+    });
+    render();
+  }
+
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    select(tab.dataset.newsTag);
     // Адрес хранит выбранную тему: ссылку со страницы можно переслать
     const url = new URL(location.href);
     url.hash = '';
@@ -58,26 +55,25 @@
     history.replaceState(null, '', url.searchParams.toString() ? url : location.pathname);
   }));
 
+  if (more) more.addEventListener('click', () => { limit += STEP; render(); });
+
   // Тема из адреса (?tema=Сеть АЗС) — например, из закладки
   const start = new URLSearchParams(location.search).get('tema');
-  const preset = start && chips.find(c => c.dataset.newsTag === start);
-  if (preset) {
-    chips.forEach(c => c.setAttribute('aria-pressed', String(c === preset)));
-    apply(start);
-  }
+  select(start && tabs.some(t => t.dataset.newsTag === start) ? start : 'all');
 
-  /* Новость, на которую ведёт ссылка с главной: отмечаем засечкой */
+  /* Новость, на которую ведёт ссылка с главной: показываем и отмечаем рамкой */
   function markTarget() {
     const id = decodeURIComponent(location.hash.slice(1));
-    if (!id) return;
-    const li = document.getElementById(id);
-    if (!li || !li.classList.contains('nitem')) return;
-    if (li.hidden) { // ссылка пришла на новость, скрытую фильтром — показываем все
-      chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.newsTag === 'all')));
-      apply('all');
+    const el = id && document.getElementById(id);
+    if (!el || !el.classList.contains('nblock')) return;
+    if (el.hidden) { // скрыта фильтром или «Показать ещё» — открываем все
+      select('all');
+      limit = items.length;
+      render();
     }
     items.forEach(x => x.classList.remove('is-target'));
-    li.classList.add('is-target');
+    el.classList.add('is-target');
+    el.scrollIntoView({ block: 'start' });
   }
   markTarget();
   window.addEventListener('hashchange', markTarget);

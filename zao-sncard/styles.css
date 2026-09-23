@@ -447,71 +447,56 @@ html:not(.js) .atlas__zoom, html:not(.js) .atlas__hud { display: none; }
   font-size: 11px; color: var(--blueprint); letter-spacing: .04em;
 }
 
-.nlist { padding: 56px 0 120px; }
-.nfilter { display: flex; flex-wrap: wrap; gap: 6px; }
+.nlist { padding: 48px 0 120px; border-top: 1px solid var(--line); }
+
+/* Фильтр — табы как на sncard/news.html */
+.nfilter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
 html:not(.js) .nfilter { display: none; } /* без JS фильтр не работает — не показываем */
-.nfilter__chip .mono { font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
-.nfilter__chip[aria-pressed="true"] .mono { color: var(--accent-hover); }
-.nfilter__shown { margin-top: 12px; font-size: 11.5px; color: var(--text-muted); }
-.nfilter__shown:empty { display: none; }
-
-/* Лента: слева дата и тема, справа текст; общий рельс как в истории компании */
-.nfeed { position: relative; margin-top: 40px; }
-.nfeed::before {
-  content: ""; position: absolute; top: 0; bottom: 0; left: 0;
-  width: 1px; background: var(--line);
+.nfilter__tab {
+  height: 44px; padding: 0 18px; display: inline-flex; align-items: center;
+  border-radius: 999px; box-shadow: inset 0 0 0 1.5px var(--line);
+  font-size: 15px; font-weight: 700;
+  transition: box-shadow var(--t-ui) ease, color var(--t-ui) ease;
 }
-.nyear { position: relative; padding: 32px 0 14px 28px; }
-.nyear:first-child { padding-top: 8px; }
-.nyear[hidden] { display: none; }
-.nyear__num { font-size: 13px; font-weight: 500; color: var(--blueprint); letter-spacing: .06em; }
-.nyear__line { display: block; height: 1px; margin-top: 10px; background: var(--line); }
-.nyear::before {
-  content: ""; position: absolute; left: -3px; top: 38px;
-  width: 7px; height: 7px; border-radius: 999px; background: var(--bg);
-  box-shadow: inset 0 0 0 1.5px var(--blueprint);
-}
-.nyear:first-child::before { top: 14px; }
+.nfilter__tab:hover { box-shadow: inset 0 0 0 1.5px var(--text); }
+.nfilter__tab.is-current { box-shadow: inset 0 0 0 1.5px var(--accent); color: var(--accent); }
+.nfilter__tab .mono { margin-left: 6px; font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.nfilter__tab.is-current .mono { color: inherit; }
 
-.nitem {
-  position: relative;
-  display: grid; grid-template-columns: 168px 1fr; gap: clamp(16px, 3vw, 48px);
-  padding: 26px 0 26px 28px;
-  border-bottom: 1px solid var(--line);
+/* Сетка блоков: у новостей нет отдельных страниц, текст — целиком в блоке */
+.nlist__items { display: grid; gap: var(--gap); grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+.nblock {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 28px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
   scroll-margin-top: calc(var(--header-h) + 16px); /* ссылка с главной не уводит под шапку */
+  transition: border-color var(--t-ui) ease, box-shadow var(--t-ui) ease;
 }
-.nitem[hidden] { display: none; }
-.nitem:last-child { border-bottom: 0; }
-.nitem::before { /* узел на рельсе */
-  content: ""; position: absolute; left: -2px; top: 34px;
-  width: 5px; height: 5px; border-radius: 999px; background: var(--blueprint-soft);
-  transition: background-color var(--t-ui) ease, box-shadow var(--t-ui) ease;
-}
-.nitem:hover::before { background: var(--accent); }
-/* Дата над темой: длинные теги («Личный кабинет») не ломают строку */
-.nitem__meta { display: grid; gap: 10px; justify-items: start; align-content: start; padding-top: 3px; }
-.nitem__meta time { font-size: 13px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
-.nitem__meta .tag { background: var(--surface); }
-.nitem__body { min-width: 0; display: grid; gap: 12px; }
-.nitem__title { font-size: clamp(19px, 1.7vw, 23px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.25; }
-.nitem__body p { color: var(--text-muted); font-size: 16.5px; line-height: 1.6; max-width: 42em; }
-.nitem__body a { color: var(--text); border-bottom: 1px solid var(--accent); }
-.nitem__body a:hover { color: var(--accent); }
+.nblock[hidden] { display: none; }
+.nblock:hover { border-color: var(--blueprint); }
+.nblock__meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+.nblock__meta time { font-size: 13px; color: var(--text-muted); }
+.nblock__title { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; }
+.nblock__body { display: grid; gap: 10px; }
+.nblock__body p { font-size: 14.5px; line-height: 1.55; color: var(--text-muted); }
+.nblock__body a { color: var(--text); border-bottom: 1px solid var(--accent); }
+.nblock__body a:hover { color: var(--accent); }
 
-/* Список АЗС внутри новости: название — адрес, как строки спецификации */
-.nstations { display: grid; gap: 0; max-width: 46em; border-top: 1px solid var(--line); }
-.nstations__row {
-  display: grid; grid-template-columns: minmax(150px, 220px) 1fr; gap: 8px 20px;
-  padding: 9px 2px; border-bottom: 1px solid var(--line);
-}
-.nstations dt { font-size: 15px; font-weight: 700; }
-.nstations dd { font-size: 15px; color: var(--text-muted); line-height: 1.5; }
+/* Список АЗС внутри новости: название над адресом, как строки спецификации */
+.nstations { display: grid; border-top: 1px solid var(--line); }
+.nstations__row { display: grid; gap: 2px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.nstations dt { font-size: 14px; font-weight: 700; }
+.nstations dd { font-size: 14px; color: var(--text-muted); line-height: 1.45; }
 
 /* Новость, на которую пришли по ссылке с главной */
-.nitem.is-target { background: rgba(211, 47, 47, .035); border-radius: var(--r-md); }
-.nitem.is-target::before { background: var(--accent); box-shadow: 0 0 0 3px rgba(211, 47, 47, .12); }
+.nblock.is-target { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(211, 47, 47, .12); }
 
-.nlist__empty { margin-top: 32px; color: var(--text-muted); font-size: 16.5px; }
+.nlist__more { display: flex; justify-content: center; margin-top: 48px; }
+.nlist__more .btn[hidden] { display: none; }
+.nlist__more:has(.btn[hidden]) { display: none; }
+.nlist__empty { padding: 32px; border: 1px dashed var(--blueprint-soft); border-radius: var(--r-lg); color: var(--text-muted); }
 .nlist__empty[hidden] { display: none; }
 .nlist__source { margin-top: 48px; font-size: 14px; color: var(--text-muted); line-height: 1.6; }
 .nlist__source a { color: var(--text); border-bottom: 1px solid var(--blueprint-soft); }
@@ -646,8 +631,7 @@ html:not(.js) .copy { display: none; }
   .reach__lines { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; }
   .line-card--link { grid-column: 1 / -1; }
 
-  .nitem { grid-template-columns: 1fr; gap: 12px; }
-  .nitem__meta { grid-auto-flow: column; justify-content: start; align-items: center; gap: 10px; padding-top: 0; }
+  .nlist__items { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 640px) {
@@ -683,10 +667,8 @@ html:not(.js) .copy { display: none; }
   .phead__lead { font-size: 17px; }
   .phead__stamp { position: static; display: block; margin-top: 20px; }
   .nlist { padding: 40px 0 80px; }
-  .nitem { padding-left: 22px; }
-  .nyear { padding-left: 22px; }
-  .nitem__body p { font-size: 16px; }
-  .nstations__row { grid-template-columns: 1fr; gap: 2px; padding: 10px 2px; }
+  .nlist__items { grid-template-columns: 1fr; }
+  .nblock { padding: 24px; }
 }
 
 /* =========================================================

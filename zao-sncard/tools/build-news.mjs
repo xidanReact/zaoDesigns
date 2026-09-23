@@ -7,7 +7,7 @@
    1. Читает новости из ../news.js (единственный источник данных).
    2. Подставляет в news.html между маркерами-комментариями:
         <!-- @filter:start --> … <!-- @filter:end -->   чипы тем со счётчиками
-        <!-- @list:start -->   … <!-- @list:end -->     список новостей по годам
+        <!-- @list:start -->   … <!-- @list:end -->     сетка блоков новостей (текст целиком)
         <!-- @count:start -->  … <!-- @count:end -->    подпись «N записей с года»
    3. Проверяет, что анкоры новостей, на которые ссылается карусель
       на index.html, существуют на news.html.
@@ -28,7 +28,6 @@ const esc = s => String(s ?? '').replace(/&(?!(?:amp|lt|gt|quot|#\d+);)/g, '&amp
 const inline = s => String(s).replace(/<(?!\/?(?:a|b|strong|em)\b)[^>]*>/g, '');
 const MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 const rusDate = iso => { const [y, m, d] = iso.split('-'); return `${+d} ${MONTHS[+m - 1]} ${y}`; };
-const shortDate = iso => { const [y, m, d] = iso.split('-'); return `${d}.${m}.${y}`; };
 const plural = (n, [one, few, many]) => {
   const a = n % 10, b = n % 100;
   return (a === 1 && b !== 11) ? one : (a >= 2 && a <= 4 && (b < 10 || b >= 20)) ? few : many;
@@ -43,7 +42,7 @@ const items = [...NEWS].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? 
 
 function filterHtml() {
   const chip = (label, count, value, on) =>
-    `      <button class="chip nfilter__chip" type="button" data-news-tag="${esc(value)}" aria-pressed="${on}">${esc(label)} <span class="mono">${count}</span></button>`;
+    `      <button class="nfilter__tab${on ? ' is-current' : ''}" type="button" data-news-tag="${esc(value)}" aria-pressed="${on}">${esc(label)} <span class="mono">${count}</span></button>`;
   return [
     chip('Все', items.length, 'all', true),
     ...TAGS.map(t => chip(t.tag, t.n, t.tag, false)),
@@ -54,10 +53,10 @@ function bodyHtml(it) {
   return it.body.map(b => {
     if (b.type === 'stations') {
       const rows = b.rows.map(r => `
-            <div class="nstations__row">
-              <dt>${esc(r.name)}</dt>
-              <dd>${esc(r.address)}</dd>
-            </div>`).join('');
+          <div class="nstations__row">
+            <dt>${esc(r.name)}</dt>
+            <dd>${esc(r.address)}</dd>
+          </div>`).join('');
       return `        <dl class="nstations">${rows}
         </dl>`;
     }
@@ -65,27 +64,19 @@ function bodyHtml(it) {
   }).join('\n');
 }
 
+/* Блок новости как на sncard/news.html, но без страницы-карточки:
+   текст короткий, поэтому показываем его целиком */
 function listHtml() {
-  const out = [];
-  let year = null;
-  items.forEach(it => {
-    const y = it.date.slice(0, 4);
-    if (y !== year) {
-      year = y;
-      out.push(`    <li class="nyear" id="y${y}"><span class="nyear__num mono">${y}</span><span class="nyear__line" aria-hidden="true"></span></li>`);
-    }
-    out.push(`    <li class="nitem" id="${esc(it.slug)}" data-tag="${esc(it.tag)}">
-      <div class="nitem__meta">
-        <time class="mono" datetime="${it.date}">${shortDate(it.date)}</time>
-        <span class="tag">${esc(it.tag)}</span>
-      </div>
-      <div class="nitem__body">
-        <h2 class="nitem__title">${esc(it.title)}</h2>
+  return items.map(it => `      <article class="nblock" id="${esc(it.slug)}" data-tag="${esc(it.tag)}">
+        <div class="nblock__meta">
+          <time class="mono" datetime="${it.date}">${rusDate(it.date)}</time>
+          <span class="tag">${esc(it.tag)}</span>
+        </div>
+        <h2 class="nblock__title">${esc(it.title)}</h2>
+        <div class="nblock__body">
 ${bodyHtml(it)}
-      </div>
-    </li>`);
-  });
-  return out.join('\n');
+        </div>
+      </article>`).join('\n');
 }
 
 function countHtml() {
