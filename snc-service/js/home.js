@@ -1,6 +1,6 @@
 /* =========================================================
    СНК · snc-service — главная: слой анимаций.
-   intro → hero (сборка/разнесение концентратора, этапы) → бегущая строка
+   intro → hero (сборка/разнесение концентратора, этапы)
    → оборудование (bento) → полный цикл (pin + камера) → карты → контакты.
    Зависит от js/motion.js (window.SNCFX). Без GSAP
    всё остаётся в финальном состоянии,
@@ -251,31 +251,6 @@
   }
 
   /* =========================================================
-     Бегущая строка
-     ========================================================= */
-  function marquee() {
-    const wrap = watch($('.marquee'));
-    const track = $('.marquee__track', wrap);
-    const group = $('.marquee__group', wrap);
-    let gw = group.offsetWidth;
-    window.addEventListener('resize', () => { gw = group.offsetWidth; });
-    let x = 0, hoverMul = 1, hoverTgt = 1, boost = 0, lastY = window.scrollY;
-    wrap.addEventListener('pointerenter', () => { hoverTgt = 0.25; });
-    wrap.addEventListener('pointerleave', () => { hoverTgt = 1; });
-    onTick(dt => {
-      const y = window.scrollY;
-      const v = dt > 0 ? Math.abs(y - lastY) / dt : 0;
-      lastY = y;
-      if (!isVis(wrap)) return;
-      boost += (Math.min(v / 250, 7) - boost) * damp(v / 250 > boost ? 10 : 2.5, dt);
-      hoverMul += (hoverTgt - hoverMul) * damp(6, dt);
-      x -= 55 * hoverMul * (1 + boost) * dt;
-      if (x <= -gw) x += gw;
-      track.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
-    });
-  }
-
-  /* =========================================================
      3. Полный цикл: этапы по клику, «камера» переходит к сцене
      ========================================================= */
   const ZONES = ['Разработка', 'Производство', 'Поставка', 'Ремонт'];
@@ -462,7 +437,6 @@
     heroTl.eventCallback('onComplete', () => { if (FINE && !SMALL && !parallaxOn) { parallaxOn = true; heroParallax(); } });
   });
 
-  marquee();
   F.bentoCards();
   contacts();
 })();
