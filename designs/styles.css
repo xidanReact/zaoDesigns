@@ -218,6 +218,13 @@ html.lenis, html.lenis body { height: auto; }
 .nav__chev { width: 14px; height: 14px; color: var(--text-muted); transition: transform var(--t-ui) var(--ease); }
 .nav__trigger[aria-expanded="true"] .nav__chev { transform: rotate(180deg); }
 
+/* Активный пункт: тонированная пилюля. Селекторы усилены .nav — чтобы перебить
+   сброс фона на hover у FLIP-подложки (.has-pill .nav__link:hover) на sncard / snc-service */
+.nav .nav__item.is-current > .nav__link,
+.nav .nav__list .nav__link[aria-current] { background-color: rgba(211, 47, 47, .08); color: var(--accent); }
+.nav .nav__item.is-current > .nav__link .nav__chev,
+.nav .nav__list .nav__link[aria-current] .nav__chev { color: currentColor; }
+
 /* Выпадающее меню */
 .dd {
   position: absolute; left: -8px; top: calc(100% + 10px);

@@ -655,42 +655,27 @@
   const watch = el => { if (el) { visible.set(el, true); vio.observe(el); } return el; };
   const isVis = el => visible.get(el) !== false;
 
-  /* ---------- Индикатор активного пункта меню (scroll-spy + FLIP) ---------- */
+  /* ---------- Активный пункт меню (scroll-spy) ---------- */
+  // Подсветку рисует CSS по aria-current (../designs/styles.css). На внутренних страницах
+  // пункты ведут на index.html#… — следить не за чем, там стоит aria-current="page"
   (function navSpy() {
     const navList = $('.nav__list');
     if (!navList) return;
-    const bar = document.createElement('span');
-    bar.className = 'nav__bar'; bar.setAttribute('aria-hidden', 'true');
-    navList.appendChild(bar);
     const links = $$('.nav__link', navList);
-    // На внутренних страницах пункты ведут на index.html#… — следить не за чем,
-    // индикатор просто встаёт под текущий раздел (aria-current="page")
     const secs = links.map(a => {
       const href = a.getAttribute('href') || '';
       return href.startsWith('#') ? $(href) : null;
     });
     let cur = null;
-    const place = a => {
-      const lr = navList.getBoundingClientRect(), r = a.getBoundingClientRect();
-      bar.style.transform = `translateX(${(r.left - lr.left + 14).toFixed(1)}px) scaleX(${((r.width - 28) / 100).toFixed(3)})`;
-    };
-    const jump = a => { bar.style.transition = 'none'; place(a); void bar.offsetWidth; bar.style.transition = ''; };
-    const move = (a, mark = true) => {
+    const move = a => {
       if (a === cur) return;
-      const first = !cur;
       cur = a;
-      if (mark) links.forEach(l => (l === a ? l.setAttribute('aria-current', 'location') : l.removeAttribute('aria-current')));
-      first ? jump(a) : place(a);
-      bar.classList.add('is-on');
+      links.forEach(l => (l === a ? l.setAttribute('aria-current', 'location') : l.removeAttribute('aria-current')));
     };
-    const current = links.find(a => a.getAttribute('aria-current') === 'page');
-    if (current) move(current, false);
     const spy = new IntersectionObserver(es => es.forEach(e => {
       if (e.isIntersecting) { const i = secs.indexOf(e.target); if (i > -1) move(links[i]); }
     }), { rootMargin: '-40% 0px -55% 0px' });
     secs.forEach(sec => sec && spy.observe(sec));
-    window.addEventListener('resize', () => { if (cur) jump(cur); });
-    document.fonts?.ready.then(() => { if (cur) jump(cur); });
   })();
 
   if (!MOTION) {

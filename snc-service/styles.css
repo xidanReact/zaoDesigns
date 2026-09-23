@@ -479,11 +479,7 @@ html:not(.js) .copy { display: none; }
    ВНУТРЕННИЕ СТРАНИЦЫ
    ========================================================= */
 
-/* ---------- Текущий раздел в меню ---------- */
-.nav__item.is-current > .nav__link::after {
-  content: ""; position: absolute; left: 50%; bottom: 3px; width: 4px; height: 4px; margin-left: -2px;
-  background: var(--accent);
-}
+/* ---------- Текущий раздел в меню (тонированная пилюля на пункте шапки — в ../designs/styles.css) ---------- */
 .dd__link[aria-current="page"] { color: var(--accent); }
 .mmenu__group a[aria-current="page"] { color: var(--accent); border-left-color: var(--accent); }
 
