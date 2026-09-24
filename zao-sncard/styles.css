@@ -721,3 +721,69 @@ html:not(.js) .copy { display: none; }
 /* Схема транзакции: узел вспыхивает, когда до него доходит пакет */
 .flow__node .bp, .flow__node .bp-thin, .flow__node .screen { transition: stroke 200ms ease; }
 .flow__node.is-hot .bp, .flow__node.is-hot .screen { stroke: var(--accent); }
+
+/* =========================================================
+   Политики (privacy.html, cookies.html) — как на sncard
+   ========================================================= */
+.policy-wrap { padding: 64px 0 120px; border-top: 1px solid var(--line); }
+.policy__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); align-items: start; }
+.toc { grid-column: 1 / span 4; position: sticky; top: 96px; }
+.toc__title { font-size: 11.5px; color: var(--text-muted); letter-spacing: .04em; margin-bottom: 14px; }
+.toc__list { display: grid; border-left: 1px solid var(--line); }
+.toc__link {
+  display: flex; gap: 10px; padding: 8px 14px; margin-left: -1px;
+  border-left: 2px solid transparent;
+  font-size: 14.5px; font-weight: 600; line-height: 1.4; color: var(--text-muted);
+  transition: color var(--t-ui) ease, border-color var(--t-ui) ease;
+}
+.toc__link:hover { color: var(--text); }
+.toc__link.is-current { color: var(--text); border-left-color: var(--accent); }
+.prose { font-size: 17px; line-height: 1.65; max-width: 44em; }
+.prose > * + * { margin-top: 16px; }
+.prose ul { display: grid; gap: 8px; }
+.prose li { position: relative; padding-left: 22px; }
+.prose li::before { content: ""; position: absolute; left: 2px; top: .8em; width: 10px; height: 1.5px; background: var(--blueprint); }
+.policy { grid-column: 6 / span 7; max-width: 42em; }
+.policy__intro { font-size: 18px; color: var(--text-muted); }
+.policy__sec + .policy__sec { margin-top: 48px; }
+.policy__sec { scroll-margin-top: 96px; }
+.policy__h { display: flex; gap: 14px; align-items: baseline; font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.3; margin: 0 0 18px; }
+.policy__num { font-size: 13px; font-weight: 400; color: var(--accent); }
+.policy__p { position: relative; padding-left: 52px; }
+.policy__n { position: absolute; left: 0; top: .2em; font-size: 12.5px; color: var(--text-muted); }
+.policy ul { padding-left: 52px; }
+@media (max-width: 1024px) {
+  .toc { grid-column: 1 / -1; position: static; margin-bottom: 32px; }
+  .policy { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .policy__p, .policy ul { padding-left: 0; }
+  .policy__n { position: static; display: block; margin-bottom: 2px; }
+}
+
+/* =========================================================
+   Кнопка «Наверх» (создаёт JS, появляется после ~1 экрана прокрутки)
+   ========================================================= */
+.totop {
+  position: fixed; right: 24px; bottom: 24px; z-index: 45;
+  display: grid; place-items: center;
+  width: 48px; height: 48px;
+  background: var(--surface); color: var(--text);
+  border: 1.5px solid var(--line); border-radius: 999px;
+  box-shadow: var(--shadow-md);
+  opacity: 0; visibility: hidden; transform: translateY(12px) scale(.96);
+  transition: opacity 220ms ease-out, transform 280ms var(--ease), visibility 0s linear 280ms,
+    color var(--t-ui) ease, border-color var(--t-ui) ease;
+}
+.totop.is-visible { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.totop svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform 220ms var(--ease); }
+.totop:hover { color: var(--accent); border-color: var(--accent); }
+.totop:hover svg { transform: translateY(-2px); }
+.totop:active { transform: scale(.94); }
+.totop:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 640px) {
+  .totop { right: 16px; bottom: 16px; width: 44px; height: 44px; }
+}
+
+/* Рассылка: «Подписаться» неактивна, пока не введён адрес и не отмечено согласие */
+.btn--submit:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; transform: none; }

@@ -182,19 +182,6 @@ function footer(r) {
         <li><a href="${r}privacy.html">Политика конфиденциальности</a></li>
         <li><a href="${r}cookies.html">Политика использования Cookies</a></li>
       </ul>
-      <h2 class="fcol__title fcol__title--gap">Разделы</h2>
-      <ul class="legal">
-        <li><a href="${r}company.html">О компании</a></li>
-        <li><a href="${r}cards.html">Изготовление карт</a></li>
-        <li><a href="${r}docs.html">Документация</a></li>
-        <li><a href="${r}cart.html">Корзина</a></li>
-      </ul>
-    </div>
-    <div class="fcol">
-      <h2 class="fcol__title">Оборудование</h2>
-      <ul class="legal legal--cols">
-${CATS.map(c => `        <li><a href="${catUrl(r, c.slug)}">${esc(c.title)}</a></li>`).join('\n')}
-      </ul>
     </div>
   </div>
   <div class="footer__bottom">

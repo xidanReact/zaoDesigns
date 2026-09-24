@@ -52,8 +52,10 @@
 /* =========================================================
    1. Hero — концентратор в разобранном виде
    ========================================================= */
-.hero--device .hero__title { font-size: clamp(38px, 3.9vw, 58px); }
+.hero--device .hero__title { font-size: clamp(38px, 3.9vw, 56px); }
 .hero--device .hero__lead { max-width: 30em; }
+/* Красная полоса под всем заголовком, а не под отдельными словами */
+.u-mark--block { display: inline-block; white-space: normal; }
 
 /* Этапы: разработка → ремонт */
 .verbs {
@@ -276,11 +278,9 @@ html:not(.js) .copy { display: none; }
 .dept__phone:hover { color: var(--accent); border-color: var(--accent); }
 
 /* =========================================================
-   Футер: без рассылки, колонка каталога
+   Футер: без рассылки — контакты и правовая информация
    ========================================================= */
 .footer__grid { grid-template-columns: 4fr 3fr 5fr; }
-.fcol__title--gap { margin-top: 40px; }
-.legal--cols { grid-template-columns: 1fr 1fr; column-gap: 32px; }
 
 /* =========================================================
    Адаптив
@@ -312,7 +312,6 @@ html:not(.js) .copy { display: none; }
   .dept--wide { grid-template-columns: 1fr; }
 
   .footer__grid { grid-template-columns: 1fr 1fr; }
-  .footer__grid .fcol:last-child { grid-column: 1 / -1; }
 }
 
 @media (max-width: 640px) {
@@ -347,7 +346,9 @@ html:not(.js) .copy { display: none; }
   .dept--wide .dept__people { grid-template-columns: 1fr; }
 
   .footer__grid { grid-template-columns: 1fr; }
-  .legal--cols { grid-template-columns: 1fr; }
+  /* designs/ на телефоне подчёркивает каждое слово — здесь оставляем одну полосу под заголовком */
+  .u-mark--block, .u-mark--block .w__in { text-decoration: none; }
+  .u-mark--block .u-mark__line { display: block; }
 }
 
 /* =========================================================
@@ -1071,4 +1072,28 @@ html:not(.js) .stepper { display: none; }
   .citem .qty { grid-area: qty; justify-self: start; }
   .citem__sum { grid-area: sum; min-width: 0; }
   .citem__del { grid-area: del; }
+}
+
+/* =========================================================
+   Кнопка «Наверх» (создаёт JS, появляется после ~1 экрана прокрутки)
+   ========================================================= */
+.totop {
+  position: fixed; right: 24px; bottom: 24px; z-index: 45;
+  display: grid; place-items: center;
+  width: 48px; height: 48px;
+  background: var(--surface); color: var(--text);
+  border: 1.5px solid var(--line); border-radius: 999px;
+  box-shadow: var(--shadow-md);
+  opacity: 0; visibility: hidden; transform: translateY(12px) scale(.96);
+  transition: opacity 220ms ease-out, transform 280ms var(--ease), visibility 0s linear 280ms,
+    color var(--t-ui) ease, border-color var(--t-ui) ease;
+}
+.totop.is-visible { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.totop svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform 220ms var(--ease); }
+.totop:hover { color: var(--accent); border-color: var(--accent); }
+.totop:hover svg { transform: translateY(-2px); }
+.totop:active { transform: scale(.94); }
+.totop:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 640px) {
+  .totop { right: 16px; bottom: 16px; width: 44px; height: 44px; }
 }

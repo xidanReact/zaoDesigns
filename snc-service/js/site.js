@@ -27,6 +27,25 @@
   };
 
   /* =========================================================
+     Кнопка «Наверх»: появляется, когда страница прокручена
+     примерно на экран. Плавный скролл к #top — в motion.js (Lenis)
+     ========================================================= */
+  const toTop = Object.assign(document.createElement('a'), { className: 'totop', href: '#top', tabIndex: -1 });
+  toTop.setAttribute('aria-label', 'Наверх страницы');
+  toTop.setAttribute('aria-hidden', 'true');
+  toTop.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>';
+  document.body.append(toTop);
+  let toTopOn = false;
+  const toggleToTop = y => {
+    const on = y > window.innerHeight * 0.9;
+    if (on === toTopOn) return;
+    toTopOn = on;
+    toTop.classList.toggle('is-visible', on);
+    toTop.tabIndex = on ? 0 : -1;
+    toTop.setAttribute('aria-hidden', String(!on));
+  };
+
+  /* =========================================================
      Шапка: сжатие и прогресс чтения
      ========================================================= */
   const header = $('#header');
@@ -37,6 +56,7 @@
     const y = window.scrollY;
     const c = y > 40;
     if (c !== compact) { compact = c; header.classList.toggle('is-compact', c); }
+    toggleToTop(y);
     const max = document.documentElement.scrollHeight - window.innerHeight;
     const p = max > 0 ? clamp(y / max, 0, 1) : 0;
     if (Math.abs(p - lastP) > 0.0005) { lastP = p; progress.style.transform = `scaleX(${p})`; }

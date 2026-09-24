@@ -235,11 +235,113 @@ function netmap({ x0, y0, w, h, k, labels = true, lngStep = 1, rings = [], prefi
   return out.join('\n');
 }
 
-const zaoMap = [
-  `<rect class="bp-frame" x="0.5" y="0.5" width="639" height="559" rx="12"/>`,
-  netmap({ x0: 20, y0: 20, w: 600, h: 520, k: 118, lngStep: 2, rings: [100, 200, 300], prefix: 'z' }),
-  `<g class="bp-tick"><path d="M8 20h10M13 15v10 M622 20h10M627 15v10 M8 540h10M13 535v10 M622 540h10M627 535v10"/></g>`,
-].join('\n');
+/* =========================================================
+   Уменьшенная копия карты АЗС с первого экрана zao-sncard:
+   та же подложка (zao-sncard/basemap.js, Natural Earth), те же значки АЗС
+   и линии связи с процессинговым центром; проекция — Web Mercator, как в Leaflet.
+   ========================================================= */
+const BASE = (() => {
+  const src = readFileSync(join(ROOT, '..', 'zao-sncard', 'basemap.js'), 'utf8');
+  const window = {};
+  new Function('window', src)(window);
+  return window.SNK_BASEMAP;
+})();
+
+function atlasMap({ W = 640, H = 560, pad = 70 } = {}) {
+  const mx = lng => lng * Math.PI / 180;
+  const my = lat => -Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
+  const pts = [SNK.office, ...SNK.stations];
+  const xs = pts.map(p => mx(p.lng)), ys = pts.map(p => my(p.lat));
+  const [minX, maxX, minY, maxY] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  const k = Math.min((W - pad * 2) / (maxX - minX), (H - pad * 2) / (maxY - minY));
+  const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
+  const proj = (lat, lng) => [r1(W / 2 + (mx(lng) - cx) * k), r1(H / 2 + (my(lat) - cy) * k)];
+  const inView = ([x, y], m = 60) => x > -m && x < W + m && y > -m && y < H + m;
+  // линия [долгота, широта] → path; точки ближе 1,5 px к предыдущей отбрасываем
+  const pathOf = (coords, close = false) => {
+    const out = [];
+    coords.forEach(([lng, lat]) => {
+      const p = proj(lat, lng), prev = out[out.length - 1];
+      if (!prev || Math.hypot(p[0] - prev[0], p[1] - prev[1]) >= 1.5) out.push(p);
+    });
+    return out.length > 1 && out.some(p => inView(p)) ? 'M' + out.map(pt).join('L') + (close ? 'Z' : '') : '';
+  };
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+
+  const out = [
+    `<defs><pattern id="a-dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle class="am-dot" cx="1" cy="1" r="1"/></pattern>` +
+      `<clipPath id="a-clip"><rect x="1" y="1" width="${W - 2}" height="${H - 2}" rx="11"/></clipPath></defs>`,
+    `<rect class="am-bg" x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="12"/>`,
+    `<g clip-path="url(#a-clip)">`,
+    `<rect x="0" y="0" width="${W}" height="${H}" fill="url(#a-dots)"/>`,
+  ];
+  if (BASE.region) out.push(`<path class="bm-region" d="${pathOf(BASE.region, true)}"/>`);
+  const lines = (list, cls) => list.map(r => { const d = pathOf(r.c || r); return d ? `<path class="${cls(r)}" d="${d}"/>` : ''; }).filter(Boolean);
+  out.push(...lines(BASE.roads, r => r.w ? 'bm-road bm-road--main' : 'bm-road'));
+  out.push(...lines(BASE.rivers, r => r.w ? 'bm-river bm-river--main' : 'bm-river'));
+  out.push(...lines(BASE.borders, () => 'bm-border'));
+
+  const [hx, hy] = proj(SNK.office.lat, SNK.office.lng);
+  // Подписи подложки: города (кроме тех, где стоит значок АЗС или офис), реки, области
+  const taken = new Set(['Томск', ...SNK.stations.map(s => s.place)]);
+  // …и те, что попадают на значок или подпись АЗС (выноска у Томска смещена вверх-вправо)
+  const busy = SNK.stations.map(s => {
+    const [px, py] = proj(s.lat, s.lng);
+    return Math.hypot(px - hx, py - hy) < 30 ? [px + 34, py - 46] : [px, py];
+  });
+  const clash = (x, y) => busy.some(([bx, by]) => x > bx - 30 && x < bx + 150 && Math.abs(y - by) < 28);
+  BASE.places.filter(p => !taken.has(p.t) && p.r <= 6).forEach(p => {
+    const [x, y] = proj(p.ll[0], p.ll[1]);
+    if (!inView([x, y], -30) || clash(x, y)) return;
+    out.push(`<g class="am-fade"><rect class="am-place" x="${r1(x - 3)}" y="${r1(y - 3)}" width="6" height="6"/><text class="am-place__t" x="${r1(x + 9)}" y="${r1(y + 4)}">${esc(p.t)}</text></g>`);
+  });
+  BASE.labels.forEach(l => {
+    const [x, y] = proj(l.ll[0], l.ll[1]);
+    if (!inView([x, y], -40)) return;
+    out.push(`<text class="am-fade ${l.k ? 'am-region' : 'am-river'}" x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" transform="rotate(${l.a} ${x} ${y})">${esc(l.t)}</text>`);
+  });
+
+  // Линии связи: процессинговый центр → АЗС
+  out.push(`<g class="net-lines">`);
+  SNK.stations.forEach((s, i) => {
+    const [sx, sy] = proj(s.lat, s.lng);
+    out.push(`<path class="mk-link net-line" id="a-l${i}" d="M${hx} ${hy}L${sx} ${sy}"/>`);
+  });
+  out.push(`</g>`);
+
+  // Значки АЗС: кольцо и колонка, подпись — название и номер
+  SNK.stations.forEach(s => {
+    const [px, py] = proj(s.lat, s.lng);
+    // Выноска: значок, стоящий почти на офисе, разводим вверх-вправо, линия ведёт к настоящей точке
+    const onHub = Math.hypot(px - hx, py - hy) < 30;
+    const [sx, sy] = onHub ? [r1(px + 34), r1(py - 46)] : [px, py];
+    const near = !onHub && Math.hypot(sx - hx, sy - hy) < 20;
+    const left = !onHub && sx < hx;
+    const tx = near ? sx : r1(sx + (left ? -18 : 18));
+    const ty = near ? r1(sy + (sy < hy ? -24 : 30)) : r1(sy - 1);
+    const anchor = near ? ' text-anchor="middle"' : left ? ' text-anchor="end"' : '';
+    const leader = onHub ? `<path class="am-leader" d="M${px} ${py}L${sx} ${sy}"/><circle class="am-true" cx="${px}" cy="${py}" r="3"/>` : '';
+    out.push(`<g class="net-pt" data-id="${s.id}" tabindex="0" aria-label="${s.num}, ${esc(s.address)}">` +
+      `<circle class="net-hit" cx="${sx}" cy="${sy}" r="16"/>${leader}` +
+      `<g class="am-mk" transform="translate(${sx} ${sy})"><circle class="mk__ring" r="12.5"/>` +
+      `<path class="mk__glyph" d="M-5 6v-11a1.5 1.5 0 0 1 1.5-1.5h4.5a1.5 1.5 0 0 1 1.5 1.5v11M-6.5 6h10M-3 -2.5h3.5M2.5 -1.5h1.6l1.4 1.4v4.3a1 1 0 0 0 2 0v-5.6l-1.8-1.8"/></g>` +
+      `<text class="am-label" x="${tx}" y="${ty}"${anchor}>${esc(s.place)}<tspan class="am-label__sub" x="${tx}" dy="13">${esc(s.num)} · ${s.fuel.join(' ')}</tspan></text></g>`);
+  });
+
+  // Процессинговый центр
+  out.push(`<circle class="am-halo" cx="${hx}" cy="${hy}" r="16"/><circle class="net-hub am-hub" cx="${hx}" cy="${hy}" r="9"/><circle class="office__dot" cx="${hx}" cy="${hy}" r="3.4"/>`);
+  out.push(`<text class="bp-label bp-label--accent am-hub__t" x="${r1(hx + 20)}" y="${r1(hy + 4)}">ОФИС СНК · ТОМСК</text>`);
+
+  // Масштабная линейка 100 км (по широте офиса) и источник подложки
+  const km100 = r1(100 / (6378.137 * Math.cos(SNK.office.lat * Math.PI / 180)) * k);
+  out.push(`<g class="bp-coord am-scale"><path d="M20 ${H - 26}v6h${km100}v-6"/><text x="${r1(20 + km100 + 8)}" y="${H - 20}">100 км</text></g>`);
+  out.push(`<text class="bp-coord" x="${W - 14}" y="${H - 20}" text-anchor="end">Подложка: Natural Earth</text>`);
+  out.push(`</g>`);
+  out.push(`<rect class="am-frame" x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="12"/>`);
+  return out.join('\n');
+}
+
+const zaoMap = atlasMap();
 const ecoMap = netmap({ x0: 1110, y0: 250, w: 420, h: 420, k: 96, labels: false, lngStep: 2, rings: [100, 200], prefix: 'e' });
 
 /* План офиса — тот же, что в snc-service (данные OpenStreetMap, ODbL) */

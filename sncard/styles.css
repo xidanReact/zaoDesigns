@@ -532,6 +532,36 @@ html:not(.js) .copy { display: none; }
 .net-pt.is-hot .net-node { stroke: var(--accent); fill: var(--accent); }
 .net-pt.is-hot text { fill: var(--accent); }
 
+/* Витрина zao: уменьшенная копия карты АЗС с первого экрана zao-sncard (стили — оттуда же) */
+.showcase--zao .netmap { width: 100%; max-width: 520px; justify-self: end; }
+.am-bg { fill: var(--surface); }
+.am-dot { fill: var(--blueprint-soft); }
+.am-frame { fill: none; stroke: var(--line); stroke-width: 1; }
+.bm-region { fill: var(--bg); fill-opacity: .92; stroke: none; }
+.bm-border { fill: none; stroke: var(--blueprint); stroke-width: 1.1; stroke-dasharray: 7 3 1.5 3; stroke-linecap: round; }
+.bm-river { fill: none; stroke: var(--blueprint); stroke-opacity: .55; stroke-width: 1; stroke-linejoin: round; stroke-linecap: round; }
+.bm-river--main { stroke-width: 2.2; stroke-opacity: .6; }
+.bm-road { fill: none; stroke: var(--blueprint-soft); stroke-width: 1; stroke-linejoin: round; }
+.bm-road--main { stroke-width: 1.8; }
+.am-place { fill: var(--bg); stroke: var(--text-muted); stroke-width: 1.2; }
+.am-place__t { font: 500 11.5px var(--font-sans); fill: var(--text-muted); paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
+.am-river { font: italic 400 11px var(--font-mono); fill: var(--blueprint); paint-order: stroke; stroke: var(--bg-soft); stroke-width: 3px; }
+.am-region { font: 700 13px var(--font-sans); fill: var(--text-muted); letter-spacing: .02em; opacity: .8; }
+.mk-link { stroke: var(--blueprint); stroke-width: 1.25; stroke-dasharray: 4 5; fill: none; transition: stroke var(--t-ui) ease; }
+.mk__ring { fill: var(--bg); stroke: var(--blueprint); stroke-width: 1.5; transition: stroke var(--t-ui) ease; }
+.mk__glyph { fill: none; stroke: var(--text); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; transition: stroke var(--t-ui) ease; }
+.am-label { font: 600 12.5px var(--font-sans); fill: var(--text); paint-order: stroke; stroke: rgba(255, 255, 255, .9); stroke-width: 4px; stroke-linejoin: round; transition: fill var(--t-ui) ease; }
+.am-label__sub { font: 400 10.5px var(--font-mono); fill: var(--text-muted); }
+.am-hub { fill: var(--bg); stroke: var(--accent); stroke-width: 2; }
+.am-halo { fill: none; stroke: var(--accent); stroke-opacity: .25; stroke-width: 1; }
+.am-hub__t { paint-order: stroke; stroke: rgba(255, 255, 255, .9); stroke-width: 4px; stroke-linejoin: round; }
+.am-leader { fill: none; stroke: var(--text-muted); stroke-width: 1; }
+.am-true { fill: var(--bg); stroke: var(--text-muted); stroke-width: 1.5; }
+.am-scale path { fill: none; stroke: var(--text-muted); stroke-width: 1.2; }
+.net-pt:hover .mk__ring, .net-pt:focus-visible .mk__ring, .net-pt.is-hot .mk__ring { stroke: var(--accent); stroke-width: 2; }
+.net-pt:hover .mk__glyph, .net-pt:focus-visible .mk__glyph, .net-pt.is-hot .mk__glyph { stroke: var(--accent); }
+.net-pt.is-hot .am-label__sub { fill: var(--accent); }
+
 /* =========================================================
    ВНУТРЕННИЕ СТРАНИЦЫ (компоненты перенесены из ../snc-service/styles.css)
    ========================================================= */
@@ -1161,3 +1191,30 @@ mark.hl { background: rgba(211, 47, 47, .12); color: inherit; border-radius: 2px
 .gallery__item--empty { cursor: default; }
 .gallery__item--empty .gallery__cap a { color: var(--text); border-bottom: 1px solid var(--blueprint-soft); }
 .gallery__item--empty .gallery__cap a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* =========================================================
+   Кнопка «Наверх» (создаёт JS, появляется после ~1 экрана прокрутки)
+   ========================================================= */
+.totop {
+  position: fixed; right: 24px; bottom: 24px; z-index: 45;
+  display: grid; place-items: center;
+  width: 48px; height: 48px;
+  background: var(--surface); color: var(--text);
+  border: 1.5px solid var(--line); border-radius: 999px;
+  box-shadow: var(--shadow-md);
+  opacity: 0; visibility: hidden; transform: translateY(12px) scale(.96);
+  transition: opacity 220ms ease-out, transform 280ms var(--ease), visibility 0s linear 280ms,
+    color var(--t-ui) ease, border-color var(--t-ui) ease;
+}
+.totop.is-visible { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.totop svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform 220ms var(--ease); }
+.totop:hover { color: var(--accent); border-color: var(--accent); }
+.totop:hover svg { transform: translateY(-2px); }
+.totop:active { transform: scale(.94); }
+.totop:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 640px) {
+  .totop { right: 16px; bottom: 16px; width: 44px; height: 44px; }
+}
+
+/* Рассылка: «Подписаться» неактивна, пока не введён адрес и не отмечено согласие */
+.btn--submit:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; transform: none; }

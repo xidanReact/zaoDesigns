@@ -169,7 +169,7 @@ const NAV = [
     key: 'equipment', label: 'Оборудование и карты', ext: [
       [`${SVC}equipment/index.html`, 'Каталог оборудования'],
       [`${SVC}cards.html`, 'Изготовление карт'],
-      [SVC, 'ООО «Сибнефтекарт-сервис»', 'разработка, производство, ремонт'],
+      [ZAO, 'Обслуживание карт'],
     ],
   },
   {
@@ -308,12 +308,6 @@ function footer(r) {
         <li><a href="${r}privacy.html">Политика конфиденциальности</a></li>
         <li><a href="${r}cookies.html">Политика использования Cookies</a></li>
         <li><a href="${r}consent.html">Согласие на получение новостных сообщений</a></li>
-      </ul>
-      <h2 class="fcol__title fcol__title--gap">Сайты группы</h2>
-      <ul class="legal">
-        <li><a href="${SVC}">Оборудование и карты <span class="ext mono" aria-hidden="true">↗</span><span class="sr-only"> — другой сайт группы, откроется в новой вкладке</span></a></li>
-        <li><a href="${ZAO}">АО «НПФ «Сибнефтекарт» <span class="ext mono" aria-hidden="true">↗</span><span class="sr-only"> — другой сайт группы, откроется в новой вкладке</span></a></li>
-        <li><a href="${KB}" target="_blank" rel="noopener">База знаний <span class="ext mono" aria-hidden="true">↗</span><span class="sr-only"> — откроется в новой вкладке</span></a></li>
       </ul>
     </div>
     <div class="fcol fcol--form">

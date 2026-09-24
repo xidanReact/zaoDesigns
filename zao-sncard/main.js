@@ -53,6 +53,25 @@
   });
 
   /* =========================================================
+     Кнопка «Наверх»: появляется, когда страница прокручена
+     примерно на экран. Плавный скролл к #top — обработчик якорей выше / Lenis
+     ========================================================= */
+  const toTop = Object.assign(document.createElement('a'), { className: 'totop', href: '#top', tabIndex: -1 });
+  toTop.setAttribute('aria-label', 'Наверх страницы');
+  toTop.setAttribute('aria-hidden', 'true');
+  toTop.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>';
+  document.body.append(toTop);
+  let toTopOn = false;
+  const toggleToTop = y => {
+    const on = y > window.innerHeight * 0.9;
+    if (on === toTopOn) return;
+    toTopOn = on;
+    toTop.classList.toggle('is-visible', on);
+    toTop.tabIndex = on ? 0 : -1;
+    toTop.setAttribute('aria-hidden', String(!on));
+  };
+
+  /* =========================================================
      Шапка: сжатие и прогресс чтения
      ========================================================= */
   const header = $('#header');
@@ -62,6 +81,7 @@
     const y = window.scrollY;
     const c = y > 40;
     if (c !== compact) { compact = c; header.classList.toggle('is-compact', c); }
+    toggleToTop(y);
     const max = document.documentElement.scrollHeight - window.innerHeight;
     const p = max > 0 ? clamp(y / max, 0, 1) : 0;
     if (Math.abs(p - lastP) > 0.0005) { lastP = p; progress.style.transform = `scaleX(${p})`; }
@@ -601,6 +621,12 @@
     input.addEventListener('input', () => { if (field.classList.contains('is-invalid')) clearErr(); });
     agree.addEventListener('change', () => check.classList.remove('is-invalid'));
 
+    // «Подписаться» доступна, только когда введён адрес и отмечено согласие
+    const syncBtn = () => { if (btn.dataset.state === 'idle') btn.disabled = !(input.value.trim() && agree.checked); };
+    input.addEventListener('input', syncBtn);
+    agree.addEventListener('change', syncBtn);
+    syncBtn();
+
     form.addEventListener('submit', e => {
       e.preventDefault();
       if (btn.dataset.state !== 'idle') return;
@@ -629,6 +655,7 @@
     form.addEventListener('reset', () => {
       clearTimeout(timer); clearErr();
       btn.dataset.state = 'idle'; status.textContent = '';
+      setTimeout(syncBtn); // поля очищаются после события reset
     });
   })();
 
@@ -654,6 +681,19 @@
   const vio = new IntersectionObserver(es => es.forEach(e => visible.set(e.target, e.isIntersecting)), { rootMargin: '80px' });
   const watch = el => { if (el) { visible.set(el, true); vio.observe(el); } return el; };
   const isVis = el => visible.get(el) !== false;
+
+  /* ---------- Оглавление политик: подсветка текущего раздела (как на sncard) ---------- */
+  (function policyToc() {
+    const toc = $$('.toc__link');
+    if (!toc.length) return;
+    const map = new Map(toc.map(a => [a.getAttribute('href').slice(1), a]));
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      toc.forEach(a => a.classList.remove('is-current'));
+      map.get(e.target.id)?.classList.add('is-current');
+    }), { rootMargin: '-30% 0px -60% 0px' });
+    $$('.policy__sec').forEach(s => io.observe(s));
+  })();
 
   /* ---------- Активный пункт меню (scroll-spy) ---------- */
   // Подсветку рисует CSS по aria-current (../designs/styles.css). На внутренних страницах

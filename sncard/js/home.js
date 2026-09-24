@@ -394,7 +394,7 @@
     const dist = pts.map(pt => { const c = $('circle', pt); return Math.hypot(+c.getAttribute('cx') - hx, +c.getAttribute('cy') - hy); });
     const maxD = Math.max(...dist) || 1;
     const tl = G.timeline({ paused: true, defaults: { ease: EASE } });
-    tl.fromTo($$('.grat, .bp-coord, .ring', svg), { opacity: 0 }, { opacity: 1, duration: 0.8, stagger: 0.015, ease: 'power1.out' }, 0)
+    tl.fromTo($$('.grat, .bp-coord, .ring, .am-fade', svg), { opacity: 0 }, { opacity: 1, duration: 0.8, stagger: 0.015, ease: 'power1.out' }, 0)
       .fromTo(hub, { attr: { r: 2 } }, { attr: { r: 9 }, duration: 0.6, ease: 'back.out(2)' }, 0.2);
     lines.forEach((p, i) => {
       const L = Math.ceil(p.getTotalLength()) + 1;
@@ -402,7 +402,7 @@
     });
     pts.forEach((pt, i) => {
       const at = 0.45 + dist[i] / maxD * 0.9;
-      tl.fromTo($('circle', pt), { scale: 0, transformOrigin: '50% 50%' }, { scale: 1, duration: 0.5, ease: 'back.out(2.5)' }, at)
+      tl.fromTo($('.am-mk', pt) || $('circle', pt), { scale: 0, transformOrigin: '50% 50%' }, { scale: 1, duration: 0.5, ease: 'back.out(2.5)' }, at)
         .fromTo($('text', pt), { opacity: 0, x: -4 }, { opacity: 1, x: 0, duration: 0.4 }, at + 0.1);
     });
     tl.fromTo($$('.bp-label--accent', svg), { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.5);
