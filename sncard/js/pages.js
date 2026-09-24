@@ -109,9 +109,27 @@
      ========================================================= */
   const newsBox = $('[data-news-items]');
   if (newsBox) {
-    const cards = $$('.ncard', newsBox);
+    const cards = $$('.nblock', newsBox);
     const more = $('[data-news-more]');
-    const empty = $('.news-list__empty');
+    const empty = $('.nlist__empty');
+    // Блоки одной высоты: длинный текст прокручивается внутри. Такие блоки отмечаем
+    // (градиент снизу, пока текст не дочитан) и даём им фокус с клавиатуры
+    const scrollState = body => {
+      const can = body.scrollHeight > body.clientHeight + 1;
+      body.classList.toggle('is-scroll', can);
+      body.classList.toggle('is-end', can && body.scrollTop + body.clientHeight >= body.scrollHeight - 2);
+      if (can && !body.hasAttribute('tabindex')) {
+        body.tabIndex = 0;
+        body.setAttribute('role', 'region');
+        body.setAttribute('aria-label', `Текст новости: ${body.closest('.nblock').querySelector('.nblock__title').textContent}`);
+      }
+    };
+    const bodies = cards.map(el => el.querySelector('.nblock__body'));
+    bodies.forEach(b => b.addEventListener('scroll', () => scrollState(b), { passive: true }));
+    const syncBodies = () => bodies.forEach(b => { if (!b.closest('.nblock').hidden) scrollState(b); });
+    window.addEventListener('resize', syncBodies);
+    document.fonts?.ready.then(syncBodies);
+
     const STEP = 12;
     let tag = 'all', shown = STEP;
     const render = ({ animate = false } = {}) => {
@@ -126,6 +144,7 @@
       more.hidden = n <= shown;
       more.textContent = `Показать ещё ${Math.min(STEP, n - shown)}`;
       empty.hidden = n > 0;
+      syncBodies();
       if (ON && appeared.length) G.fromTo(appeared, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.05, ease: EASE, clearProps: 'transform,opacity' });
     };
     more.addEventListener('click', () => { shown += STEP; render({ animate: true }); });
@@ -136,6 +155,22 @@
       newsBox.scrollIntoView({ block: 'nearest', behavior: ON ? 'smooth' : 'auto' });
     }));
     render();
+
+    /* Новость по ссылке news.html#slug: показываем (даже если скрыта «Показать ещё») и отмечаем рамкой */
+    const markTarget = () => {
+      const el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (!el || !el.classList.contains('nblock')) return;
+      if (el.hidden) {
+        tag = 'all'; shown = Math.max(STEP, cards.indexOf(el) + 1);
+        $$('[data-news-tag]').forEach(b => { const on = b.dataset.newsTag === 'all'; b.classList.toggle('is-current', on); b.setAttribute('aria-pressed', String(on)); });
+        render();
+      }
+      cards.forEach(c => c.classList.remove('is-target'));
+      el.classList.add('is-target');
+      el.scrollIntoView({ block: 'start' });
+    };
+    markTarget();
+    window.addEventListener('hashchange', markTarget);
   }
 
   /* =========================================================

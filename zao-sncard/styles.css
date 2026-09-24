@@ -462,7 +462,8 @@ html:not(.js) .nfilter { display: none; } /* без JS фильтр не раб�
 .nfilter__tab .mono { margin-left: 6px; font-size: 12px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .nfilter__tab.is-current .mono { color: inherit; }
 
-/* Сетка блоков: у новостей нет отдельных страниц, текст — целиком в блоке */
+/* Сетка блоков: у новостей нет отдельных страниц, текст — целиком в блоке.
+   Та же разметка и стили — на sncard/news.html */
 .nlist__items { display: grid; gap: var(--gap); grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
 .nblock {
   display: flex; flex-direction: column; gap: 10px;
@@ -482,6 +483,25 @@ html:not(.js) .nfilter { display: none; } /* без JS фильтр не раб�
 .nblock__body p { font-size: 14.5px; line-height: 1.55; color: var(--text-muted); }
 .nblock__body a { color: var(--text); border-bottom: 1px solid var(--accent); }
 .nblock__body a:hover { color: var(--accent); }
+
+/* Блоки одной высоты: метка и заголовок на месте, текст под ними прокручивается внутри блока */
+.nblock { height: 400px; min-height: 0; }
+.nblock__meta, .nblock__title { flex: none; }
+.nblock__body {
+  flex: 1 1 auto; min-height: 0; align-content: start;
+  overflow-y: auto; overscroll-behavior: contain;
+  margin-right: -10px; padding-right: 10px; /* полоса прокрутки не прижата к тексту */
+  scrollbar-width: thin; scrollbar-color: var(--blueprint-soft) transparent;
+}
+.nblock__body::-webkit-scrollbar { width: 6px; }
+.nblock__body::-webkit-scrollbar-thumb { background: var(--blueprint-soft); border-radius: 999px; }
+.nblock__body:hover::-webkit-scrollbar-thumb { background: var(--blueprint); }
+.nblock__body.is-scroll:not(.is-end) { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 48px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 48px), transparent); }
+.nblock__body:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+.nblock__body ul, .nblock__body ol { display: grid; gap: 6px; padding-left: 18px; font-size: 14.5px; line-height: 1.55; color: var(--text-muted); }
+.nblock__body ul { list-style: disc; }
+.nblock__body ol { list-style: decimal; }
+.nblock__body h3, .nblock__body h4 { font-size: 15px; font-weight: 700; color: var(--text); }
 
 /* Список АЗС внутри новости: название над адресом, как строки спецификации */
 .nstations { display: grid; border-top: 1px solid var(--line); }
@@ -668,7 +688,7 @@ html:not(.js) .copy { display: none; }
   .phead__lead { font-size: 17px; }
   .nlist { padding: 40px 0 80px; }
   .nlist__items { grid-template-columns: 1fr; }
-  .nblock { padding: 24px; }
+  .nblock { padding: 24px; height: 400px; }
 }
 
 /* =========================================================

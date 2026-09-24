@@ -20,6 +20,24 @@
   const STEP = 12;
   let tag = 'all', limit = STEP;
 
+  // Блоки одной высоты: длинный текст прокручивается внутри. Такие блоки отмечаем
+  // (градиент снизу, пока текст не дочитан) и даём им фокус с клавиатуры
+  const scrollState = body => {
+    const can = body.scrollHeight > body.clientHeight + 1;
+    body.classList.toggle('is-scroll', can);
+    body.classList.toggle('is-end', can && body.scrollTop + body.clientHeight >= body.scrollHeight - 2);
+    if (can && !body.hasAttribute('tabindex')) {
+      body.tabIndex = 0;
+      body.setAttribute('role', 'region');
+      body.setAttribute('aria-label', `Текст новости: ${body.closest('.nblock').querySelector('.nblock__title').textContent}`);
+    }
+  };
+  const bodies = items.map(el => el.querySelector('.nblock__body'));
+  bodies.forEach(b => b.addEventListener('scroll', () => scrollState(b), { passive: true }));
+  const syncBodies = () => bodies.forEach(b => { if (!b.closest('.nblock').hidden) scrollState(b); });
+  window.addEventListener('resize', syncBodies);
+  document.fonts?.ready.then(syncBodies);
+
   function render() {
     let n = 0;
     items.forEach(el => {
@@ -32,6 +50,7 @@
       more.hidden = n <= limit;
       more.textContent = `Показать ещё ${Math.min(STEP, n - limit)}`;
     }
+    syncBodies();
   }
 
   function select(value) {

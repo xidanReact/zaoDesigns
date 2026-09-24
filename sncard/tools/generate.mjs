@@ -604,38 +604,40 @@ ${related.map(x => '      ' + prodCard(r, x)).join('\n')}
    Новости
    ========================================================= */
 const TAGS = [...new Set(NEWS.map(n => n.tag))];
-function newsCard(r, n) {
-  return `<article class="ncard ncard--row" data-tag="${esc(n.tag)}" data-reveal-item>
-        <div class="ncard__meta">
-          <time datetime="${n.date}" class="mono">${rusDate(n.date)}</time>
+/* Блок новости — как на zao-sncard/news.html: текст целиком, блоки одной высоты,
+   длинный текст прокручивается внутри блока. У каждой новости остаётся своя страница */
+function newsBlock(r, n) {
+  const body = content(n.body, r).replace(/<h2 itemprop="name">[\s\S]*?<\/h2>\s*/, '').trim(); // заголовок уже в блоке
+  return `<article class="nblock" id="${n.slug}" data-tag="${esc(n.tag)}">
+        <div class="nblock__meta">
+          <time class="mono" datetime="${n.date}">${rusDate(n.date)}</time>
           <span class="tag">${esc(n.tag)}</span>
         </div>
-        <h2 class="ncard__title"><a href="${r}news/${n.slug}.html">${esc(n.title)}</a></h2>
-        <p class="ncard__lead">${esc(n.lead)}…</p>
-        <span class="ncard__more">Читать</span>
+        <h2 class="nblock__title">${esc(n.title)}</h2>
+        <div class="nblock__body" data-lenis-prevent>
+${body}
+        </div>
       </article>`;
 }
 function pageNewsIndex() {
   const r = '';
   const main = `${phead({
     r, trail: [['Новости']], title: 'Новости',
-    lead: `Обновления программ СНК, изменения в&nbsp;законодательстве и&nbsp;работе сервисов: ${NEWS.length} записей с&nbsp;${NEWS.at(-1).date.slice(0, 4)} года.`,
+    lead: `Обновления программ СНК, изменения в&nbsp;законодательстве и&nbsp;работе сервисов: <b>${NEWS.length}</b> записей с&nbsp;${NEWS.at(-1).date.slice(0, 4)} года.`,
     sheet: 'СНК · Новости · Лист 1',
   })}
 
-<section class="news-list">
+<section class="nlist" aria-label="Все новости">
   <div class="container">
-    <div class="docs__bar">
-      <div class="docs__tabs" role="group" aria-label="Фильтр новостей">
-        <button class="docs__tab is-current" type="button" data-news-tag="all" aria-pressed="true">Все <span class="mono">${NEWS.length}</span></button>
-${TAGS.map(t => `        <button class="docs__tab" type="button" data-news-tag="${esc(t)}" aria-pressed="false">${esc(t)} <span class="mono">${NEWS.filter(n => n.tag === t).length}</span></button>`).join('\n')}
-      </div>
+    <div class="nfilter" role="group" aria-label="Фильтр новостей по теме">
+      <button class="nfilter__tab is-current" type="button" data-news-tag="all" aria-pressed="true">Все <span class="mono">${NEWS.length}</span></button>
+${TAGS.map(t => `      <button class="nfilter__tab" type="button" data-news-tag="${esc(t)}" aria-pressed="false">${esc(t)} <span class="mono">${NEWS.filter(n => n.tag === t).length}</span></button>`).join('\n')}
     </div>
-    <div class="news-list__items" data-news-items>
-${NEWS.map(n => '      ' + newsCard(r, n)).join('\n')}
+    <div class="nlist__items" data-news-items>
+${NEWS.map(n => '      ' + newsBlock(r, n)).join('\n')}
     </div>
-    <p class="news-list__empty" hidden>По этому фильтру новостей нет.</p>
-    <div class="news-list__more">
+    <p class="nlist__empty" hidden>По этому фильтру новостей нет.</p>
+    <div class="nlist__more">
       <button class="btn btn--outline" type="button" data-news-more hidden>Показать ещё</button>
     </div>
   </div>
