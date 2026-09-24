@@ -785,5 +785,9 @@ html:not(.js) .copy { display: none; }
   .totop { right: 16px; bottom: 16px; width: 44px; height: 44px; }
 }
 
+/* Рассылка: ссылка на согласие в подписи галочки — как на sncard */
+.check__text a { color: var(--text); border-bottom: 1px solid var(--blueprint-soft); }
+.check__text a:hover { color: var(--accent); border-color: var(--accent); }
+
 /* Рассылка: «Подписаться» неактивна, пока не введён адрес и не отмечено согласие */
 .btn--submit:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; transform: none; }

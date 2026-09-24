@@ -6,7 +6,7 @@
    Что делает:
    1. Читает тексты из ../policies.js (перенесены с zao.sncard.ru дословно).
    2. Берёт news.html как образец оболочки (шапка, мобильное меню, футер)
-      и пишет privacy.html и cookies.html — разметка как на sncard:
+      и пишет privacy.html, cookies.html и consent.html — разметка как на sncard:
       шапка страницы (phead) + оглавление + текст с нумерацией пунктов.
    Шапку и футер правьте в index.html / news.html, затем перезапустите скрипт.
    ========================================================= */
@@ -106,5 +106,5 @@ function page(key, file) {
   return file;
 }
 
-const out = [page('privacy', 'privacy.html'), page('cookies', 'cookies.html')];
+const out = [page('privacy', 'privacy.html'), page('cookies', 'cookies.html'), page('consent', 'consent.html')];
 console.log(`Готово: ${out.join(', ')}.`);
