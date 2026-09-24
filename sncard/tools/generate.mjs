@@ -371,6 +371,8 @@ function shell({ r, page, here, title, desc, main, scripts = ['js/site.js', 'js/
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
   <!-- Дизайн-система: эталон в designs/, здесь только новые компоненты -->
+  <link rel="icon" href="${r}favicon.ico" sizes="any">
+  <link rel="icon" href="${r}favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="${r}../designs/styles.css">
   <link rel="stylesheet" href="${r}styles.css">
 </head>
