@@ -806,7 +806,9 @@ html:not(.js) .copy { display: none; }
 .prose { font-size: 17px; line-height: 1.65; max-width: 44em; }
 .prose > * + * { margin-top: 16px; }
 .prose h3 { font-size: 21px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.3; margin-top: 36px; }
-.prose ul { display: grid; gap: 8px; }
+.prose { overflow-wrap: break-word; }
+.prose ul { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; } /* колонка не растягивается под длинное слово */
+.prose table { display: block; max-width: 100%; overflow-x: auto; } /* широкие таблицы из старого сайта — прокрутка внутри */
 .prose li { position: relative; padding-left: 22px; }
 .prose li::before { content: ""; position: absolute; left: 2px; top: .8em; width: 10px; height: 1.5px; background: var(--blueprint); }
 .prose li ul { margin-top: 8px; }
@@ -1099,6 +1101,7 @@ mark.hl { background: rgba(211, 47, 47, .12); color: inherit; border-radius: 2px
   .phead__icon { display: block; width: 40px; height: 40px; margin: 0 0 12px; }
   .phead__lead { font-size: 17px; }
   .phead__facts dd { font-size: 17px; }
+  .phead__facts { flex-wrap: wrap; } /* три факта не помещаются в строку на 390 */
   .catalog, .catalog-index { padding-top: 32px; }
   .catalog__list, .related__list { grid-template-columns: 1fr; }
   .product { padding-top: 20px; }
@@ -1267,6 +1270,7 @@ html:not(.js) .nfilter { display: none; } /* без JS фильтр не раб�
 .partners { padding: 48px 0 120px; border-top: 1px solid var(--line); }
 .pgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
 .pcard { display: grid; gap: 10px; align-content: start; padding: 22px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-lg); transition: border-color var(--t-ui) ease, box-shadow var(--t-ui) ease; }
+.pcard { grid-template-columns: minmax(0, 1fr); overflow-wrap: anywhere; } /* длинные названия не распирают карточку */
 .pcard:hover { border-color: var(--blueprint); box-shadow: var(--shadow-sm); }
 .pcard__logo { display: grid; place-items: center; height: 64px; margin-bottom: 4px; }
 .pcard__logo img { max-width: 100%; max-height: 64px; width: auto; height: auto; object-fit: contain; filter: grayscale(1); opacity: .85; transition: filter var(--t-ui) ease, opacity var(--t-ui) ease; }

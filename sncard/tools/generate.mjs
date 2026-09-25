@@ -563,7 +563,7 @@ function prodCard(r, p, { headingLevel = 3 } = {}) {
 function pageSoftwareIndex() {
   const r = '../';
   const main = `${phead({
-    r, trail: [['Программное обеспечение']], title: 'Программное&nbsp;обеспечение',
+    r, trail: [['Программное обеспечение']], title: 'Программное обеспечение',
     lead: `${PRODUCTS.length} продуктов СНК в&nbsp;четырёх направлениях: управление АЗС и&nbsp;АЗК, сеть АЗС, процессинг топливных карт, нефтебазы. Поставка по&nbsp;лицензии, сопровождение 12&nbsp;месяцев в&nbsp;составе поставки.`,
     sheet: 'СНК · ПО · Лист 1',
     aside: facts([['продуктов', PRODUCTS.length], ['направления', SECTIONS.length], ['реестр ПО', '№&nbsp;2022616071']]),

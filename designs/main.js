@@ -137,7 +137,7 @@
       mmenu.style.setProperty('--mmenu-top', `${header.getBoundingClientRect().bottom}px`);
       mmenu.hidden = false;
       lenis?.stop();
-      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
       if (G && !RM) {
         G.fromTo(mmenu, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: 'power1.out' });
         G.fromTo($$('.mmenu__list > li, .mmenu__foot', mmenu), { opacity: 0, y: 16 },
@@ -146,7 +146,7 @@
     } else {
       mmenu.hidden = true;
       lenis?.start();
-      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     }
   }
   burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));

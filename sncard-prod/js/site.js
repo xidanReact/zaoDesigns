@@ -113,7 +113,7 @@
     burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
     if (open) mmenu.style.setProperty('--mmenu-top', `${header.getBoundingClientRect().bottom}px`);
     mmenu.hidden = !open;
-    document.body.style.overflow = open ? 'hidden' : '';
+    document.documentElement.style.overflow = open ? 'hidden' : '';
     document.dispatchEvent(new CustomEvent('snc:menu', { detail: { open } }));
   }
   burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));

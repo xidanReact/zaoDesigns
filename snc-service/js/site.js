@@ -126,11 +126,11 @@
     if (open) {
       mmenu.style.setProperty('--mmenu-top', `${header.getBoundingClientRect().bottom}px`);
       mmenu.hidden = false;
-      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
       document.dispatchEvent(new CustomEvent('snc:menu', { detail: { open } }));
     } else {
       mmenu.hidden = true;
-      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       document.dispatchEvent(new CustomEvent('snc:menu', { detail: { open } }));
     }
   }
