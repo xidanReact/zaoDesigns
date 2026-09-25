@@ -352,7 +352,7 @@ html:not(.js) .atlas__zoom, html:not(.js) .atlas__hud { display: none; }
 }
 .flow__cap { font-size: 14.5px; color: var(--text-muted); line-height: 1.5; max-width: 40em; }
 
-.company__metrics { margin: 96px 0; border-block: 1px solid var(--line); }
+.company__metrics { margin: 96px 0; border-block: 1px solid var(--line); grid-template-columns: repeat(3, 1fr); }
 
 .history {
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap);
@@ -643,6 +643,7 @@ html:not(.js) .copy { display: none; }
   .company__metrics .metric:nth-child(3) { border-left: 0; }
   .company__metrics .metric:nth-child(n+3) { border-top: 1px solid var(--line); }
   .company__metrics .metric:nth-child(3)::before { display: none; }
+  .company__metrics .metric:nth-child(3) { grid-column: 1 / -1; }
   .history__side, .timeline { grid-column: 1 / -1; }
   .history__side { position: static; margin-bottom: 24px; }
 
