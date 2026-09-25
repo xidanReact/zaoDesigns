@@ -1012,10 +1012,11 @@ html:not(.js) .has-dd:focus-within .dd,
 
 /* ---------- Cookie-баннер (общий для сайтов группы; разметку создаёт JS сайта) ---------- */
 .cookie {
-  position: fixed; left: 24px; bottom: 24px; z-index: 95;
-  display: grid; gap: 16px;
-  width: min(460px, calc(100vw - 48px));
-  padding: 20px 20px 20px 22px;
+  position: fixed; left: 0; right: 0; bottom: 20px; z-index: 95;
+  margin-inline: auto;
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px 24px;
+  width: min(920px, calc(100% - 48px));
+  padding: 12px 12px 12px 22px;
   background: var(--bg); color: var(--text);
   border: 1px solid var(--line); border-radius: var(--r-md);
   box-shadow: var(--shadow-md);
@@ -1023,12 +1024,12 @@ html:not(.js) .has-dd:focus-within .dd,
   transition: opacity 220ms ease-out, transform 320ms var(--ease), visibility 0s linear 320ms;
 }
 .cookie.is-visible { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
-.cookie__text { font-size: 14.5px; line-height: 1.5; color: var(--text-muted); }
+.cookie__text { font-size: 14px; line-height: 1.45; color: var(--text-muted); }
 .cookie__text a { color: var(--text); text-decoration: underline; text-decoration-color: var(--blueprint); text-underline-offset: 3px; }
 .cookie__text a:hover { color: var(--accent); text-decoration-color: currentColor; }
-.cookie__actions { display: flex; flex-wrap: wrap; gap: 10px; }
-.cookie__actions .btn { --h: 44px; padding: 0 20px; font-size: 15px; }
-@media (max-width: 640px) {
-  .cookie { left: 16px; bottom: 16px; width: calc(100vw - 32px); padding: 16px; }
+.cookie__actions { display: flex; gap: 8px; }
+.cookie__actions .btn { --h: 40px; padding: 0 18px; font-size: 14.5px; }
+@media (max-width: 760px) {
+  .cookie { grid-template-columns: 1fr; bottom: 16px; width: calc(100% - 32px); padding: 14px 16px; }
   .cookie__actions .btn { flex: 1 1 auto; }
 }
