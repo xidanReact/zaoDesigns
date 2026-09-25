@@ -337,7 +337,7 @@ function atlasMap({ W = 640, H = 560, pad = 70, padX = 150 } = {}) { // padX —
   const km = [1, 2, 5, 10, 20, 50, 100, 200].filter(n => n * pxPerKm <= W / 4).pop() || 1;
   const bar = r1(km * pxPerKm);
   out.push(`<g class="bp-coord am-scale"><path d="M20 ${H - 26}v6h${bar}v-6"/><text x="${r1(20 + bar + 8)}" y="${H - 20}">${km} км</text></g>`);
-  out.push(`<text class="bp-coord" x="${W - 14}" y="${H - 20}" text-anchor="end">Подложка: Natural Earth</text>`);
+  out.push(`<text class="bp-coord" x="${W - 14}" y="${H - 20}" text-anchor="end">Natural Earth</text>`);
   out.push(`</g>`);
   out.push(`<rect class="am-frame" x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="12"/>`);
   return out.join('\n');

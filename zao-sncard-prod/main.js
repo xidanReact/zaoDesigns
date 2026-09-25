@@ -40,10 +40,9 @@
     box.className = 'cookie';
     box.setAttribute('aria-label', 'Уведомление об использовании cookies');
     box.innerHTML = `
-      <p class="cookie__text">Сайт использует cookies. Обязательные нужны для работы сайта, аналитические — только с&nbsp;вашего согласия. Подробнее — в&nbsp;<a href="${policy}">Политике использования Cookies</a>.</p>
+      <p class="cookie__text"><span class="cookie__line cookie__line--lead">Сайт использует cookies. Обязательные нужны для работы сайта, аналитические — только с&nbsp;вашего согласия.</span> <span class="cookie__line">Подробнее — в&nbsp;<a href="${policy}">Политике использования Cookies</a>.</span></p>
       <div class="cookie__actions">
         <button class="btn btn--primary" type="button" data-cookie="all">Принять</button>
-        <button class="btn btn--outline" type="button" data-cookie="necessary">Только обязательные</button>
       </div>`;
     box.addEventListener('click', e => {
       const b = e.target.closest('[data-cookie]');
@@ -143,7 +142,9 @@
     }
   }
   burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
-  mmenu.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+  // закрываем раньше якорных обработчиков (у Lenis — capture на document): остановленный Lenis
+  // игнорирует scrollTo, а lenis.start() при закрытии сбросил бы уже начатую прокрутку
+  window.addEventListener('click', e => { if (e.target.closest('#mobile-menu a')) setMenu(false); }, true);
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') { setMenu(false); burger.focus(); }
   });
@@ -363,7 +364,7 @@
     map.on('zoomend', byZoom);
     map.whenReady(byZoom);
     map.setMaxBounds(L.latLngBounds(B.bounds).pad(0.05));
-    map.attributionControl.addAttribution('Подложка: <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a>');
+    map.attributionControl.addAttribution('<a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a>');
   }
 
   /* ---------- Leaflet ---------- */
