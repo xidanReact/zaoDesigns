@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
   <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../styles.css?v=2c55098b53">
+  <link rel="stylesheet" href="../styles.css?v=74724f8848">
 </head>
 <body data-page="docs">
 <!-- Файл создан tools/generate.mjs из data/*.js — правьте данные, а не этот файл -->
@@ -251,24 +251,24 @@
 <p><b>Подключение ТРК ADAST к системе управления СНК-АЗС</b></p>
 <p>Система управления СНК-АЗСподдерживает работу с ТРК ADAST, оборудованных контроллерами ADP1/2, ADP1/M, ADP2/M, ADPMPD и ADPMPD/M (производитель – <a href="http://www.betacontrol.cz/ru/" target="_blank" rel="noopener">компания BetaControl</a>).</p>
 <p>Управление этими контроллерами осуществляется по интерфейсу RS485(2-wire), логический протокол Easycall.</p>
-<p>Для подключение ТРК ADAST мы применяем преобразователи интерфейсов собственного производства <a href="https://www.sncard.ru/?view=article&id=36:rs232-rs485&catid=2" target="_blank" rel="noopener">RS232-RS485</a></p>
+<p>Для подключение ТРК ADAST мы применяем преобразователи интерфейсов собственного производства <a href="https://snc-service.sncard.ru/equipment/preobrazovateli-interfejsov/preobrazovatel-iz-rs232-ili-usb-v-rs485-poludupleks.html" target="_blank" rel="noopener">RS232-RS485</a></p>
 
 <table>
 <tbody>
 <tr>
-<td></td>
-<td> </td>
+<td><img width="106" height="83" src="../img/docs/podklyuchenie-trk-adast/rs232_rs485.jpg" alt="rs232 rs485" loading="lazy" decoding="async"></td>
+<td><img width="327" height="294" src="../img/docs/podklyuchenie-trk-pk-elektroniks/convrs232-rs485_2.jpg" alt="ConvRS232 RS485 2" loading="lazy" decoding="async"> </td>
 </tr>
 </tbody>
 </table>
 
-<p> или <a href="https://www.sncard.ru/?view=article&id=37:usb-rs485&catid=2" target="_blank" rel="noopener">USB-RS485</a><a href="https://www.sncard.ru/component/content/article/37-usb-rs485?catid=2:uncategorised&Itemid=200" target="_blank" rel="noopener"><br /></a></p>
+<p> или <a href="https://snc-service.sncard.ru/equipment/preobrazovateli-interfejsov/preobrazovatel-iz-rs232-ili-usb-v-rs485-poludupleks.html" target="_blank" rel="noopener">USB-RS485</a><a href="https://snc-service.sncard.ru/equipment/preobrazovateli-interfejsov/preobrazovatel-iz-rs232-ili-usb-v-rs485-poludupleks.html" target="_blank" rel="noopener"><br /></a></p>
 
 <table>
 <tbody>
 <tr>
-<td></td>
-<td></td>
+<td><img width="279" height="261" src="../img/docs/podklyuchenie-trk-pk-elektroniks/convusb-rs485.jpg" alt="ConvUSB RS485" loading="lazy" decoding="async"></td>
+<td><img width="272" height="260" src="../img/docs/podklyuchenie-trk-topaz/convusb-rs485_1.jpg" alt="ConvUSB RS485 1" loading="lazy" decoding="async"></td>
 </tr>
 </tbody>
 </table>
@@ -277,23 +277,23 @@
 <p>ТРК подключаются к контактам А и В разьема преобразователя.</p>
 
 <p><b>Настройка ТРК ADAST для работы с системой управления СНК-АЗС</b></p>
-<p>Для организации связи между системой управления <b>СНК-АЗС </b>и ТРК ADAST необходимо запрограммировать следующие параметры в ТРК. Программирование ТРК выполняется при помощи сервисного пульта. Комплект документации на счетчики ADPT на русском языке можно скачать <a href="https://www.sncard.ru/images/files/azs/Doc/Manufac/TRK_Adast/Elektronika.rar" target="_blank" rel="noopener">здесь</a>.</p>
+<p>Для организации связи между системой управления <b>СНК-АЗС </b>и ТРК ADAST необходимо запрограммировать следующие параметры в ТРК. Программирование ТРК выполняется при помощи сервисного пульта. Комплект документации на счетчики ADPT на русском языке можно скачать <a href="../files/azs/Doc/Manufac/TRK_Adast/Elektronika.rar" target="_blank" rel="noopener">здесь</a>.</p>
 <p>Необходимые условия для перехода в режим установки параметров:</p>
 <ol>
 <li>С момента последнего включения контроллера ТРК пистолет не снимался.</li>
 <li>Завершенные транзакции должны быть подтверждены.</li>
 </ol>
 <p>Внешний вид сервисного пульта, работающего через инфракрасный порт:</p>
-<p></p>
+<p><img width="209" height="270" src="../img/docs/podklyuchenie-trk-adast/pult.png" alt="Pult" loading="lazy" decoding="async"></p>
 <p>Последовательность действий для программирования ТРК:</p>
 <ol>
 <li>Нажмите на сервисном пульте клавишу “S” во время задержки после включения или по истечении этой задержки, но до снятия пистолета.</li>
 </ol>
-<p><br /> В первой строке дисплея (строка общей стоимости) отобразится “PArAПS”, а в третьей строке (строка цены за единицу) – номер версии программного обеспечения.</p>
+<p><img width="187" height="150" src="../img/docs/podklyuchenie-trk-adast/menu_1.png" alt="menu 1" loading="lazy" decoding="async"><br /> В первой строке дисплея (строка общей стоимости) отобразится “PArAПS”, а в третьей строке (строка цены за единицу) – номер версии программного обеспечения.</p>
 <ol>
 <li>При нажатии клавиши “0” в строке объема отобразится значение параметра, а в строке цены за единицу “P-” и номер параметра.</li>
 </ol>
-<p><br /> При повторном нажатии клавиши “0” последовательно просматривается список параметров.</p>
+<p><img width="161" height="150" src="../img/docs/podklyuchenie-trk-adast/menu_2.png" alt="menu 2" loading="lazy" decoding="async"><br /> При повторном нажатии клавиши “0” последовательно просматривается список параметров.</p>
 <ol>
 <li>При нажатии клавиши “+” значение отображаемого параметра увеличивается, при нажатии клавиши “-” значение отображаемого параметра уменьшается.</li>
 <li>При нажатии клавиши “0” подтвердится текущее отображаемое значение параметра и осуществится переход к следующему параметру.</li>
@@ -476,7 +476,7 @@
 
 
 <p><b>Настройка системы управления «СНК-АЗС».</b></p>
-<p></p>
+<p><img width="633" height="416" src="../img/docs/podklyuchenie-trk-adast/adast_1.png" alt="Adast 1" loading="lazy" decoding="async"></p>
 
 
 <p><b>1. Настройка в программе </b><b>HWServerConfig</b><b>:</b></p>
@@ -487,7 +487,7 @@
 <li>При необходимости измените адреса сторон и шлангов.</li>
 <li>Нажмите кнопку «Сохранить».</li>
 </ul>
-<p></p>
+<p><img width="1105" height="417" src="../img/docs/podklyuchenie-trk-adast/hwserver_2.png" alt="HWServer 2" loading="lazy" decoding="async"></p>
 <p>Дополнительные Параметры настройки:</p>
 <ul>
 <li>Адрес ТРК – устанавливает адрес стороны 1…32</li>
@@ -498,83 +498,17 @@
 </ul>
 
 <p><b>2. Настройка в программе «Управление конфигурацией»:</b></p>
-<p></p>
+<p><img width="555" height="407" src="../img/docs/podklyuchenie-uzsg-ot-tehnoproekt/livna_3.png" alt="Livna 3" loading="lazy" decoding="async"></p>
 <ul>
 <li>Откройте приложение «Управление конфигурацией».</li>
 <li>Выберите вкладку «Резервуары и ТРК», экран ТРК.</li>
 <li>Создайте новую ТРК или отредактируйте существующую.</li>
 <li>Выберите канал контроллера.</li>
 </ul>
-<p></p>
+<p><img width="327" height="362" src="../img/docs/podklyuchenie-unsg-01-vesy-ot-kompanii/livna_4.png" alt="Livna 4" loading="lazy" decoding="async"></p>
 <ul>
 <li>При необходимости примените индивидуальные параметры.</li>
 </ul>
- 
- 
- 
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- <p><a href="tel:+78002500534"></a></p>
-<a href="tel:+78002500534"></a>
-<footer><h3>Контактная информация</h3>
- <ul>
-<li>634009, г. Томск, ул. Розы Люксембург, д. 55</li>
-<li><a href="mailto:sncard@sncard.ru">sncard@sncard.ru</a></li>
-<li><a href="tel:+73822651030">+7 (3822) 65-10-30</a></li>
-</ul>
-<h3>Правовая информация</h3>
- <p><a href="../privacy.html" target="_blank" rel="noopener">Политика конфиденциальности</a></p>
-<p><a href="../cookies.html" target="_blank" rel="noopener">Политика использования Cookies</a></p>
-<p><a href="../consent.html" target="_blank" rel="noopener">Согласие на получение новостных сообщений</a></p>
-<h3>Поиск</h3>
-<form action="/component/finder/search?Itemid=185" method="get" role="search">
- <label for="mod-finder-searchword153"> </label><input type="text" name="q" value="" placeholder="Введите текст для поиска...">
- <input type="hidden" name="Itemid" value="185"></form>
-<h3>Рассылка новостей</h3>
- 
-Рассылка ООО "Сибнефтекарт"
-<input name="email" required="" type="email" placeholder="Введите адрес эл. почты" />
- 
-
-
- <input type="checkbox" name="newsletter-agreement" />
- <label for="newsletter-agreement">Соглашаюсь получать рекламно-информационные сообщения</label>
-
-<button type="button">Подписаться</button><button type="button">Отменить</button>
-</footer>
- 
-<p><a href="https://metrika.yandex.ru/stat/?id=22525165&from=informer" target="_blank" rel="noopener"></a></p>
- <noscript></noscript>
-© ООО "Сибнефтекарт-Сервис", 
- 
- 
- 
- <a href="#" target="_blank" rel="noopener"><i aria-hidden="true" title="Close Menu"></i></a>
- 
- <ul>
-<li><a href="https://www.sncard.ru/mobile-home" target="_blank" rel="noopener"> Главная</a></li><li><a href="https://www.sncard.ru/mobile-news" target="_blank" rel="noopener"> Новости</a></li><li><a href="https://www.sncard.ru/mobile-company" target="_blank" rel="noopener"> О компании</a></li><li><a href="https://www.sncard.ru/mobile-apps" target="_blank" rel="noopener"> Программное обеспечение</a></li><li> <a href="https://snc-service.sncard.ru/" target="_blank" rel="noopener"> Оборудование</a></li><li> <a href="https://snc-service.sncard.ru/" target="_blank" rel="noopener"> Изготовление карт</a></li><li><a href="https://www.sncard.ru/mobile-dokumentatsiya" target="_blank" rel="noopener"> Документация</a></li><li><a href="https://www.sncard.ru/mobile-partners" target="_blank" rel="noopener"> Партнеры</a></li><li><a href="https://www.sncard.ru/mobile-contacts" target="_blank" rel="noopener"> Контакты</a></li><li> <a href="http://kkt.sncard.ru/" target="_blank" rel="noopener"> Обслуживание ККТ</a></li></ul>
- 
- 
- 
- 
- 
- 
- 
- <a href="javascript:void(0)" target="_blank" rel="noopener"> </a>
- 
- 
- </body>
-</html>
     </div>
     <p class="article__back"><a class="link-more" href="../docs.html">Вся документация <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
   </div>

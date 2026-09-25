@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
   <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../styles.css?v=2c55098b53">
+  <link rel="stylesheet" href="../styles.css?v=74724f8848">
 </head>
 <body data-page="docs">
 <!-- Файл создан tools/generate.mjs из data/*.js — правьте данные, а не этот файл -->
@@ -250,24 +250,24 @@
     <div class="prose article__body">
 <p><b>Подключение ТРК Dresser Wayne к системе управления СНК-АЗС</b></p>
 <p>Обмен информацией с ТРК Dresser Wayne происходит по 2-х проводной линии связи RS485 simplex. Логический протокол DART-LINE версия 1.3.</p>
-<p>Для ТРК Dresser Wayne 4-го поколения достаточно применить один преобразователь интерфейсов <a href="https://www.sncard.ru/elektronnoe-oborudovanie/preobrazovateli-interfejsov/rs232-rs485" target="_blank" rel="noopener">RS232-RS485</a> полудуплекс</p>
+<p>Для ТРК Dresser Wayne 4-го поколения достаточно применить один преобразователь интерфейсов <a href="https://snc-service.sncard.ru/equipment/preobrazovateli-interfejsov/preobrazovatel-iz-rs232-ili-usb-v-rs485-poludupleks.html" target="_blank" rel="noopener">RS232-RS485</a> полудуплекс</p>
 
 <table>
 <tbody>
 <tr>
-<td></td>
-<td></td>
+<td><img width="136" height="129" src="../img/docs/podklyuchenie-trk-topaz/convrs232-rs485_1.jpg" alt="ConvRS232 RS485 1" loading="lazy" decoding="async"></td>
+<td><img width="327" height="294" src="../img/docs/podklyuchenie-trk-pk-elektroniks/convrs232-rs485_2.jpg" alt="ConvRS232 RS485 2" loading="lazy" decoding="async"></td>
 </tr>
 </tbody>
 </table>
 
-<p>или <a href="https://www.sncard.ru/?view=article&id=37:usb-rs485&catid=2" target="_blank" rel="noopener">USB-RS485</a> полудуплекс</p>
+<p>или <a href="https://snc-service.sncard.ru/equipment/preobrazovateli-interfejsov/preobrazovatel-iz-rs232-ili-usb-v-rs485-poludupleks.html" target="_blank" rel="noopener">USB-RS485</a> полудуплекс</p>
 
 <table>
 <tbody>
 <tr>
-<td></td>
-<td></td>
+<td><img width="279" height="261" src="../img/docs/podklyuchenie-trk-pk-elektroniks/convusb-rs485.jpg" alt="ConvUSB RS485" loading="lazy" decoding="async"></td>
+<td><img width="272" height="260" src="../img/docs/podklyuchenie-trk-topaz/convusb-rs485_1.jpg" alt="ConvUSB RS485 1" loading="lazy" decoding="async"></td>
 </tr>
 </tbody>
 </table>
@@ -279,7 +279,7 @@
 <p><b>Настройка ТРК Dresser Wayne для работы с системой управления СНК-АЗС</b></p>
 <p>Для настройки ТРК Dresser Wayne надо переставить джампер (DIP8) в правое положение для переключения с "current loop" на "RS485" (см. техническую документацию Dresser Wayne на ТРК соответствующей модели). Затем необходимо выполнить программирование ТРК.</p>
 <p>Программирование ТРК выполняется при помощи сервисной клавиатуры:</p>
-<p></p>
+<p><img width="227" height="147" src="../img/docs/podklyuchenie-trk-dresser-wayne/klb.png" alt="klb" loading="lazy" decoding="async"></p>
 <p>Последовательность действий для программирования ТРК:</p>
 <ol>
 <li>Повесить все пистолеты на обеих сторонах ТРК.</li>
@@ -317,7 +317,7 @@
 
 <p><b>Настройка системы управления СНК-АЗС.</b></p>
 <p><b>1. Настройка в программе </b><b>HWServerConfig</b><b>:</b></p>
-<p></p>
+<p><img width="964" height="757" src="../img/docs/podklyuchenie-trk-dresser-wayne/hws_1.png" alt="hws 1" loading="lazy" decoding="async"></p>
 <p>Запустите программу HWServerConfig.exe, во вкладке Контроллеры создайте Контроллер Dresser Wayne</p>
 <ul>
 <li>Выберите COM-порт, к которому подключен преобразователь интерфейсов.</li>
@@ -325,7 +325,7 @@
 <li>При необходимости измените адреса шлангов.</li>
 <li>Нажмите кнопку «Сохранить».</li>
 </ul>
-<p></p>
+<p><img width="1443" height="555" src="../img/docs/podklyuchenie-trk-dresser-wayne/hws_2.png" alt="hws 2" loading="lazy" decoding="async"></p>
 <p>Дополнительные Параметры настройки:</p>
 <ul>
 <li>Адрес ТРК – устанавливает адрес стороны 0…32</li>
@@ -346,69 +346,7 @@
 </ul>
 <ul>
 <li>При необходимости примените индивидуальные параметры.</li>
-</ul> 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- <p><a href="tel:+78002500534"></a></p>
-<a href="tel:+78002500534"></a>
-<footer><h3>Контактная информация</h3>
- <ul>
-<li>634009, г. Томск, ул. Розы Люксембург, д. 55</li>
-<li><a href="mailto:sncard@sncard.ru">sncard@sncard.ru</a></li>
-<li><a href="tel:+73822651030">+7 (3822) 65-10-30</a></li>
 </ul>
-<h3>Правовая информация</h3>
- <p><a href="../privacy.html" target="_blank" rel="noopener">Политика конфиденциальности</a></p>
-<p><a href="../cookies.html" target="_blank" rel="noopener">Политика использования Cookies</a></p>
-<p><a href="../consent.html" target="_blank" rel="noopener">Согласие на получение новостных сообщений</a></p>
-<h3>Поиск</h3>
-<form action="/component/finder/search?Itemid=185" method="get" role="search">
- <label for="mod-finder-searchword153"> </label><input type="text" name="q" value="" placeholder="Введите текст для поиска...">
- <input type="hidden" name="Itemid" value="185"></form>
-<h3>Рассылка новостей</h3>
- 
-Рассылка ООО "Сибнефтекарт"
-<input name="email" required="" type="email" placeholder="Введите адрес эл. почты" />
- 
-
-
- <input type="checkbox" name="newsletter-agreement" />
- <label for="newsletter-agreement">Соглашаюсь получать рекламно-информационные сообщения</label>
-
-<button type="button">Подписаться</button><button type="button">Отменить</button>
-</footer>
- 
-<p><a href="https://metrika.yandex.ru/stat/?id=22525165&from=informer" target="_blank" rel="noopener"></a></p>
- <noscript></noscript>
-© ООО "Сибнефтекарт-Сервис", 
- 
- 
- 
- <a href="#" target="_blank" rel="noopener"><i aria-hidden="true" title="Close Menu"></i></a>
- 
- <ul>
-<li><a href="https://www.sncard.ru/mobile-home" target="_blank" rel="noopener"> Главная</a></li><li><a href="https://www.sncard.ru/mobile-news" target="_blank" rel="noopener"> Новости</a></li><li><a href="https://www.sncard.ru/mobile-company" target="_blank" rel="noopener"> О компании</a></li><li><a href="https://www.sncard.ru/mobile-apps" target="_blank" rel="noopener"> Программное обеспечение</a></li><li> <a href="https://snc-service.sncard.ru/" target="_blank" rel="noopener"> Оборудование</a></li><li> <a href="https://snc-service.sncard.ru/" target="_blank" rel="noopener"> Изготовление карт</a></li><li><a href="https://www.sncard.ru/mobile-dokumentatsiya" target="_blank" rel="noopener"> Документация</a></li><li><a href="https://www.sncard.ru/mobile-partners" target="_blank" rel="noopener"> Партнеры</a></li><li><a href="https://www.sncard.ru/mobile-contacts" target="_blank" rel="noopener"> Контакты</a></li><li> <a href="http://kkt.sncard.ru/" target="_blank" rel="noopener"> Обслуживание ККТ</a></li></ul>
- 
- 
- 
- 
- 
- 
- 
- <a href="javascript:void(0)" target="_blank" rel="noopener"> </a>
- 
- 
- </body>
-</html>
     </div>
     <p class="article__back"><a class="link-more" href="../docs.html">Вся документация <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
   </div>

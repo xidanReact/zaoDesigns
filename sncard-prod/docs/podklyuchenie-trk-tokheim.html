@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
   <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../styles.css?v=2c55098b53">
+  <link rel="stylesheet" href="../styles.css?v=74724f8848">
 </head>
 <body data-page="docs">
 <!-- Файл создан tools/generate.mjs из data/*.js — правьте данные, а не этот файл -->
@@ -250,24 +250,24 @@
     <div class="prose article__body">
 <p><b>Подключение ТРК Tokheim к системе СНК-АЗС</b></p>
 <p>Подключение сигнального кабеля к колонке осуществляется к разъему X2 интерфейсной платы <i>WWC 0EL 021.0 COMM TOKHEIM INTERFACE</i>.</p>
-<p>Для подключения ТРК к СОМ порту персонального компьютера мы применяем специализированный преобразователь интерфейсов <a href="https://www.sncard.ru/?view=article&id=128:preobrazovatel-interfejsov-rs232-tokheim-2&catid=2" target="_blank" rel="noopener">RS232-Tokheim</a></p>
+<p>Для подключения ТРК к СОМ порту персонального компьютера мы применяем специализированный преобразователь интерфейсов <a href="https://snc-service.sncard.ru/equipment/preobrazovateli-interfejsov/preobrazovatel-interfeysov-usb-ili-rs232-v-interfeys.html" target="_blank" rel="noopener">RS232-Tokheim</a></p>
 
 <table>
 <tbody>
 <tr>
-<td></td>
-<td></td>
+<td><img width="395" height="336" src="../img/docs/podklyuchenie-trk-tokheim/rs232_tokheim.jpg" alt="RS232 Tokheim" loading="lazy" decoding="async"></td>
+<td><img width="394" height="327" src="../img/docs/podklyuchenie-trk-tokheim/rs232_tokheim_out.jpg" alt="RS232 Tokheim out" loading="lazy" decoding="async"></td>
 </tr>
 </tbody>
 </table>
 
-<p>Или <a href="https://www.sncard.ru/?view=article&id=129:preobrazovatel-usb-tokheim&catid=2" target="_blank" rel="noopener">USB-Tokheim</a></p>
+<p>Или <a href="https://snc-service.sncard.ru/equipment/preobrazovateli-interfejsov/preobrazovatel-interfeysov-usb-ili-rs232-v-interfeys.html" target="_blank" rel="noopener">USB-Tokheim</a></p>
 
 <table>
 <tbody>
 <tr>
-<td></td>
-<td></td>
+<td><img width="367" height="336" src="../img/docs/podklyuchenie-trk-tokheim/usb_tokheim.jpg" alt="USB Tokheim" loading="lazy" decoding="async"></td>
+<td><img width="394" height="327" src="../img/docs/podklyuchenie-trk-tokheim/rs232_tokheim_out.jpg" alt="RS232 Tokheim out" loading="lazy" decoding="async"></td>
 </tr>
 </tbody>
 </table>
@@ -276,7 +276,7 @@
 
 <p><b>Настройка в программе </b><b>HWServerConfig</b><b>:</b></p>
 <p>Запустите программу HWServerConfig.exe, во вкладке Контроллеры создайте Контроллер Tokheim</p>
-<p></p>
+<p><img width="448" height="235" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_1.jpg" alt="HW tokheim 1" loading="lazy" decoding="async"></p>
 
 <ul>
 <li>Выберите COM-порт, к которому подключен преобразователь интерфейсов.</li>
@@ -285,11 +285,11 @@
 <li>Для отпуска топлива на СУММУ установите галочку параметра «Заявка на целые литры».</li>
 <li>Нажмите кнопку «Сохранить».</li>
 </ul>
-<p></p>
+<p><img width="448" height="280" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_2.jpg" alt="HW tokheim 2" loading="lazy" decoding="async"></p>
 
 <p><b>Настройка в программе «Управление конфигурацией»:</b></p>
 
-<p></p>
+<p><img width="555" height="407" src="../img/docs/podklyuchenie-uzsg-ot-tehnoproekt/livna_3.png" alt="Livna 3" loading="lazy" decoding="async"></p>
 
 <ul>
 <li>Откройте приложение «Управление конфигурацией».</li>
@@ -298,7 +298,7 @@
 <li>Выберите канал контроллера.</li>
 </ul>
 
-<p></p>
+<p><img width="327" height="362" src="../img/docs/podklyuchenie-unsg-01-vesy-ot-kompanii/livna_4.png" alt="Livna 4" loading="lazy" decoding="async"></p>
 <ul>
 <li>При необходимости примените индивидуальные параметры.</li>
 </ul>
@@ -318,27 +318,27 @@
 <p><b><i>Внимание:</i></b><i>Перед проведением процедуры COLD RESTART (Холодный пуск) необходимо отключить электропитание электроники ТРК. После выполнения процедуры холодного пуска потребуется полностью настроить конфигурацию ТРК.</i></p>
 <p>Для выполнения сброса (обнуления) требуется:</p>
 <p>1. Отключить электропитание электроники ТРК.<br /> 2. Проверить наличие интерфейсной платы WWC COMM TOKHEIM INTERFACE.</p>
-<p></p>
+<p><img width="197" height="201" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_comm.png" alt="HW tokheim Comm" loading="lazy" decoding="async"></p>
 <p>3. Снять джамперы W201 и W202, расположенные на центральной плате (Main Board v.4) электроники TOKHEIM.<br /> 4. Включить электропитание электроники ТРК.</p>
 <p>ТРК перейдет в режим настроек и на дисплее отобразится мигающее сообщение "SEtUP PIncd". Для перехода к дальнейшим пунктам настройки потребуется ввод PIN-кода.</p>
-<p></p>
+<p><img width="175" height="113" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_setup.png" alt="HW tokheim setup" loading="lazy" decoding="async"></p>
 <p>После ввода PIN-кода нажать клавишу "7". При вводе действительного PIN-кода ТРК выполнит процедуру самотестирования (мигающие 8-ки на дисплее) и перейдет к первому пункту меню настроек "cntrY code".</p>
 <p>Вид дисплея при самотестировании:</p>
-<p></p>
+<p><img width="173" height="112" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_test.png" alt="HW tokheim test" loading="lazy" decoding="async"></p>
 <p>Пункт меню cntrY code:</p>
-<p></p>
+<p><img width="174" height="111" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_cntry.png" alt="HW tokheim cntry" loading="lazy" decoding="async"></p>
 <p><b>Программирование параметров работы ТРК TOKHEIM</b></p>
 <p><b><i>Внимание:</i></b><i>Для изменения параметров ТРК TOKHEIM необходима клавишная панель дистанционного управления (IRM) или внутренняя конфигурационная клавишная панель. Инфракрасный контроллер дистанционного управления является опцией.<br /> В зависимости от версии ядра некоторые пункты меню могут отличаться от описанных далее.</i></p>
 <p>Вид дистанционной клавишной панели (IRM):</p>
-<p></p>
+<p><img width="136" height="240" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_pult.png" alt="HW tokheim pult" loading="lazy" decoding="async"></p>
 <p>Необходимо установить следующие параметры:</p>
 <p><i>Код страны (обязательный параметр)</i></p>
 <p>Необходимо установить параметр 0007, соответствующий "РОССИЯ". Для выбора параметра (кода) используется клавиша "9". Для возврата к значению "0000" необходимо нажать "0". Для подтверждения выбора и перехода к следующему меню нажать "7".</p>
-<p></p>
+<p><img width="173" height="113" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_cntry7.png" alt="HW tokheim cntry7" loading="lazy" decoding="async"></p>
 <p>Если код страны не выбран, появится сообщение об ошибке.</p>
 <p><i>Положение десятичной запятой Euro YES/NO</i></p>
 <p>Необходимо установить значение "NO". Данный параметр определяет положение десятичной запятой, заданное по настройке (коду) для страны.</p>
-<p></p>
+<p><img width="173" height="111" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_evro.png" alt="HW tokheim evro" loading="lazy" decoding="async"></p>
 <p>Для выбора параметра используется клавиша "9". Для подтверждения выбора и перехода к следующему меню нажать "7".</p>
 <p><i>Положение десятичной запятой при отображении цены ScalE</i></p>
 <p>Необходимое значение "0". В данном меню можно изменить положение десятичной запятой для цены за единицу.</p>
@@ -346,8 +346,8 @@
 <table>
 <tbody>
 <tr>
-<td> </td>
-<td> </td>
+<td><img width="173" height="112" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_salex.png" alt="HW tokheim saleX" loading="lazy" decoding="async"> </td>
+<td><img width="175" height="112" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_sale0.png" alt="HW tokheim sale0" loading="lazy" decoding="async"> </td>
 </tr>
 </tbody>
 </table>
@@ -355,7 +355,7 @@
 <p>Значение "Х" можно увеличить с помощью клавиши "9", пока не будет достигнуто нужное значение. Для подтверждения выбора и перехода к следующему меню нажать "7".</p>
 <p><i>Единица измерения GALLON/LITER</i></p>
 <p>Требуемое значение "no" для измерений в литрах. Это параметр задает единицы измерения продукта.</p>
-<p></p>
+<p><img width="173" height="115" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_gallon.png" alt="HW tokheim gallon" loading="lazy" decoding="async"></p>
 <p>Для выбора параметра используется клавиша "9". Для подтверждения выбора и перехода к следующему меню нажать "7".</p>
 <p><i>Код настройки diSP SEtUP (обязательный параметр)</i></p>
 <p>Значение должно соответствовать гидравлической схеме.</p>
@@ -363,8 +363,8 @@
 <table>
 <tbody>
 <tr>
-<td> </td>
-<td> </td>
+<td><img width="173" height="111" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_disp.png" alt="HW tokheim disp" loading="lazy" decoding="async"> </td>
+<td><img width="173" height="114" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_disp1.png" alt="HW tokheim disp1" loading="lazy" decoding="async"> </td>
 </tr>
 </tbody>
 </table>
@@ -377,8 +377,8 @@
 <table>
 <tbody>
 <tr>
-<td> </td>
-<td> </td>
+<td><img width="173" height="108" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_hose.png" alt="HW tokheim hose" loading="lazy" decoding="async"> </td>
+<td><img width="174" height="112" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_hose1.png" alt="HW tokheim hose1" loading="lazy" decoding="async"> </td>
 </tr>
 </tbody>
 </table>
@@ -386,32 +386,32 @@
 <p>Установить значение для левой стороны. Слева мигает значение "X". Значение "X" можно увеличить с помощью клавиши "9", пока не будет достигнуто нужное значение. Для подтверждения выбора и перехода к следующему меню нажать клавишу "7".</p>
 <p><i>Обнаружение утечки паров</i></p>
 <p>После выполнения этого пункта меню необходимо установить перемычку<i>W201</i>.</p>
-<p></p>
+<p><img width="174" height="115" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_lea.png" alt="HW tokheim lea" loading="lazy" decoding="async"></p>
 <p>Это последний пункт начальных настроек.</p>
 <p><b><i>Внимание:</i></b><i>На этом этапе выполнения начальных настроек необходимо вставить перемычку W201 во избежание повторного холодного пуска.</i></p>
 <p>При этом происходит автоматический перезапуск калькулятора. В память EEPROM будут записаны новые конфигурационные данные.</p>
 <p>Если в процессе автоматического перезапуска будут обнаружены несоответствия оборудования и заданных параметров, появится сообщение об ошибке.</p>
-<p></p>
+<p><img width="174" height="111" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_err.png" alt="HW tokheim err" loading="lazy" decoding="async"></p>
 <p>Сообщение содержит код возникшей ошибки. Пояснения кодов содержатся в документации производителя.</p>
 <p>Сообщения об ошибках мигают в течение нескольких секунд, после чего электроника переходит к первому пункту меню начальных установок.</p>
 <p><i>Настройка WWC T1</i></p>
 <p>Все дальнейшие настройки производятся на уровне техника АЗС.</p>
 <p>Для перехода в режим конфигурации (сервисный) необходимо нажать клавишу "ON" на конфигурационной клавишной панели. Колонка перейдет в режим конфигурирования. На дисплее ТРК будет отображено текущее состояние ТРК – "conF".</p>
 <p>Вид дисплея при переходе в режим настроек:</p>
-<p></p>
+<p><img width="174" height="112" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_conf.png" alt="HW tokheim conf" loading="lazy" decoding="async"></p>
 <p><b><i>Важно:</i></b><i>При проведении операций программирования все пистолеты на обеих сторонах ТРК должны быть повешены.</i></p>
 <p>Дальнейший порядок действий:</p>
 <p>1. Нажать клавишу "5" для перехода в меню технических настроек ТРК. На дисплее колонки будет отображен мигающий пункт входа в техническое меню "tEcH".</p>
-<p></p>
+<p><img width="175" height="113" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_tech.png" alt="HW tokheim tech" loading="lazy" decoding="async"></p>
 <p>Вход в меню осуществляется по нажатию клавиши "7". Далее по запросу системы на ввод PIN-кода нужно еще раз нажать "7". На дисплее ТРК будет отображено сообщение с приглашением ввести четырехзначный PIN-код техника АЗС (мигает левый символ "-").</p>
-<p></p>
+<p><img width="174" height="112" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_enter.png" alt="HW tokheim enter" loading="lazy" decoding="async"></p>
 <p>На этом этапе необходимо ввести PIN-код техника АЗС. При вводе недействительного PIN-кода на дисплее будет мигать сообщение "Error" в течение нескольких секунд, а затем калькулятор ТРК перейдет в предыдущее меню для ввода PIN-кода.</p>
 
 <table>
 <tbody>
 <tr>
-<td> </td>
-<td> </td>
+<td><img width="173" height="113" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_error1.png" alt="HW tokheim error1" loading="lazy" decoding="async"> </td>
+<td><img width="173" height="112" src="../img/docs/podklyuchenie-trk-tokheim/hw_tokheim_error2.png" alt="HW tokheim error2" loading="lazy" decoding="async"> </td>
 </tr>
 </tbody>
 </table>
@@ -448,69 +448,7 @@
 </tbody>
 </table>
 
-<p>При выходе из режима обслуживания и подтверждении запроса на сохранение параметров будет произведена проверка конфигурации (самотестирование).<br /> В случае обнаружения критической ошибки в конфигурации на индикаторах ТРК появится сообщение "Error" и электроника перейдет к начальному меню настроек.</p> 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- <p><a href="tel:+78002500534"></a></p>
-<a href="tel:+78002500534"></a>
-<footer><h3>Контактная информация</h3>
- <ul>
-<li>634009, г. Томск, ул. Розы Люксембург, д. 55</li>
-<li><a href="mailto:sncard@sncard.ru">sncard@sncard.ru</a></li>
-<li><a href="tel:+73822651030">+7 (3822) 65-10-30</a></li>
-</ul>
-<h3>Правовая информация</h3>
- <p><a href="../privacy.html" target="_blank" rel="noopener">Политика конфиденциальности</a></p>
-<p><a href="../cookies.html" target="_blank" rel="noopener">Политика использования Cookies</a></p>
-<p><a href="../consent.html" target="_blank" rel="noopener">Согласие на получение новостных сообщений</a></p>
-<h3>Поиск</h3>
-<form action="/component/finder/search?Itemid=185" method="get" role="search">
- <label for="mod-finder-searchword153"> </label><input type="text" name="q" value="" placeholder="Введите текст для поиска...">
- <input type="hidden" name="Itemid" value="185"></form>
-<h3>Рассылка новостей</h3>
- 
-Рассылка ООО "Сибнефтекарт"
-<input name="email" required="" type="email" placeholder="Введите адрес эл. почты" />
- 
-
-
- <input type="checkbox" name="newsletter-agreement" />
- <label for="newsletter-agreement">Соглашаюсь получать рекламно-информационные сообщения</label>
-
-<button type="button">Подписаться</button><button type="button">Отменить</button>
-</footer>
- 
-<p><a href="https://metrika.yandex.ru/stat/?id=22525165&from=informer" target="_blank" rel="noopener"></a></p>
- <noscript></noscript>
-© ООО "Сибнефтекарт-Сервис", 
- 
- 
- 
- <a href="#" target="_blank" rel="noopener"><i aria-hidden="true" title="Close Menu"></i></a>
- 
- <ul>
-<li><a href="https://www.sncard.ru/mobile-home" target="_blank" rel="noopener"> Главная</a></li><li><a href="https://www.sncard.ru/mobile-news" target="_blank" rel="noopener"> Новости</a></li><li><a href="https://www.sncard.ru/mobile-company" target="_blank" rel="noopener"> О компании</a></li><li><a href="https://www.sncard.ru/mobile-apps" target="_blank" rel="noopener"> Программное обеспечение</a></li><li> <a href="https://snc-service.sncard.ru/" target="_blank" rel="noopener"> Оборудование</a></li><li> <a href="https://snc-service.sncard.ru/" target="_blank" rel="noopener"> Изготовление карт</a></li><li><a href="https://www.sncard.ru/mobile-dokumentatsiya" target="_blank" rel="noopener"> Документация</a></li><li><a href="https://www.sncard.ru/mobile-partners" target="_blank" rel="noopener"> Партнеры</a></li><li><a href="https://www.sncard.ru/mobile-contacts" target="_blank" rel="noopener"> Контакты</a></li><li> <a href="http://kkt.sncard.ru/" target="_blank" rel="noopener"> Обслуживание ККТ</a></li></ul>
- 
- 
- 
- 
- 
- 
- 
- <a href="javascript:void(0)" target="_blank" rel="noopener"> </a>
- 
- 
- </body>
-</html>
+<p>При выходе из режима обслуживания и подтверждении запроса на сохранение параметров будет произведена проверка конфигурации (самотестирование).<br /> В случае обнаружения критической ошибки в конфигурации на индикаторах ТРК появится сообщение "Error" и электроника перейдет к начальному меню настроек.</p>
     </div>
     <p class="article__back"><a class="link-more" href="../docs.html">Вся документация <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
   </div>

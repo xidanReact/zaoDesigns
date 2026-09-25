@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
   <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../styles.css?v=2c55098b53">
+  <link rel="stylesheet" href="../styles.css?v=74724f8848">
 </head>
 <body data-page="docs">
 <!-- Файл создан tools/generate.mjs из data/*.js — правьте данные, а не этот файл -->
@@ -250,18 +250,18 @@
     <div class="prose article__body">
 <p><b>Подключение ТРК Ливенка к системе управления «СНК-АЗС»</b></p>
 
-<p></p>
+<p><img width="300" height="225" src="../img/docs/podklyuchenie-trk-livna/image001.jpg" alt="image001" loading="lazy" decoding="async"></p>
 <p>Контроллер управления КУП-1..19 (<a href="http://www.prompribor.ru" target="_blank" rel="noopener">ОАО Промприбор</a>, г. Ливны) предназначен для управления топливораздаточной колонкой (ТРК) Ливенка, имеющей до 8 раздаточных кранов (пистолетов).</p>
 <p>Контроллеры управления КУП имеют интерфейс управления «Токовая петля 20ма», поэтому для соединения  с компьютером применяется «Контроллер Концентратор токовой петли 20\42ма» на 6 каналов приема-передачи. Контроллер может быть подключен к компьютеру по интерфейсу RS232 или USB (виртуальный СОМ порт).</p>
 <p>Контроллер позволяет разделить ТРК по разным каналам, таким образом исключить взаимное влияние в случае выхода из строя аппаратной интерфейсной части одного из КУПов.</p>
 
-<p></p>
+<p><img width="99" height="62" src="../img/docs/podklyuchenie-trk-livna/rs232_20ma.jpg" alt="RS232 20ma" loading="lazy" decoding="async"></p>
 <p>Подключить КУП можно через одноканальный преобразователь интерфейсов «USB-Токовая петля 20\42ма» или «RS232- Токовая петля 20\42 ма». Максимальное количество последовательно соединенных КУПов – 3.<br /> <br /> </p>
 <table>
 <tbody>
 <tr>
-<td></td>
-<td></td>
+<td><img width="301" height="292" src="../img/docs/podklyuchenie-trk-livna/convusb-20ma.jpg" alt="ConvUSB 20ma" loading="lazy" decoding="async"></td>
+<td><img width="263" height="262" src="../img/docs/podklyuchenie-trk-livna/convusb-20ma_2.jpg" alt="ConvUSB 20ma 2" loading="lazy" decoding="async"></td>
 </tr>
 </tbody>
 </table>
@@ -281,7 +281,7 @@
 <p><b>Настройка системы управления «СНК-АЗС».</b></p>
 <p> 1. <b>Настройка в программе </b><b>HWServerConfig</b><b>:</b></p>
 
-<p></p>
+<p><img width="386" height="193" src="../img/docs/podklyuchenie-trk-livna/livna_1.png" alt="Livna 1" loading="lazy" decoding="async"></p>
 <p>Запустите программу HWServerConfig.exe, во вкладке Контроллеры создайте Контроллер ТРК/ГНК Ливенка</p>
 <ul>
 <li>Выберите COM-порт, к которому подключен Контроллер Концентратор или преобразователь интерфейсов.</li>
@@ -290,7 +290,7 @@
 <li>Установите галочку «Подавление эхо».</li>
 <li>Нажмите кнопку «Сохранить».</li>
 </ul>
-<p></p>
+<p><img width="623" height="328" src="../img/docs/podklyuchenie-trk-livna/livna_2.png" alt="Livna 2" loading="lazy" decoding="async"></p>
 <p>Дополнительные Параметры настройки:</p>
 <ul>
 <li>Инвертировать - позволяет изменить отображение состояния пистолета ТРК на обратное.</li>
@@ -302,79 +302,17 @@
 
 <p><b>2. Настройка в программе «Управление конфигурацией»:</b></p>
 
-<p></p>
+<p><img width="555" height="407" src="../img/docs/podklyuchenie-trk-livna/livna_3.png" alt="Livna 3" loading="lazy" decoding="async"></p>
 <ul>
 <li>Откройте приложение «Управление конфигурацией»</li>
 <li>Выберите вкладку «Резервуары и ТРК», экран ТРК</li>
 <li>Создайте новую ТРК или отредактируйте существующую.</li>
 </ul>
 
-<p></p>
+<p><img width="327" height="362" src="../img/docs/podklyuchenie-trk-livna/livna_4.png" alt="Livna 4" loading="lazy" decoding="async"></p>
 <ul>
 <li>При необходимости примените индивидуальные параметры.</li>
-</ul> 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- <p><a href="tel:+78002500534"></a></p>
-<a href="tel:+78002500534"></a>
-<footer><h3>Контактная информация</h3>
- <ul>
-<li>634009, г. Томск, ул. Розы Люксембург, д. 55</li>
-<li><a href="mailto:sncard@sncard.ru">sncard@sncard.ru</a></li>
-<li><a href="tel:+73822651030">+7 (3822) 65-10-30</a></li>
 </ul>
-<h3>Правовая информация</h3>
- <p><a href="../privacy.html" target="_blank" rel="noopener">Политика конфиденциальности</a></p>
-<p><a href="../cookies.html" target="_blank" rel="noopener">Политика использования Cookies</a></p>
-<p><a href="../consent.html" target="_blank" rel="noopener">Согласие на получение новостных сообщений</a></p>
-<h3>Поиск</h3>
-<form action="/component/finder/search?Itemid=185" method="get" role="search">
- <label for="mod-finder-searchword153"> </label><input type="text" name="q" value="" placeholder="Введите текст для поиска...">
- <input type="hidden" name="Itemid" value="185"></form>
-<h3>Рассылка новостей</h3>
- 
-Рассылка ООО "Сибнефтекарт"
-<input name="email" required="" type="email" placeholder="Введите адрес эл. почты" />
- 
-
-
- <input type="checkbox" name="newsletter-agreement" />
- <label for="newsletter-agreement">Соглашаюсь получать рекламно-информационные сообщения</label>
-
-<button type="button">Подписаться</button><button type="button">Отменить</button>
-</footer>
- 
-<p><a href="https://metrika.yandex.ru/stat/?id=22525165&from=informer" target="_blank" rel="noopener"></a></p>
- <noscript></noscript>
-© ООО "Сибнефтекарт-Сервис", 
- 
- 
- 
- <a href="#" target="_blank" rel="noopener"><i aria-hidden="true" title="Close Menu"></i></a>
- 
- <ul>
-<li><a href="https://www.sncard.ru/mobile-home" target="_blank" rel="noopener"> Главная</a></li><li><a href="https://www.sncard.ru/mobile-news" target="_blank" rel="noopener"> Новости</a></li><li><a href="https://www.sncard.ru/mobile-company" target="_blank" rel="noopener"> О компании</a></li><li><a href="https://www.sncard.ru/mobile-apps" target="_blank" rel="noopener"> Программное обеспечение</a></li><li> <a href="https://snc-service.sncard.ru/" target="_blank" rel="noopener"> Оборудование</a></li><li> <a href="https://snc-service.sncard.ru/" target="_blank" rel="noopener"> Изготовление карт</a></li><li><a href="https://www.sncard.ru/mobile-dokumentatsiya" target="_blank" rel="noopener"> Документация</a></li><li><a href="https://www.sncard.ru/mobile-partners" target="_blank" rel="noopener"> Партнеры</a></li><li><a href="https://www.sncard.ru/mobile-contacts" target="_blank" rel="noopener"> Контакты</a></li><li> <a href="http://kkt.sncard.ru/" target="_blank" rel="noopener"> Обслуживание ККТ</a></li></ul>
- 
- 
- 
- 
- 
- 
- 
- <a href="javascript:void(0)" target="_blank" rel="noopener"> </a>
- 
- 
- </body>
-</html>
     </div>
     <p class="article__back"><a class="link-more" href="../docs.html">Вся документация <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
   </div>

@@ -29,7 +29,7 @@ const require = createRequire(import.meta.url);
 const SOFT = require(path.join(ROOT, 'data/software.js'));
 const NEWS = require(path.join(ROOT, 'data/news.js'));
 const KKT = require(path.join(ROOT, 'data/kkt.js'));
-const DOCS = require(path.join(ROOT, 'data/docs.js'));
+const DOCS_ALL = require(path.join(ROOT, 'data/docs.js'));
 const PARTNERS = require(path.join(ROOT, 'data/partners.js'));
 const POLICIES = require(path.join(ROOT, 'data/policies.js'));
 const COMPANY = require(path.join(ROOT, 'data/company.js'));
@@ -45,7 +45,10 @@ function externalize(html) {
     return withRel.replace(/>$/, ' target="_blank">');
   });
 }
-const write = (f, s) => { fs.mkdirSync(path.dirname(path.join(ROOT, f)), { recursive: true }); fs.writeFileSync(path.join(ROOT, f), externalize(s)); };
+const write = (f, s) => {
+  fs.mkdirSync(path.dirname(path.join(ROOT, f)), { recursive: true });
+  fs.writeFileSync(path.join(ROOT, f), externalize(mapLinks(s, '../'.repeat(f.split('/').length - 1))));
+};
 const exists = f => fs.existsSync(path.join(ROOT, f));
 const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const nb = s => String(s).replace(/ /g, ' ');
@@ -78,37 +81,118 @@ const prodById = id => PRODUCTS.find(p => p.id === id);
 const askHref = name => `mailto:${MAIL}?subject=${encodeURIComponent(`Запрос с сайта sncard.ru: ${name}`)}`;
 
 /* =========================================================
-   Ссылки и картинки внутри перенесённого контента
+   Ссылки на старый www.sncard.ru → страницы и файлы нового сайта.
+   Применяется ко всей странице при записи (write), поэтому ловит и контент,
+   и ссылки из data/*.js. Файлы — по data/images.json и data/files.json
+   (скачивает tools/fetch-images.mjs); null в files.json — файла нет и на
+   старом сайте: пункт списка со ссылкой убирается, иначе остаётся текст.
    ========================================================= */
+const loadJson = f => (exists(f) ? JSON.parse(read(f)) : {});
+const IMAGES = new Map(Object.entries(loadJson('data/images.json')).map(([k, v]) => [k.toLowerCase(), v]));
+const FILES = loadJson('data/files.json');
+const DEAD_FILE = '#dead-file', NO_LINK = '#no-link';
+const EQ = `${SVC}equipment/`;
+/* Страницы старого сайта, которых нет в новом, → ближайшие аналоги */
+const TRK_ARTICLES = { 136: 'podklyuchenie-trk-livna', 137: 'podklyuchenie-trk-adast', 138: 'podklyuchenie-trk-dresser-wayne', 143: 'podklyuchenie-trk-pk-elektroniks', 147: 'podklyuchenie-trk-topaz', 148: 'podklyuchenie-trk-gilbarco', 149: 'podklyuchenie-trk-tokheim', 158: 'podklyuchenie-trk-censtar', 159: 'podklyuchenie-uzsg-ot-tehnoproekt', 225: 'podklyuchenie-unsg-01-vesy-ot-kompanii-tehnoproekt' };
+const EQ_ARTICLES = { // статьи-карточки оборудования → каталог snc-service
+  36: 'preobrazovateli-interfejsov/preobrazovatel-iz-rs232-ili-usb-v-rs485-poludupleks.html',
+  37: 'preobrazovateli-interfejsov/preobrazovatel-iz-rs232-ili-usb-v-rs485-poludupleks.html',
+  38: 'preobrazovateli-interfejsov/preobrazovateli-iz-rs232-ili-usb-v-tokovuyu-petlyu.html',
+  83: 'preobrazovateli-interfejsov/preobrazovateli-iz-rs232-ili-usb-v-tokovuyu-petlyu.html',
+  39: 'kontrollery-upravleniya/kontsentrator-tokovoy-petli.html',
+  73: 'kontrollery-upravleniya/kontsentrator-trk-censtar-ili-lanfeng.html',
+  82: 'preobrazovateli-interfejsov/preobrazovatel-usb-rs232.html',
+  128: 'preobrazovateli-interfejsov/preobrazovatel-interfeysov-usb-ili-rs232-v-interfeys.html',
+  129: 'preobrazovateli-interfejsov/preobrazovatel-interfeysov-usb-ili-rs232-v-interfeys.html',
+};
+const SOFT_ARTICLES = { // статьи Joomla о ПО → разделы каталога
+  18: 'avtomatizatsiya-azs',                   // СНК-АЗС — системы управления для АЗС/АЗК
+  19: 'tsentralizorovannoe-upravlenie-setyu',  // СНК-Офис — управление сетью АЗС
+  20: 'avtomatizatsiya-neftebaz',              // СНК-АСН — системы управления для нефтебаз
+  48: 'protsessing',                           // топливные карты СНК — безналичные расчёты
+};
+const OLD_PAGES = {
+  '/programmnoe-obespechenie': 'software/index.html',
+  '/company': 'company.html',
+  '/o-firme/sertifikaty': 'company.html#certificates',
+  '/news': 'news.html',
+  '/partnery': 'partners.html',
+  '/contacts': 'contacts.html',
+  '/dokumentatsiya': 'docs.html',
+  '/privacy-policy': 'privacy.html',
+  '/cookie-policy': 'cookies.html',
+  '/agreement-newsletter': 'consent.html',
+  '/obsluzhivanie-kkt/shtrikh-m': 'kkt.html#shtrih',
+  '/obsluzhivanie-kkt/kkt-ooo-atol': 'kkt.html#atol',
+  '/obsluzhivanie-kkt/fiskalnye-nakopiteli': 'kkt.html#fn',
+  '/obsluzhivanie-kkt/dogovory': 'kkt.html#contracts',
+};
+const OLD_EXTERNAL = {
+  '/dokumentatsiya/oborudovanie': `${SVC}docs.html`,
+  '/prajs-list/oborudovanie': `${EQ}index.html`,
+  '/prajs-list/karty/beskontaktnye-karty-rfid': `${SVC}cards.html`,
+  '/toplivnye-karty/karta-azs': `${ZAO}#map`,
+  '/elektronnoe-oborudovanie/preobrazovateli-interfejsov': `${EQ}preobrazovateli-interfejsov.html`,
+  '/elektronnoe-oborudovanie/preobrazovateli-interfejsov/rs232-rs485': `${EQ}${EQ_ARTICLES[36]}`,
+  '/elektronnoe-oborudovanie/preobrazovateli-interfejsov/rs232-tokovaya-petlya-20ma': `${EQ}${EQ_ARTICLES[38]}`,
+  '/elektronnoe-oborudovanie/preobrazovateli-interfejsov/preobrazovatel-rs232-tokheim': `${EQ}${EQ_ARTICLES[128]}`,
+  '/elektronnoe-oborudovanie/preobrazovateli-interfejsov/preobrazovatel-usb-tokheim': `${EQ}${EQ_ARTICLES[129]}`,
+  '/elektronnoe-oborudovanie/kontrollery-upravleniya/kontsentrator-trk-censtar-i-langfen': `${EQ}${EQ_ARTICLES[73]}`,
+  '/elektronnoe-oborudovanie?id=244': `${EQ}kontrollery-upravleniya/blok-sopryazheniya-snk-uzsg-unsg-01.html`,
+  '/elektronnoe-oborudovanie?id=243': `${EQ}kontrollery-upravleniya/blok-sopryazheniya-snk-uzsg-unsg-02.html`,
+};
+
+/* Одна ссылка на старый сайт → адрес в новом контуре (или исходный, если аналога нет) */
+function mapOld(url, r) {
+  const u = new URL(url);
+  const pathname = decodeURI(u.pathname), query = decodeURI(u.search), h = u.hash;
+  if (pathname.startsWith('/images/')) {
+    const img = IMAGES.get(pathname.toLowerCase());
+    if (img && exists(img)) return r + img;
+    if (pathname in FILES) {
+      const f = FILES[pathname];
+      if (!f) return DEAD_FILE;
+      return exists(f) ? r + f : url; // ещё не скачан — пока ведём на исходный
+    }
+    return url;
+  }
+  const prod = pathname.match(/\/component\/jshopping\/product\/view\/\d+\/(\d+)/)
+    || (pathname === '/azs-menu-product' ? [, '1'] : null)
+    || (pathname === '/azs-menu-product-192' ? [, '17'] : null)
+    || (pathname === '/programmnoe-obespechenie/avtomatizatsiya-azs-asn/snk-azs' ? [, '1'] : null)
+    || (pathname.startsWith('/component/content/article/150-snk-web-ofis') ? [, '16'] : null);
+  if (prod) { const p = prodById(+prod[1]); if (p) return prodUrl(r, p); }
+  const sec = pathname.match(/^\/programmnoe-obespechenie\/([\w-]+)\/?$/);
+  if (sec && SECTIONS.some(s => s.slug === sec[1])) return secUrl(r, sec[1]);
+  // статьи Joomla: «/?view=article&id=N», «/company?view=article&id=N», «/component/content/article/N-…»
+  const id = +((query.match(/[?&]id=(\d+)/) || pathname.match(/^\/component\/content\/article\/(\d+)-/) || [])[1] || 0);
+  if (id && /^\/(company|programmnoe-obespechenie|component\/content\/article\/.*)?$/.test(pathname)) {
+    if (TRK_ARTICLES[id]) return `${r}docs/${TRK_ARTICLES[id]}.html`;
+    if (EQ_ARTICLES[id]) return EQ + EQ_ARTICLES[id];
+    if (SOFT_ARTICLES[id]) return secUrl(r, SOFT_ARTICLES[id]);
+    if (id === 22) return prodUrl(r, prodById(3)); // СНК-КС — обмен данными для СНК-АЗС
+    if (id === 50) return `${SVC}cards.html`;      // изготовление карт
+    if (id === 188) return NO_LINK;                 // ТРК Tatsuno: статьи нет — остаётся текст
+  }
+  if (OLD_EXTERNAL[pathname + query]) return OLD_EXTERNAL[pathname + query];
+  const local = OLD_PAGES[pathname.replace(/\/$/, '')] ?? (pathname === '/' && !query ? 'index.html' : null);
+  if (local) return r + local + (h && !local.includes('#') ? (h === '#certs' ? '#certificates' : h) : '');
+  return url;
+}
+/* Документация без файлов, которых нет и на старом сайте (иначе счётчики врут) */
+const DOCS = DOCS_ALL
+  .map(g => ({ ...g, items: g.items.filter(it => !/^https?:\/\/(www\.)?sncard\.ru\//.test(it.href || '') ||mapOld(it.href, '') !== DEAD_FILE) }))
+  .filter(g => g.items.length);
 function mapLinks(html, r) {
-  return html.replace(/href="https:\/\/www\.sncard\.ru([^"]*)"/g, (m, p) => {
-    const [pathname, hash = ''] = decodeURI(p).split('#');
-    const h = hash ? `#${hash}` : '';
-    const prod = pathname.match(/\/component\/jshopping\/product\/view\/\d+\/(\d+)/)
-      || (pathname === '/azs-menu-product' ? [, '1'] : null)
-      || (pathname === '/azs-menu-product-192' ? [, '17'] : null);
-    if (prod) { const p = prodById(+prod[1]); if (p) return `href="${prodUrl(r, p)}"`; }
-    const sec = pathname.match(/^\/programmnoe-obespechenie\/([\w-]+)\/?$/);
-    if (sec && SECTIONS.some(s => s.slug === sec[1])) return `href="${secUrl(r, sec[1])}"`;
-    const map = {
-      '/programmnoe-obespechenie': 'software/index.html',
-      '/company': 'company.html',
-      '/news': 'news.html',
-      '/partnery': 'partners.html',
-      '/contacts': 'contacts.html',
-      '/dokumentatsiya': 'docs.html',
-      '/privacy-policy': 'privacy.html',
-      '/cookie-policy': 'cookies.html',
-      '/agreement-newsletter': 'consent.html',
-      '/obsluzhivanie-kkt/shtrikh-m': 'kkt.html#shtrih',
-      '/obsluzhivanie-kkt/kkt-ooo-atol': 'kkt.html#atol',
-      '/obsluzhivanie-kkt/fiskalnye-nakopiteli': 'kkt.html#fn',
-      '/obsluzhivanie-kkt/dogovory': 'kkt.html#contracts',
-    };
-    const local = map[pathname.replace(/\/$/, '')];
-    if (local) return `href="${r}${local.replace('#certs', '#certificates')}${h === '#certs' ? '#certificates' : h}"`;
-    return m; // файлы (/images/…) и прочее остаются на sncard.ru
-  }).replace(/href="https:\/\/snc-service\.sncard\.ru([^"]*)"/g, () => `href="${SVC}"`);
+  return html
+    .replace(/\sdata-remote="[^"]*"/g, '') // исходный адрес картинки нужен был только для докачки
+    .replace(/(href|src)="(https?:\/\/(?:www\.)?sncard\.ru[^"]*)"/g, (m, attr, url) => `${attr}="${mapOld(url.replace(/^http:/, 'https:'), r)}"`)
+    .replace(/href="https:\/\/snc-service\.sncard\.ru([^"]*)"/g, () => `href="${SVC}"`)
+    // файла нет и на старом сайте: пункт-ссылку убираем, в тексте оставляем подпись без ссылки
+    .replace(/<li[^>]*>\s*<a [^>]*href="#dead-file"[^>]*>[\s\S]*?<\/a>\s*<\/li>\s*/g, '')
+    .replace(/<a [^>]*href="#(?:dead-file|no-link)"[^>]*>([\s\S]*?)<\/a>/g, '$1')
+    // свои страницы открываются в той же вкладке (внешние — см. externalize)
+    .replace(/(<a href="[^":]*\.html(?:#[^"]*)?")((?:\s+(?:target="_blank"|rel="noopener"))+)/g, '$1');
 }
 /* Картинки: показываем только скачанные, иначе убираем (заглушку ставит вёрстка) */
 function resolveImgs(html, r) {

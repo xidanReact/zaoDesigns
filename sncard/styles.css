@@ -1163,6 +1163,11 @@ mark.hl { background: rgba(211, 47, 47, .12); color: inherit; border-radius: 2px
 /* Каталог ПО: карточки разделов */
 .catalog-index .bento { grid-auto-rows: minmax(220px, auto); }
 .catalog-index .card { grid-column: span 6; }
+.card__title a { color: inherit; }
+/* вся карточка кликабельна: ссылка заголовка растягивается на карточку */
+.card__cover-link::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.card__cover-link:focus-visible { outline: none; }
+.card:has(.card__cover-link:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* Новости — разметка и стили как на zao-sncard/news.html */
 .nlist { padding: 48px 0 120px; border-top: 1px solid var(--line); }

@@ -1880,6 +1880,10 @@ mark.hl { background: rgba(211, 47, 47, .12); color: inherit; border-radius: 2px
 .prod__stock::before { background: var(--blueprint-soft); }
 .catalog-index .bento { grid-auto-rows: minmax(220px, auto); }
 .catalog-index .card { grid-column: span 6; }
+.card__title a { color: inherit; }
+.card__cover-link::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.card__cover-link:focus-visible { outline: none; }
+.card:has(.card__cover-link:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
 .nlist { padding: 48px 0 120px; border-top: 1px solid var(--line); }
 .nfilter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
 html:not(.js) .nfilter { display: none; }
