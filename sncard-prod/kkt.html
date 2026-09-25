@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=12e9ad2d18">
+  <link rel="stylesheet" href="styles.css?v=2c55098b53">
 </head>
 <body data-page="kkt">
 <!-- Файл создан tools/generate.mjs из data/*.js — правьте данные, а не этот файл -->
@@ -150,13 +150,19 @@
       </ul>
     </nav>
 
-    <a class="hotline" href="tel:+78002500534" aria-label="Круглосуточная поддержка СНК-АЗС: 8 800 250-05-34">
-      <svg class="hotline__ic" aria-hidden="true"><use href="#i-headset"/></svg>
-      <span class="hotline__text">
-        <span class="hotline__num mono">8 800 250-05-34</span>
-        <span class="hotline__label">поддержка 24/7</span>
-      </span>
-    </a>
+    <div class="hotline-box">
+      <a class="hotline" href="tel:+78002500534" aria-label="Круглосуточная техническая поддержка по СНК-АЗС: 8 (800) 250-05-34">
+        <svg class="hotline__ic" aria-hidden="true"><use href="#i-headset"/></svg>
+        <span class="hotline__text">
+          <span class="hotline__num mono">8 800 250-05-34</span>
+          <span class="hotline__label">поддержка 24/7</span>
+        </span>
+      </a>
+      <div class="hotline__tip" aria-hidden="true">
+        <span class="hotline__tip-num mono">8 (800) 250-05-34</span>
+        <span class="hotline__tip-text">Круглосуточная техническая поддержка по СНК-АЗС</span>
+      </div>
+    </div>
 
     <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Открыть меню">
       <span></span><span></span>

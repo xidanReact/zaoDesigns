@@ -915,6 +915,59 @@ html:not(.js) .has-dd:focus-within .dd,
 .hotline__text { display: none; line-height: 1.15; }
 .hotline__num { font-size: 14px; font-weight: 500; color: var(--text); white-space: nowrap; }
 .hotline__label { font-size: 11.5px; font-weight: 600; color: var(--text-muted); }
+.hotline-box { position: relative; flex-shrink: 0; }
+.hotline-box > .hotline { vertical-align: middle; }
+.hotline__tip {
+  position: absolute; right: 0; top: calc(100% + 12px); z-index: 2;
+  display: grid; gap: 4px; width: max-content; max-width: 300px;
+  padding: 14px 18px 15px;
+  background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-md);
+  box-shadow: var(--shadow-md);
+  text-align: left; cursor: text; -webkit-user-select: text; user-select: text;
+  pointer-events: none;
+  visibility: hidden; opacity: 0;
+  transform: translateY(-6px) scale(.96); transform-origin: calc(100% - 22px) 0;
+  transition: opacity 140ms ease-out 120ms, transform 180ms var(--ease) 120ms, visibility 0s linear 300ms;
+}
+.hotline__tip::before {
+  content: ""; position: absolute; right: 16px; top: -6px;
+  width: 11px; height: 11px; background: var(--bg);
+  border-left: 1px solid var(--line); border-top: 1px solid var(--line);
+  border-top-left-radius: 3px; transform: rotate(45deg);
+}
+.hotline__tip::after { content: ""; position: absolute; left: 0; right: 0; top: -14px; height: 14px; }
+.hotline__tip-num { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); white-space: nowrap; }
+.hotline__tip-text { font-size: 13px; font-weight: 600; line-height: 1.35; color: var(--text-muted); }
+.hotline__tip-num, .hotline__tip-text {
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 140ms ease-out, transform 200ms var(--ease);
+}
+.hotline__tip ::selection { background: rgba(211, 47, 47, .16); }
+@media (hover: hover) {
+  .hotline-box:hover .hotline { box-shadow: inset 0 0 0 1.5px var(--accent); }
+  .hotline-box:hover .hotline__tip { pointer-events: auto; }
+  .hotline-box:hover .hotline__tip,
+  .hotline:focus-visible + .hotline__tip {
+    visibility: visible; opacity: 1; transform: none;
+    transition: opacity 160ms ease-out, transform 240ms var(--ease), visibility 0s;
+  }
+  .hotline-box:hover .hotline__tip-num, .hotline:focus-visible + .hotline__tip .hotline__tip-num,
+  .hotline-box:hover .hotline__tip-text, .hotline:focus-visible + .hotline__tip .hotline__tip-text {
+    opacity: 1; transform: none; transition-delay: 50ms;
+  }
+  .hotline-box:hover .hotline__tip-text, .hotline:focus-visible + .hotline__tip .hotline__tip-text { transition-delay: 100ms; }
+  .hotline:hover .hotline__ic { animation: hotline-ring 520ms var(--ease); }
+}
+@keyframes hotline-ring {
+  0%, 100% { transform: rotate(0); }
+  20% { transform: rotate(-12deg); }
+  45% { transform: rotate(9deg); }
+  70% { transform: rotate(-4deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hotline__tip, .hotline__tip-num, .hotline__tip-text { transform: none !important; }
+  .hotline:hover .hotline__ic { animation: none; }
+}
 .mmenu__foot .btn { gap: 10px; }
 .ext { font-size: .85em; color: var(--text-muted); }
 .hero--arch .hero__text { grid-column: 1 / span 5; }
@@ -1180,9 +1233,11 @@ html:not(.js) .copy { display: none; }
   .nav { display: none; }
   html:not(.js) .nav { display: block; }
   .burger { display: block; margin-left: 0; }
-  .hotline { margin-left: auto; width: auto; padding: 0 14px 0 12px; }
+  .hotline-box { margin-left: auto; }
+  .hotline { width: auto; padding: 0 14px 0 12px; }
   .hotline__text { display: grid; }
   .hotline__label { display: block; }
+  .hotline__tip { display: none; }
   .dd--mega { left: -220px; }
 }
 @media (max-width: 1024px) {
