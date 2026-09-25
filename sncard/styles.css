@@ -957,7 +957,7 @@ html:not(.js) .copy { display: none; }
 .docsec[hidden] { display: none; }
 .docsec + .docsec { margin-top: 88px; }
 .docsec__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
-.docsec__count { font-size: 13px; color: var(--text-muted); }
+.docsec__count { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
 .docsec__groups { columns: 2; column-gap: var(--gap); }
 .docgroup {
   break-inside: avoid; margin-bottom: var(--gap);
@@ -1265,6 +1265,22 @@ html:not(.js) .nfilter { display: none; } /* без JS фильтр не раб�
 .chip-mini { display: inline-block; margin: 2px 4px 2px 0; padding: 2px 8px; border-radius: 999px; background: var(--surface); font-size: 11.5px; color: var(--text-muted); }
 .kkt__note { margin-top: 48px; font-size: 15px; color: var(--text-muted); }
 .kkt__note a { color: var(--text); border-bottom: 1px solid var(--accent); }
+@media (max-width: 640px) {
+  /* общий .ptable-wrap на телефоне скрыт (у прайсов товаров есть .plist) — здесь замены нет,
+     поэтому та же таблица раскладывается в список: № и цена сверху, модель, характеристики */
+  .kkt .ptable-wrap { display: block; overflow: visible; }
+  .ptable--kkt, .ptable--kkt tbody { display: block; }
+  .ptable--kkt thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .ptable--kkt tbody tr { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "n price" "model model" "specs specs"; align-items: baseline; gap: 6px 16px; padding: 16px; }
+  .ptable--kkt tbody tr + tr { border-top: 1px solid var(--line); }
+  .ptable--kkt tbody tr[hidden] { display: none; }
+  .ptable--kkt tbody tr > *, .ptable--kkt tbody tr:hover > * { padding: 0; border: 0; background: none; position: static; min-width: 0; max-width: none; white-space: normal; }
+  .ptable--kkt tbody td:first-child { grid-area: n; font-size: 12px; color: var(--accent); }
+  .ptable--kkt tbody td:first-child::before { content: "№ "; color: var(--text-muted); }
+  .ptable--kkt tbody th { grid-area: model; font-size: 15px; line-height: 1.35; overflow-wrap: anywhere; }
+  .ptable--kkt tbody td:nth-child(3) { grid-area: price; font-size: 12.5px; color: var(--text-muted); text-align: right; }
+  .ptable--kkt tbody .ptable__specs { grid-area: specs; margin-top: 4px; }
+}
 
 /* Партнёры */
 .partners { padding: 48px 0 120px; border-top: 1px solid var(--line); }
