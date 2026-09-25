@@ -18,6 +18,44 @@
   // (часто выключена «анимация Windows» на рабочих ПК) намеренно игнорируется
   const RM = false;
   const FINE = mq('(hover: hover) and (pointer: fine)');
+
+  /* ---------- Cookie-баннер: одинаковый на трёх сайтах группы, стили — designs/styles.css ----------
+     Выбор хранится в localStorage «snc-cookie-consent»: { v: 'all' | 'necessary', t: дата }.
+     Аналитику подключать только при window.SNC_COOKIES.analytics === true
+     (или по событию «snc:cookie-consent» на document). */
+  (() => {
+    const KEY = 'snc-cookie-consent';
+    const apply = v => {
+      window.SNC_COOKIES = { choice: v, analytics: v === 'all' };
+      document.dispatchEvent(new CustomEvent('snc:cookie-consent', { detail: window.SNC_COOKIES }));
+    };
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(KEY)); } catch (e) { /* storage недоступен */ }
+    if (saved && (saved.v === 'all' || saved.v === 'necessary')) { apply(saved.v); return; }
+    window.SNC_COOKIES = { choice: null, analytics: false };
+
+    // ссылка на политику — из футера: у вложенных страниц свой относительный путь
+    const policy = document.querySelector('a[href$="cookies.html"]')?.getAttribute('href') || 'cookies.html';
+    const box = document.createElement('section');
+    box.className = 'cookie';
+    box.setAttribute('aria-label', 'Уведомление об использовании cookies');
+    box.innerHTML = `
+      <p class="cookie__text">Сайт использует cookies. Обязательные нужны для работы сайта, аналитические — только с&nbsp;вашего согласия. Подробнее — в&nbsp;<a href="${policy}">Политике использования Cookies</a>.</p>
+      <div class="cookie__actions">
+        <button class="btn btn--primary" type="button" data-cookie="all">Принять</button>
+        <button class="btn btn--outline" type="button" data-cookie="necessary">Только обязательные</button>
+      </div>`;
+    box.addEventListener('click', e => {
+      const b = e.target.closest('[data-cookie]');
+      if (!b) return;
+      try { localStorage.setItem(KEY, JSON.stringify({ v: b.dataset.cookie, t: new Date().toISOString() })); } catch (e2) { /* выбор действует до перезагрузки */ }
+      apply(b.dataset.cookie);
+      box.classList.remove('is-visible');
+      setTimeout(() => box.remove(), 400);
+    });
+    document.body.append(box);
+    requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add('is-visible')));
+  })();
   const SMALL = mq('(max-width: 640px)');
   const DESKTOP = () => mq('(min-width: 1025px)');
   const MAC = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
