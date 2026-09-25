@@ -1265,3 +1265,10 @@ html:not(.js) .nfilter { display: none; } /* без JS фильтр не раб�
 
 /* Рассылка: «Подписаться» неактивна, пока не введён адрес и не отмечено согласие */
 .btn--submit:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; transform: none; }
+
+/* Рассылка: уведомление «функция недоступна» (бэкенда пока нет) — под кнопками, в строке статуса */
+.subscribe__status.is-notice {
+  color: var(--text); background: var(--bg);
+  border-left: 3px solid var(--accent); border-radius: var(--r-sm);
+  padding: 10px 14px;
+}

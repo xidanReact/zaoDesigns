@@ -148,7 +148,7 @@
   });
 
   /* =========================================================
-     Рассылка: idle → loading → success (имитация без бэкенда)
+     Рассылка: проверка полей → уведомление о недоступности (бэкенда нет)
      ========================================================= */
   const form = $('#subscribe');
   if (form) {
@@ -159,10 +159,9 @@
     const agree = $('input[name="agree"]', form);
     const btn = $('.btn--submit', form);
     const status = $('.subscribe__status', form);
-    let timer = null;
 
     const shake = el => { el.classList.remove('is-shake'); void el.offsetWidth; el.classList.add('is-shake'); };
-    const clearErr = () => { field.classList.remove('is-invalid'); check.classList.remove('is-invalid'); err.textContent = ''; input.removeAttribute('aria-invalid'); };
+    const clearErr = () => { field.classList.remove('is-invalid'); check.classList.remove('is-invalid'); err.textContent = ''; input.removeAttribute('aria-invalid'); status.classList.remove('is-notice'); };
 
     input.addEventListener('input', () => { if (field.classList.contains('is-invalid')) clearErr(); });
     agree.addEventListener('change', () => check.classList.remove('is-invalid'));
@@ -190,20 +189,16 @@
         shake(check);
         return;
       }
-      btn.dataset.state = 'loading';
-      status.textContent = 'Оформляем подписку…';
-      // TODO: подключить отправку в сервис рассылки
-      timer = setTimeout(() => {
-        btn.dataset.state = 'success';
-        status.textContent = `Подписка оформлена: письма будут приходить на ${email}`;
-      }, 1300);
+      // TODO: подключить отправку в сервис рассылки; пока сообщаем, что функция недоступна
+      status.classList.add('is-notice');
+      status.textContent = 'Подписка на рассылку временно недоступна. Следите за новостями компании в разделе «Новости».';
     });
 
     form.addEventListener('reset', () => {
-      clearTimeout(timer);
       clearErr();
       btn.dataset.state = 'idle';
       status.textContent = '';
+      status.classList.remove('is-notice');
       setTimeout(syncBtn); // поля очищаются после события reset
     });
   }

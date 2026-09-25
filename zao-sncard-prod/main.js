@@ -601,7 +601,7 @@
   });
 
   /* =========================================================
-     Футер: форма рассылки (из designs/; бэкенда нет — уведомление о недоступности)
+     Футер: форма рассылки (из designs/, имитация без бэкенда)
      ========================================================= */
   (function subscribeForm() {
     const form = $('#subscribe');
@@ -613,9 +613,10 @@
     const agree = $('input[name="agree"]', form);
     const btn = $('.btn--submit', form);
     const status = $('.subscribe__status', form);
+    let timer = null;
 
     const shake = el => { el.classList.remove('is-shake'); void el.offsetWidth; el.classList.add('is-shake'); };
-    const clearErr = () => { field.classList.remove('is-invalid'); check.classList.remove('is-invalid'); err.textContent = ''; input.removeAttribute('aria-invalid'); status.classList.remove('is-notice'); };
+    const clearErr = () => { field.classList.remove('is-invalid'); check.classList.remove('is-invalid'); err.textContent = ''; input.removeAttribute('aria-invalid'); };
 
     input.addEventListener('input', () => { if (field.classList.contains('is-invalid')) clearErr(); });
     agree.addEventListener('change', () => check.classList.remove('is-invalid'));
@@ -643,14 +644,17 @@
         shake(check);
         return;
       }
-      // Бэкенда рассылки пока нет — сообщаем об этом, а не имитируем подписку
-      status.classList.add('is-notice');
-      status.textContent = 'Подписка на рассылку временно недоступна. Следите за новостями компании в разделе «Новости».';
+      btn.dataset.state = 'loading';
+      status.textContent = 'Оформляем подписку…';
+      timer = setTimeout(() => {
+        btn.dataset.state = 'success';
+        status.textContent = `Подписка оформлена: письма будут приходить на ${email}`;
+      }, 1300);
     });
 
     form.addEventListener('reset', () => {
-      clearErr();
-      btn.dataset.state = 'idle'; status.textContent = ''; status.classList.remove('is-notice');
+      clearTimeout(timer); clearErr();
+      btn.dataset.state = 'idle'; status.textContent = '';
       setTimeout(syncBtn); // поля очищаются после события reset
     });
   })();

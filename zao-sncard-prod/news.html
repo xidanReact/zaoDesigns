@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Новости — АО «НПФ «Сибнефтекарт»</title>
+  <meta name="description" content="Все новости АО «НПФ «Сибнефтекарт»: изменения списка АЗС, обслуживающих топливные карты СНК, реквизиты компании и работа личного кабинета.">
+  <link rel="canonical" href="https://zao.sncard.ru/news.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="АО «НПФ «Сибнефтекарт»">
+  <meta property="og:url" content="https://zao.sncard.ru/news.html">
+  <meta property="og:title" content="Новости — АО «НПФ «Сибнефтекарт»">
+  <meta property="og:description" content="Все новости АО «НПФ «Сибнефтекарт»: изменения списка АЗС, обслуживающих топливные карты СНК, реквизиты компании и работа личного кабинета.">
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=f18da4435b">
+</head>
+<body>
+<!-- Список новостей собран из news.js: node zao-sncard/tools/build-news.mjs -->
+
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+
+<!-- Общие SVG-символы -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h3l1.5 4-2 1.3a10.5 10.5 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7a2 2 0 0 1 2.1-2.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="6" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<!-- 1. Header (тот же, что на главной; карта интро здесь не нужна) -->
+<header class="header" id="header">
+  <div class="header__progress" aria-hidden="true"><span></span></div>
+  <div class="header__inner container">
+    <a class="brand" href="index.html" aria-label="Сибнефтекарт — на главную">
+      <svg class="brand__mark" viewBox="0 0 120 48" aria-hidden="true">
+        <path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square"/>
+      </svg>
+      <span class="brand__text">
+        <span class="brand__name">Сибнефтекарт</span>
+        <span class="brand__sub">акционерное общество «Научно-производственная фирма»</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Главное меню">
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" href="index.html#map">Карта АЗС</a></li>
+        <li class="nav__item"><a class="nav__link" href="index.html#company">О компании</a></li>
+        <li class="nav__item"><a class="nav__link" href="news.html" aria-current="page">Новости</a></li>
+        <li class="nav__item"><a class="nav__link" href="index.html#contacts">Контакты</a></li>
+      </ul>
+    </nav>
+
+    <a class="btn btn--outline btn--lk" href="https://account.sncard.ru/" rel="noopener" target="_blank">
+      <svg class="lock" viewBox="0 0 24 24" aria-hidden="true">
+        <path class="lock__shackle" d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <rect x="5" y="11" width="14" height="9.5" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M12 15v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span>Личный кабинет</span>
+    </a>
+
+    <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Открыть меню">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Мобильное меню -->
+<div class="mmenu" id="mobile-menu" hidden>
+  <div class="mmenu__inner container">
+    <ul class="mmenu__list">
+      <li><a class="mmenu__link" href="index.html#map">Карта АЗС</a></li>
+      <li><a class="mmenu__link" href="index.html#company">О компании</a></li>
+      <li><a class="mmenu__link" href="news.html" aria-current="page">Новости</a></li>
+      <li><a class="mmenu__link" href="index.html#contacts">Контакты</a></li>
+    </ul>
+    <div class="mmenu__foot">
+      <a class="btn btn--outline" href="https://account.sncard.ru/" rel="noopener" target="_blank">Личный кабинет</a>
+      <a class="mmenu__phone mono" href="tel:+73822651070">+7 (3822) 65-10-70</a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- 2. Шапка страницы -->
+<section class="phead">
+  <div class="container">
+    <div class="phead__sheet">
+      <span class="phead__ticks" aria-hidden="true"></span>
+      <nav class="crumbs mono" aria-label="Навигационная цепочка">
+        <ol>
+          <li><a href="index.html">Главная</a></li>
+          <li aria-current="page">Новости</li>
+        </ol>
+      </nav>
+      <div class="phead__row">
+        <div class="phead__text">
+          <h1 class="phead__title" id="news-page-title">Новости</h1>
+          <p class="phead__lead">
+<!-- @count:start -->
+      Изменения в сети АЗС, работе личного кабинета и реквизитах компании: <b>28</b> записей с 2015 года.
+<!-- @count:end -->
+          </p>
+        </div>
+      </div>
+      <span class="phead__stamp mono" aria-hidden="true">СНК · Новости · Лист 1</span>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Все новости -->
+<section class="nlist" aria-labelledby="news-page-title">
+  <div class="container">
+    <div class="nfilter" role="group" aria-label="Фильтр новостей по теме">
+<!-- @filter:start -->
+      <button class="nfilter__tab is-current" type="button" data-news-tag="all" aria-pressed="true">Все <span class="mono">28</span></button>
+      <button class="nfilter__tab" type="button" data-news-tag="Сеть АЗС" aria-pressed="false">Сеть АЗС <span class="mono">23</span></button>
+      <button class="nfilter__tab" type="button" data-news-tag="Реквизиты" aria-pressed="false">Реквизиты <span class="mono">2</span></button>
+      <button class="nfilter__tab" type="button" data-news-tag="Сайт" aria-pressed="false">Сайт <span class="mono">2</span></button>
+      <button class="nfilter__tab" type="button" data-news-tag="Личный кабинет" aria-pressed="false">Личный кабинет <span class="mono">1</span></button>
+<!-- @filter:end -->
+    </div>
+
+    <div class="nlist__items">
+<!-- @list:start -->
+      <article class="nblock" id="2024-05-17-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2024-05-17">17 мая 2024</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 17 мая 2024 года на неопределенный срок приостанавливается обслуживание по топливным картам СНК и Партнёров на следующих АЗС:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС Южная</dt>
+            <dd>г. Томск, ул. Предвокзальная, 51</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС Стандарт</dt>
+            <dd>г. Томск, ул. 2-я Усть-Киргизка, 18а</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС Гарант</dt>
+            <dd>г. Томск, ул. Иркутский тракт, 201</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС Альянс</dt>
+            <dd>Томская область, пос. Калтай</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС Гранд-Авто</dt>
+            <dd>г. Томск, ул. Вилюйская, 41</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС Кузовлевский тракт</dt>
+            <dd>г. Томск, Кузовлевский тракт, 38</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2024-01-26-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2024-01-26">26 января 2024</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>Прекращено обслуживание по топливным картам СНК и Партнёров на АЗС ООО «СТД», расположенной по адресу: АЗС – Томская область, пос. Кандинка.</p>
+        </div>
+      </article>
+      <article class="nblock" id="2023-09-26-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2023-09-26">26 сентября 2023</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 29 сентября 2023 года на неопределенный срок приостанавливается обслуживание по топливным картам СНК и Партнёров на АЗС, расположенной по адресу: Томская область, Томский район, с. Малиновка, 58</p>
+        </div>
+      </article>
+      <article class="nblock" id="2023-08-28-izmeneniya-nastroek-bezopasnosti" data-tag="Личный кабинет">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2023-08-28">28 августа 2023</time>
+          <span class="tag">Личный кабинет</span>
+        </div>
+        <h2 class="nblock__title">Изменения настроек безопасности паролей личных кабинетов СНК</h2>
+        <div class="nblock__body">
+        <p>11 сентября, для всех пользователей личных кабинетов СНК, будет включена проверка безопасности пароля.</p>
+        <p>Это означает, что при входе в личный кабинет пользователей, у которых пароль не будет удовлетворять требованиям безопасности, попросят сменить пароль.</p>
+        </div>
+      </article>
+      <article class="nblock" id="2023-08-08-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2023-08-08">8 августа 2023</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 08 августа 2023 года временно прекращается обслуживание по топливным картам СНК и Партнёров на следующих АЗС ООО «СеверНефтеПродукт»: АЗС № 3 – Томская область, г. Колпашево, ул. Лазо, 10/1.</p>
+        </div>
+      </article>
+      <article class="nblock" id="2023-05-03-ob-izmenenii-rekvizitov" data-tag="Реквизиты">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2023-05-03">3 мая 2023</time>
+          <span class="tag">Реквизиты</span>
+        </div>
+        <h2 class="nblock__title">Об изменении реквизитов</h2>
+        <div class="nblock__body">
+        <p>Уважаемые партнеры!</p>
+        <p>Уведомляем Вас об изменении номера телефона, фактического и почтового адреса ЗАО «НПФ «Сибнефтекарт» со 02 мая 2023 года.</p>
+        <p>Новый номер телефона: 65-10-70</p>
+        <p>Новый фактический и почтовый адрес: 634009, г. Томск, ул. Розы Люксембург, 55</p>
+        <p>Юридический адрес не изменился.</p>
+        </div>
+      </article>
+      <article class="nblock" id="2021-10-15-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2021-10-15">15 октября 2021</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>Прекращается обслуживание по топливным картам СНК и Партнёров на следующих АЗС ООО «СеверНефтеПродукт»:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС № 8</dt>
+            <dd>Томская область, Первомайский район, пос.Комсомольск, ул. Строителей, 3</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2021-09-30-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2021-09-30">30 сентября 2021</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 30 сентября 2021 года временно прекращается обслуживание по топливным картам СНК и Партнёров на следующих АЗС ООО «СеверНефтеПродукт»:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС № 6</dt>
+            <dd>Томская область, Кожевниковский район, с. Чилино, ул. Светлая</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2021-09-29-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2021-09-29">29 сентября 2021</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 30 сентября 2021 года прекращается обслуживание по топливным картам СНК и Партнёров на следующих АЗС ООО «Томтрансойл»:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС Нефтепродукт-М</dt>
+            <dd>Томская область, Молчановский район, с. Молчаново, ул. Промышленная, 30</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС Подгорное</dt>
+            <dd>Томская область, Чаинский р-н, с. Подгорное, ул.Трактовая</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС Зоркальцево</dt>
+            <dd>Томская область, Томский район, с. Петровский участок, 16 км а/д Томск-Мельниково</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС</dt>
+            <dd>Томская область, Колпашевский район, с. Чажемто, ул. Полевая, строение 1</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2020-03-20-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2020-03-20">20 марта 2020</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>Пополнился список АЗС, принимающих топливные карты СНК и Партнёров.</p>
+        <p>Сеть АЗС ООО «СеверНефтеПродукт»:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС 33</dt>
+            <dd>Томская область, Чаинский район, с. Новоколомино</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2020-02-21-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2020-02-21">21 февраля 2020</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 22 февраля 2020 года возобновляется обслуживание по топливным картам СНК и Партнёров на АЗС ООО «Эверест»:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС</dt>
+            <dd>Томская область, Кривошеинский район, п. Володино</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2020-02-18-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2020-02-18">18 февраля 2020</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 18 февраля 2020 года временно прекращается обслуживание по топливным картам СНК и Партнёров на следующих АЗС ООО «Бэст»:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС</dt>
+            <dd>Томская область, Кривошеинский район, п. Володино</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2019-08-28-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2019-08-28">28 августа 2019</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 01 сентября 2019 года прекращается обслуживание по топливным картам СНК и Партнёров на следующих АЗС ИП Лукин К.В.:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС-2</dt>
+            <dd>Томская область, с. Молчаново, ул. Промышленная, 15</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС-3</dt>
+            <dd>Томская область, Чаинский район, с. Новоколомино</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС-4</dt>
+            <dd>Томская область, г. Кедровый, II мкр</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2019-06-28-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2019-06-28">28 июня 2019</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 01 июля 2019 года прекращается обслуживание по топливным картам сети СНК на АЗС ООО «СеверНефтеПродукт»:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС-2</dt>
+            <dd>Томская область, г.Колпашево, ул.Л.Толстого, 73</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2019-04-03-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2019-04-03">3 апреля 2019</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>Пополнился список АЗС, принимающих топливные карты СНК и Партнёров.</p>
+        <p>Сеть АЗС ИП Михайлина М.В.:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС 1</dt>
+            <dd>Томская область, г. Асино, ул. Ленина, 89 в</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС 4</dt>
+            <dd>Томская область, г. Асино, ул. 9 Мая, д.76</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2019-01-17-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2019-01-17">17 января 2019</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>Пополнился список АЗС, принимающих топливные карты СНК и Партнёров.</p>
+        <p>Сеть АЗС ИП Лукин К.В.:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС № 1</dt>
+            <dd>Томская обл., Шегарский район, с. Нащёково, 63 км трассы Томск – Колпашево</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 2</dt>
+            <dd>Томская обл., с. Молчаново, ул. Промышленная, 15</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 3</dt>
+            <dd>Томская обл., Чаинский район, с. Новоколомино</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 4</dt>
+            <dd>Томская обл., г. Кедровый, II мкр</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2019-01-14-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2019-01-14">14 января 2019</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 14 января 2019 года прекращается обслуживание по топливным картам сети СНК на АЗС ИП Денисов В.О., Томская область, с. Бакчар, ул. Трактовая, 3</p>
+        </div>
+      </article>
+      <article class="nblock" id="2019-01-10-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2019-01-10">10 января 2019</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 11 января 2019 года временно прекращается обслуживание по топливным картам сети СНК на АЗС ООО «БЭСТ»:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС</dt>
+            <dd>Томская область, Кривошеинский район, п. Володино</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2018-07-19-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2018-07-19">19 июля 2018</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 19 июля 2018 года прекращается обслуживание по топливным картам сети СНК на АЗС ООО «РТК» (ТМ Тэсла):</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС-Кожевниково</dt>
+            <dd>Томская область, с. Кожевниково, трасса Кожевниково-Томск, поворот на с. Ювала.</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2018-05-15-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2018-05-15">15 мая 2018</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 15 мая 2018 года прекращается обслуживание по топливным картам сети СНК на АЗС ООО «ЧеГевара»:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС-Парусинка</dt>
+            <dd>г. Северск, ул. Парусинка, 4</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС ИКАР</dt>
+            <dd>г. Томск, ул. Пролетарская, 57 а</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 1</dt>
+            <dd>Томский район, п. Лоскутово</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 2</dt>
+            <dd>Томский район, п. Зоркольцево, Шегарский тракт, 20</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 3</dt>
+            <dd>Томский район, п. Больше-Дорохово</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2018-04-26-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2018-04-26">26 апреля 2018</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 26.04.2018 на АЗС "Чажемто" принимаются к обслуживанию только радиокарты Мифаре.</p>
+        </div>
+      </article>
+      <article class="nblock" id="2018-04-16-u-kompanii-sibneftekart" data-tag="Реквизиты">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2018-04-16">16 апреля 2018</time>
+          <span class="tag">Реквизиты</span>
+        </div>
+        <h2 class="nblock__title">У компании «Сибнефтекарт» изменился адрес</h2>
+        <div class="nblock__body">
+        <p>С 16.04.2018 группа компаний "Сибнефтекарт" располагается по новому адресу г. Томск, ул. Советская, 2. Изменились городские телефоны (3822) 900431, 900341. Все электронные адреса, профили в Skype остались неизменными.</p>
+        </div>
+      </article>
+      <article class="nblock" id="2018-01-11-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2018-01-11">11 января 2018</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 15 января 2018 года прекращается обслуживание по топливным картам сети СНК на АЗС № 9 ООО «СеверНефтеПродукт», расположенной по адресу: Томская область, Каргасокский район, с. Каргасок, ул. Таежная, 36</p>
+        </div>
+      </article>
+      <article class="nblock" id="2017-11-30-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2017-11-30">30 ноября 2017</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 01.12.2017 прекращается обслуживание по топливным картам сети СНК на следующих АЗС ООО «Шегарскнефтепродукт»:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС № 1</dt>
+            <dd>Томская область, Шегарский район, с. Нащеково, 63 км трассы Томск - Колпашево</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 2</dt>
+            <dd>Томская область, с. Молчаново, ул. Промышленная, 15</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 3</dt>
+            <dd>Томская область, Чаинский район, с. Новоколомино</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 4</dt>
+            <dd>Томская область, г. Кедровый, II мкр.</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2017-03-31-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2017-03-31">31 марта 2017</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>На следующих АЗС ООО «ЧеГевара» принимают топливные карты СНК и Партнёров:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС Парусинка</dt>
+            <dd>г. Северск, ул. Парусинка, 4</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС Икар</dt>
+            <dd>г. Томск, ул. Пролетарская, 57 а</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 1</dt>
+            <dd>Томский район, п. Лоскутово</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 2</dt>
+            <dd>Томский район, п. Зоркольцево, Шегарский тракт, 20</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 3</dt>
+            <dd>Томский район, п. Больше-Дорохово</dd>
+          </div>
+        </dl>
+        <p><a href="index.html#map">Перейти</a> к карте АЗС</p>
+        </div>
+      </article>
+      <article class="nblock" id="2016-12-16-izmenenie-spiska-azs" data-tag="Сеть АЗС">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2016-12-16">16 декабря 2016</time>
+          <span class="tag">Сеть АЗС</span>
+        </div>
+        <h2 class="nblock__title">Изменение списка АЗС, обслуживающих топливные карты</h2>
+        <div class="nblock__body">
+        <p>С 15.12.2016 прекращается обслуживание по топливным картам сети СНК на следующих АЗС ООО «Нефтегазпроцессинг»:</p>
+        <dl class="nstations">
+          <div class="nstations__row">
+            <dt>АЗС № 1</dt>
+            <dd>Томский район, п. Лоскутово</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 2</dt>
+            <dd>Томский район, п. Зоркальцево, Шегарский тракт, 20</dd>
+          </div>
+          <div class="nstations__row">
+            <dt>АЗС № 3</dt>
+            <dd>Томский район, п. Больше-Дорохово</dd>
+          </div>
+        </dl>
+        </div>
+      </article>
+      <article class="nblock" id="2015-03-31-interaktivnaya-karta-azs" data-tag="Сайт">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2015-03-31">31 марта 2015</time>
+          <span class="tag">Сайт</span>
+        </div>
+        <h2 class="nblock__title">Интерактивная карта АЗС</h2>
+        <div class="nblock__body">
+        <p>На сайте появилась интерактивная карта, на которой указаны АЗС принимающие для обслуживания топливные карты сети "Сибнефтекарт". Перейти на неё можно из раздела "Топливные карты" -&gt; "<a href="index.html#map">Карта АЗС</a>".</p>
+        </div>
+      </article>
+      <article class="nblock" id="2015-03-12-obnovlenie-sayta-zao" data-tag="Сайт">
+        <div class="nblock__meta">
+          <time class="mono" datetime="2015-03-12">12 марта 2015</time>
+          <span class="tag">Сайт</span>
+        </div>
+        <h2 class="nblock__title">Обновление сайта ЗАО «НПФ «Сибнефтекарт»</h2>
+        <div class="nblock__body">
+        <p>Мы рады приветствовать Вас на новом сайте ЗАО "НПФ "Сибнефтекарт". С 11.03.2015 сайт прошел полную переработку.</p>
+        </div>
+      </article>
+<!-- @list:end -->
+    </div>
+
+    <div class="nlist__more"><button class="btn btn--outline" type="button" hidden>Показать ещё</button></div>
+    <p class="nlist__empty" hidden>По этой теме записей нет.</p>
+
+  </div>
+</section>
+
+</main>
+
+<!-- 7. Footer (из designs/) -->
+<footer class="footer">
+  <svg class="footer__mark" viewBox="0 0 120 48" aria-hidden="true">
+    <path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37"/>
+  </svg>
+  <div class="container footer__grid">
+    <div class="fcol">
+      <h2 class="fcol__title">Контактная информация</h2>
+      <ul class="contacts">
+        <li><svg aria-hidden="true"><use href="#i-pin"/></svg><span>634009, г. Томск, ул. Розы Люксембург, д. 55</span></li>
+        <li><svg aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:zao.sncard@sncard.ru">zao.sncard@sncard.ru</a></li>
+        <li><svg aria-hidden="true"><use href="#i-phone"/></svg><span><a href="tel:+73822651070">+7 (3822) 65-10-70</a><small>многоканальный</small></span></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h2 class="fcol__title">Правовая информация</h2>
+      <ul class="legal">
+        <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        <li><a href="cookies.html">Политика использования Cookies</a></li>
+        <li><a href="consent.html">Согласие на получение новостных сообщений</a></li>
+      </ul>
+    </div>
+    <div class="fcol fcol--form">
+      <h2 class="fcol__title">Рассылка АО «НПФ «Сибнефтекарт»</h2>
+      <form class="subscribe" id="subscribe" novalidate>
+        <div class="field">
+          <input class="field__input" id="sub-email" name="email" type="email" placeholder=" " autocomplete="email" required aria-describedby="sub-email-err">
+          <label class="field__label" for="sub-email">Электронная почта</label>
+          <span class="field__err" id="sub-email-err" role="alert"></span>
+        </div>
+        <label class="check">
+          <input type="checkbox" name="agree" required>
+          <span class="check__box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>
+          <span class="check__text">Соглашаюсь получать рекламно-информационные сообщения (<a href="consent.html">согласие</a>)</span>
+        </label>
+        <div class="subscribe__actions">
+          <button class="btn btn--primary btn--submit" type="submit" data-state="idle">
+            <span class="bstate bstate--idle">Подписаться</span>
+            <span class="bstate bstate--loading" aria-hidden="true"><i class="spinner"></i></span>
+            <span class="bstate bstate--success" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg>Вы подписаны</span>
+          </button>
+          <button class="btn btn--ghost" type="reset">Отменить</button>
+        </div>
+        <p class="subscribe__status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container footer__bottom-inner">
+      <span>© АО «НПФ &quot;Сибнефтекарт», 2026</span>
+      <span class="mono">ОГРН 1027000875285 · ИНН 7018002185 · 56°29′ с. ш. · 84°57′ в. д.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="cursor" aria-hidden="true"><span class="cursor__ring"></span><span class="cursor__dot"></span></div>
+
+<script src="vendor/gsap.min.js" defer></script>
+<script src="vendor/ScrollTrigger.min.js" defer></script>
+<script src="vendor/CustomEase.min.js" defer></script>
+<script src="vendor/lenis.min.js" defer></script>
+<script src="main.js?v=7084a83149" defer></script>
+<script src="news-page.js?v=4c9c37d00d" defer></script>
+</body>
+</html>
