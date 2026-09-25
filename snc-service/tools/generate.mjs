@@ -31,7 +31,36 @@ const CARDS = require(path.join(ROOT, 'data/cards.js'));
 const POLICIES = require(path.join(ROOT, 'data/policies.js'));
 
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
-const write = (f, s) => { fs.mkdirSync(path.dirname(path.join(ROOT, f)), { recursive: true }); fs.writeFileSync(path.join(ROOT, f), s); };
+const write = (f, s) => {
+  fs.mkdirSync(path.dirname(path.join(ROOT, f)), { recursive: true });
+  fs.writeFileSync(path.join(ROOT, f), mapLinks(s, '../'.repeat(f.split('/').length - 1)));
+};
+
+/* ---------- Файлы со старого сайта → локальные копии в files/ ----------
+   Карта data/files.json «путь на старом сайте → файл в files/» (качает
+   tools/fetch-files.mjs); null — файла нет и на старом сайте: пункт списка
+   со ссылкой убирается, в тексте остаётся подпись без ссылки. */
+const FILES = fs.existsSync(path.join(ROOT, 'data/files.json')) ? JSON.parse(read('data/files.json')) : {};
+const SNCARD = 'https://xidanreact.github.io/zaoDesigns/sncard/';
+const DEAD_FILE = '#dead-file';
+function mapOld(url, r) {
+  const u = new URL(url);
+  const pathname = decodeURI(u.pathname);
+  if (pathname in FILES) {
+    const f = FILES[pathname];
+    if (!f) return DEAD_FILE;
+    return fs.existsSync(path.join(ROOT, f)) ? r + f : url; // ещё не скачан — пока ведём на исходный
+  }
+  if (pathname === '/azs-menu-product') return `${SNCARD}software/avtomatizatsiya-azs/snk-azs-programma-dlya-avtomatizatsii-azs.html`;
+  return url;
+}
+const isDead = href => /^https?:\/\/(snc-service\.sncard\.ru|www\.sncard\.ru)\//.test(href || '') && mapOld(href, '') === DEAD_FILE;
+function mapLinks(html, r) {
+  return html
+    .replace(/(href|src)="(https?:\/\/(?:snc-service\.sncard\.ru|www\.sncard\.ru)[^"]*)"/g, (m, attr, url) => `${attr}="${mapOld(url.replace(/^http:/, 'https:'), r)}"`)
+    .replace(/<li[^>]*>\s*<a [^>]*href="#dead-file"[^>]*>[\s\S]*?<\/a>\s*<\/li>\s*/g, '')
+    .replace(/<a [^>]*href="#dead-file"[^>]*>([\s\S]*?)<\/a>/g, '$1');
+}
 const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const nb = s => String(s).replace(/ /g, ' ');
 const rub = n => nb(n.toLocaleString('ru-RU').replace(/ | /g, ' ')) + ' ₽';
@@ -511,7 +540,9 @@ function ctaBlock() {
    ========================================================= */
 const FTYPE = { pdf: 'PDF', rar: 'RAR', zip: 'ZIP', doc: 'DOC', docx: 'DOC', page: 'СТР' };
 function docsBlock() {
-  return DOCS.map(sec => `<section class="docsec" id="${sec.id}" aria-labelledby="docsec-${sec.id}">
+  // без файлов, которых нет и на старом сайте (иначе счётчики врут)
+  const docs = DOCS.map(sec => ({ ...sec, groups: sec.groups.map(g => ({ ...g, items: g.items.filter(it => !isDead(it.href)) })) }));
+  return docs.map(sec => `<section class="docsec" id="${sec.id}" aria-labelledby="docsec-${sec.id}">
       <div class="docsec__head">
         <h2 class="h2" id="docsec-${sec.id}">${sec.id === 'equipment' ? 'Оборудование для АЗС' : esc(sec.title)}</h2>
         <p class="docsec__count mono">${files(sec.groups.reduce((s, g) => s + g.items.filter(i => i.href).length, 0))}</p>
