@@ -1126,6 +1126,7 @@ html:not(.js) .copy { display: none; }
   .footer__grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 640px) {
+  .hero--device .hero__title { font-size: 32px; }
   .header__inner { gap: 10px; }
   .brand { gap: 10px; min-width: 0; }
   .brand__mark { width: 46px; }
