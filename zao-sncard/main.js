@@ -143,7 +143,9 @@
     }
   }
   burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
-  mmenu.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+  // закрываем раньше якорных обработчиков (у Lenis — capture на document): остановленный Lenis
+  // игнорирует scrollTo, а lenis.start() при закрытии сбросил бы уже начатую прокрутку
+  window.addEventListener('click', e => { if (e.target.closest('#mobile-menu a')) setMenu(false); }, true);
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') { setMenu(false); burger.focus(); }
   });
