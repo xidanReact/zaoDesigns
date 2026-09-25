@@ -247,13 +247,13 @@ const BASE = (() => {
   return window.SNK_BASEMAP;
 })();
 
-function atlasMap({ W = 640, H = 560, pad = 70 } = {}) {
+function atlasMap({ W = 640, H = 560, pad = 70, padX = 150 } = {}) { // padX — место под подписи АЗС справа и слева
   const mx = lng => lng * Math.PI / 180;
   const my = lat => -Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
   const pts = [SNK.office, ...SNK.stations];
   const xs = pts.map(p => mx(p.lng)), ys = pts.map(p => my(p.lat));
   const [minX, maxX, minY, maxY] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
-  const k = Math.min((W - pad * 2) / (maxX - minX), (H - pad * 2) / (maxY - minY));
+  const k = Math.min((W - padX * 2) / (maxX - minX), (H - pad * 2) / (maxY - minY));
   const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
   const proj = (lat, lng) => [r1(W / 2 + (mx(lng) - cx) * k), r1(H / 2 + (my(lat) - cy) * k)];
   const inView = ([x, y], m = 60) => x > -m && x < W + m && y > -m && y < H + m;
@@ -332,9 +332,11 @@ function atlasMap({ W = 640, H = 560, pad = 70 } = {}) {
   out.push(`<circle class="am-halo" cx="${hx}" cy="${hy}" r="16"/><circle class="net-hub am-hub" cx="${hx}" cy="${hy}" r="9"/><circle class="office__dot" cx="${hx}" cy="${hy}" r="3.4"/>`);
   out.push(`<text class="bp-label bp-label--accent am-hub__t" x="${r1(hx + 20)}" y="${r1(hy + 4)}">ОФИС СНК · ТОМСК</text>`);
 
-  // Масштабная линейка 100 км (по широте офиса) и источник подложки
-  const km100 = r1(100 / (6378.137 * Math.cos(SNK.office.lat * Math.PI / 180)) * k);
-  out.push(`<g class="bp-coord am-scale"><path d="M20 ${H - 26}v6h${km100}v-6"/><text x="${r1(20 + km100 + 8)}" y="${H - 20}">100 км</text></g>`);
+  // Масштабная линейка (по широте офиса): самая длинная из «круглых» длин, что не шире четверти карты
+  const pxPerKm = k / (6378.137 * Math.cos(SNK.office.lat * Math.PI / 180));
+  const km = [1, 2, 5, 10, 20, 50, 100, 200].filter(n => n * pxPerKm <= W / 4).pop() || 1;
+  const bar = r1(km * pxPerKm);
+  out.push(`<g class="bp-coord am-scale"><path d="M20 ${H - 26}v6h${bar}v-6"/><text x="${r1(20 + bar + 8)}" y="${H - 20}">${km} км</text></g>`);
   out.push(`<text class="bp-coord" x="${W - 14}" y="${H - 20}" text-anchor="end">Подложка: Natural Earth</text>`);
   out.push(`</g>`);
   out.push(`<rect class="am-frame" x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="12"/>`);

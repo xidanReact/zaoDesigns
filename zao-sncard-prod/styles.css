@@ -987,8 +987,9 @@ html:not(.js) .has-dd:focus-within .dd,
 .gridline--y { left: 0; right: 0; height: 1px; }
 .atlas__panel {
   position: absolute; z-index: var(--z-map-ui);
-  left: max(var(--gutter), calc((100vw - 1320px) / 2)); top: 32px; bottom: 32px;
+  left: max(var(--gutter), calc((100vw - 1320px) / 2)); top: 32px;
   width: var(--panel-w);
+  max-height: calc(100% - 64px);
   display: flex; flex-direction: column;
   background: rgba(255, 255, 255, .94);
   -webkit-backdrop-filter: saturate(160%) blur(14px);

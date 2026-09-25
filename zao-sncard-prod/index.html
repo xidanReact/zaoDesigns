@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="vendor/leaflet.min.css">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=a34ac40eaf">
+  <link rel="stylesheet" href="styles.css?v=142d96bbf2">
 </head>
 <body>
 
@@ -151,9 +151,6 @@
   <aside class="atlas__panel" aria-label="Список АЗС и фильтры">
     <div class="atlas__head">
       <h1 class="atlas__title" id="atlas-title">Где принимают топливные карты СНК</h1>
-      <p class="atlas__lead">
-        <span class="atlas__count" data-count>6</span> АЗС в Томской и Новосибирской областях
-      </p>
     </div>
 
     <div class="atlas__tools">
@@ -173,12 +170,10 @@
       <!-- Без JS: список обновлять вместе с stations.js -->
       <noscript>
         <ul class="stations stations--static">
-          <li class="station"><span class="station__name">АЗС-5 · Каргасок</span><span class="station__addr">Томская обл., с. Каргасок, ул. Центральная, 60</span><span class="station__meta mono">95 · 92 · ДТ — iButton, RFID</span></li>
-          <li class="station"><span class="station__name">АЗС-7 · Колпашево</span><span class="station__addr">Томская обл., г. Колпашево, ул. Портовая, 2/11</span><span class="station__meta mono">95 · 92 · 80 · ДТ — iButton, RFID</span></li>
-          <li class="station"><span class="station__name">АЗС-11 · Белый Яр</span><span class="station__addr">Томская обл., с. Белый Яр, ул. Гагарина, 163</span><span class="station__meta mono">95 · 92 · ДТ — iButton, RFID</span></li>
-          <li class="station"><span class="station__name">АЗС-12 · Дзержинское</span><span class="station__addr">Томский р-н, 8 км от нового коммунального моста</span><span class="station__meta mono">95 · 92 · ДТ — RFID</span></li>
-          <li class="station"><span class="station__name">АЗС · Колывань</span><span class="station__addr">Новосибирская обл., р. п. Колывань</span><span class="station__meta mono">95 · 92 · ДТ — RFID</span></li>
-          <li class="station"><span class="station__name">АЗС-1 · Нащёково</span><span class="station__addr">Томская обл., с. Нащёково, 63 км трассы Томск — Колпашево</span><span class="station__meta mono">95 · 92 · 80 · ДТ — RFID</span></li>
+          <li class="station"><span class="station__name">АЗС · Шегарский тракт</span><span class="station__addr">г. Томск, Шегарский тракт, 12А</span><span class="station__meta mono">ДТ — RFID</span></li>
+          <li class="station"><span class="station__name">АЗС · Герцена</span><span class="station__addr">г. Томск, ул. Герцена, 61А</span><span class="station__meta mono">ДТ — RFID</span></li>
+          <li class="station"><span class="station__name">АЗС · Новомихайловка</span><span class="station__addr">Томский р-н, д. Новомихайловка, 1/1</span><span class="station__meta mono">ДТ — RFID</span></li>
+          <li class="station"><span class="station__name">АЗС · Ивана Черных</span><span class="station__addr">г. Томск, ул. Ивана Черных, 64</span><span class="station__meta mono">ДТ — RFID</span></li>
         </ul>
       </noscript>
     </div>
@@ -206,7 +201,7 @@
             <rect class="fill-s" x="32" y="106" width="20" height="15" rx="2"/>
             <path class="bp-thin" d="M32 136h52M32 143h34"/>
             <text class="bp-label" x="68" y="202" text-anchor="middle">Карта</text>
-            <text class="bp-label bp-label--sm" x="68" y="217" text-anchor="middle">RFID · iButton</text>
+            <text class="bp-label bp-label--sm" x="68" y="217" text-anchor="middle">RFID</text>
           </g>
           <!-- 2. АЗС -->
           <g class="flow__node" data-flow="azs">
@@ -249,7 +244,7 @@
       <!-- Значения посчитаны по данным сайта: с 1993 года; число АЗС и операторов — из stations.js -->
       <li class="metric"><span class="metric__num"><span class="odo" data-target="33">33</span></span><span class="metric__label">года на рынке процессинга, с 1993</span></li>
       <li class="metric"><span class="metric__num"><span class="odo" data-target="1987">1987</span></span><span class="metric__label">первая система безналичных расчётов на АЗС в Томске</span></li>
-      <li class="metric"><span class="metric__num"><span class="odo" data-target="6">6</span></span><span class="metric__label">АЗС принимают карты СНК сейчас</span></li>
+      <li class="metric"><span class="metric__num"><span class="odo" data-target="4">4</span></span><span class="metric__label">АЗС принимают карты СНК сейчас</span></li>
     </ul>
 
     <div class="history">
@@ -468,7 +463,7 @@
 <script src="vendor/CustomEase.min.js" defer></script>
 <script src="vendor/lenis.min.js" defer></script>
 <script src="basemap.js?v=3d87eb33ad" defer></script>
-<script src="stations.js?v=30b13696a4" defer></script>
-<script src="main.js?v=eb77449ab2" defer></script>
+<script src="stations.js?v=1140bcde81" defer></script>
+<script src="main.js?v=74d0f210cb" defer></script>
 </body>
 </html>

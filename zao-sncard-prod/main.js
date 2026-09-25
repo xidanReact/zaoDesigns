@@ -121,7 +121,7 @@
   const panel = atlas && $('.atlas__panel', atlas);
   const list = atlas && $('#station-list');
   const SIDES = ['right', 'left', 'top', 'bottom']; // стороны подписи у значка
-  const CARD_FULL = { ibutton: 'электронные таблетки iButton', rfid: 'бесконтактные карты RFID' };
+  const CARD_FULL = { rfid: 'бесконтактные карты RFID' };
   const fuelName = f => (/^\d+$/.test(f) ? `АИ-${f}` : f);
 
   /* Значок АЗС: кольцо и колонка */
@@ -165,7 +165,7 @@
         </button>
         <div class="station__more" id="${moreId}" hidden>
           <dl class="station__dl">
-            <div class="station__row"><dt>оператор</dt><dd>${esc(DATA.operators[st.operator])}</dd></div>
+            ${st.operator ? `<div class="station__row"><dt>оператор</dt><dd>${esc(DATA.operators[st.operator])}</dd></div>` : ''}
             <div class="station__row"><dt>топливо</dt><dd>${st.fuel.map(fuelName).join(', ')}</dd></div>
             <div class="station__row"><dt>карты</dt><dd>${st.cards.map(c => CARD_FULL[c]).join(', ')}</dd></div>
           </dl>
@@ -183,19 +183,19 @@
       li.addEventListener('pointerenter', () => hot(st.id, true));
       li.addEventListener('pointerleave', () => hot(st.id, false));
     });
-    $('[data-count]').textContent = DATA.stations.length;
   }
 
   /* ---------- Фильтры по типу карты ---------- */
   const CARD_FILTERS = [
-    { id: 'ibutton', name: 'Электронные таблетки iButton', note: 'самообслуживание' },
     { id: 'rfid', name: 'Бесконтактные пластиковые карты RFID Mifare Standart S50', note: 'сервисное обслуживание' }
   ];
   function renderFilters() {
+    // один тип карты — фильтровать нечего
+    if (CARD_FILTERS.length < 2) { $('.atlas__tools', atlas).remove(); return; }
     const row = $('[data-filter="cards"]');
     CARD_FILTERS.forEach(f => {
       const b = chip('cards', f.id, 'chip chip--card');
-      b.innerHTML = `<span class="lg ${f.id === 'ibutton' ? 'lg--st' : 'lg--card'}" aria-hidden="true"></span>
+      b.innerHTML = `<span class="lg lg--card" aria-hidden="true"></span>
         <span class="chip__text">${esc(f.name)}<small>${esc(f.note)}</small></span>`;
       row.appendChild(b);
     });
