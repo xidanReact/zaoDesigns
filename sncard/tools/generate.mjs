@@ -75,7 +75,7 @@ const bySection = slug => PRODUCTS.filter(p => p.section === slug);
 const secUrl = (r, slug) => `${r}software/${slug}.html`;
 const prodUrl = (r, p) => `${r}software/${p.section}/${p.slug}.html`;
 const prodById = id => PRODUCTS.find(p => p.id === id);
-const askHref = name => `mailto:${MAIL}?subject=${encodeURIComponent(`Запрос: ${name}`)}`;
+const askHref = name => `mailto:${MAIL}?subject=${encodeURIComponent(`Запрос с сайта sncard.ru: ${name}`)}`;
 
 /* =========================================================
    Ссылки и картинки внутри перенесённого контента
@@ -1055,7 +1055,6 @@ function pagePolicy(key, file, page) {
   const P = POLICIES[key];
   const main = `${phead({
     r, trail: [[P.title]], title: esc(P.title),
-    lead: 'Текст документа перенесён с&nbsp;сайта sncard.ru без&nbsp;изменений.',
     sheet: `СНК · ${P.title} · Лист 1`,
   })}
 

@@ -1097,3 +1097,32 @@ html:not(.js) .stepper { display: none; }
 @media (max-width: 640px) {
   .totop { right: 16px; bottom: 16px; width: 44px; height: 44px; }
 }
+
+/* Уведомление в левом нижнем углу («В корзину» — заказ пока недоступен). Справа внизу — .totop */
+.toast {
+  position: fixed; left: 24px; bottom: 24px; z-index: 96;
+  display: flex; align-items: flex-start; gap: 12px;
+  max-width: min(400px, calc(100vw - 48px));
+  padding: 14px 14px 14px 18px;
+  background: var(--bg); color: var(--text);
+  border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--r-md);
+  box-shadow: var(--shadow-md);
+  opacity: 0; visibility: hidden; transform: translateY(12px);
+  transition: opacity 220ms ease-out, transform 280ms var(--ease), visibility 0s linear 280ms;
+}
+.toast.is-visible { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.toast__text { margin: 0; font-size: 14.5px; line-height: 1.45; }
+.toast__close {
+  flex: none; display: grid; place-items: center; width: 28px; height: 28px; margin: -4px -4px 0 0;
+  background: none; border: 0; border-radius: 999px; color: var(--text-muted); cursor: pointer;
+  transition: color var(--t-ui) ease, background-color var(--t-ui) ease;
+}
+.toast__close:hover { color: var(--accent); background: var(--surface); }
+.toast__close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.toast__close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+@media (max-width: 640px) {
+  .toast { left: 16px; bottom: 16px; max-width: calc(100vw - 88px); } /* справа место под .totop */
+}
+@media (prefers-reduced-motion: reduce) {
+  .toast { transform: none; transition: opacity 150ms linear, visibility 0s linear 150ms; }
+}

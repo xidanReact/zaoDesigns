@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://snc-service.sncard.ru/sitemap.xml

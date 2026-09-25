@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Сибнефтекарт-сервис — оборудование для автоматизации АЗС и нефтебаз</title>
+  <meta name="description" content="ООО «Сибнефтекарт-сервис», Томск: разработка, мелкосерийное производство, поставка и ремонт оборудования для автоматизации АЗС и нефтебаз, изготовление пластиковых карт.">
+  <link rel="canonical" href="https://snc-service.sncard.ru/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="ООО «Сибнефтекарт-сервис»">
+  <meta property="og:url" content="https://snc-service.sncard.ru/">
+  <meta property="og:title" content="Сибнефтекарт-сервис — оборудование для автоматизации АЗС и нефтебаз">
+  <meta property="og:description" content="ООО «Сибнефтекарт-сервис», Томск: разработка, мелкосерийное производство, поставка и ремонт оборудования для автоматизации АЗС и нефтебаз, изготовление пластиковых карт.">
+  <script>
+    document.documentElement.classList.add('js');
+    // Интро на первом визите: закрываем страницу сразу, чтобы она не мелькала до запуска анимации
+    try {
+      if (sessionStorage.getItem('snc-service-intro') !== '1') {
+        document.documentElement.classList.add('intro-pending');
+        // Страховка: если скрипты не запустили интро, не держим страницу закрытой
+        setTimeout(function () { if (!document.querySelector('.intro.is-on')) document.documentElement.classList.remove('intro-pending'); }, 5000);
+      }
+    } catch (e) { /* storage недоступен */ }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=98638d27e9">
+</head>
+<body data-page="home">
+
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+
+<!-- @sprite:start -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h3l1.5 4-2 1.3a10.5 10.5 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7a2 2 0 0 1 2.1-2.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="6" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4.5h2.4l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.3a1.5 1.5 0 0 0 1.4-1.1L20.5 8H6.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9.5" cy="19.5" r="1.4" fill="currentColor"/><circle cx="17" cy="19.5" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15 15l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10.5 10.5v6M13.5 10.5v6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6.5 3.5h7l4 4v13h-11z M13.5 3.5v4h4 M9 12h6M9 15h6M9 18h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+
+    <!-- Иконки категорий оборудования (контур, 32×32) -->
+    <symbol id="c-ctrl" viewBox="0 0 32 32"><rect x="4" y="10" width="24" height="15" rx="2"/><path d="M9 10V5.5M13 10V5.5M17 10V7.5M21 10V7.5 M8 15h7v6H8z"/><path class="ic-slot" d="M19 15h5"/><path class="ic-slot" d="M19 18h5"/><path class="ic-slot" d="M19 21h3"/></symbol>
+    <symbol id="c-conv" viewBox="0 0 32 32"><rect x="3" y="11" width="8" height="10" rx="1.5"/><path d="M21 11h8l-1.6 10h-4.8z M5.5 14.5h3M5.5 17.5h3"/><path class="ic-flow" d="M11 16h10 M17.5 13l3 3-3 3"/></symbol>
+    <symbol id="c-term" viewBox="0 0 32 32"><rect x="9" y="3.5" width="14" height="25" rx="2.5"/><rect class="ic-screen" x="12" y="7" width="8" height="6" rx="1"/><path class="ic-key" d="M12.5 17h1M16 17h1M19.5 17h1"/><path class="ic-key" d="M12.5 20.5h1M16 20.5h1M19.5 20.5h1"/><path class="ic-key" d="M12.5 24h1M16 24h1M19.5 24h1"/></symbol>
+    <symbol id="c-read" viewBox="0 0 32 32"><rect x="3.5" y="10" width="15" height="14" rx="2.5"/><path d="M7.5 17h7"/><path class="ic-wave" d="M22.5 12.5a6.5 6.5 0 0 1 0 9"/><path class="ic-wave ic-wave--2" d="M26 9.5a11 11 0 0 1 0 15"/></symbol>
+    <symbol id="c-modem" viewBox="0 0 32 32"><rect x="4" y="15" width="24" height="11" rx="2"/><path d="M21 15V5 M8.5 20.5h1M12 20.5h1M15.5 20.5h1"/><path class="ic-wave" d="M18 6.5a4.5 4.5 0 0 0 0 5 M24 6.5a4.5 4.5 0 0 1 0 5"/></symbol>
+    <symbol id="c-voice" viewBox="0 0 32 32"><path d="M4 13h5l10-6.5v19L9 19H4z M9 19l1.6 6.5h3.4L12.5 19.5"/><path class="ic-wave" d="M23 12.5a5 5 0 0 1 0 7"/><path class="ic-wave ic-wave--2" d="M26.5 9.5a9.5 9.5 0 0 1 0 13"/></symbol>
+    <symbol id="c-com" viewBox="0 0 32 32"><path d="M3 8h19v15H3z M7 23v3h11v-3 M22 5.5v22 M7 12h8M7 15.5h8M7 19h5"/><path class="ic-port" d="M22 9h5v4h-5"/><path class="ic-port" d="M22 15h5v4h-5"/></symbol>
+    <symbol id="c-scan" viewBox="0 0 32 32"><path d="M4 9V5h4M24 5h4v4M28 23v4h-4M8 27H4v-4"/><path class="ic-key" d="M9 10v12M12 10v12M15.5 10v12M18 10v12M21.5 10v12M24 10v12"/></symbol>
+    <symbol id="c-card" viewBox="0 0 32 32"><rect x="3.5" y="7" width="25" height="18" rx="2.5"/><rect class="ic-screen" x="7" y="12" width="6" height="5" rx="1"/><path d="M7 21h9"/><path class="ic-wave" d="M21 12.5a4 4 0 0 1 0 6"/><path class="ic-wave ic-wave--2" d="M24 10.5a7 7 0 0 1 0 10"/></symbol>
+    <symbol id="c-tbr" viewBox="0 0 32 32"><rect x="3.5" y="9" width="11" height="14" rx="2"/><path d="M7 13h4M7 16h4M7 19h2 M20 23h5v4.5h-5z M21.5 27.5V30M23.5 27.5V30"/><path class="ic-flow" d="M14.5 16h4.5a3.5 3.5 0 0 1 3.5 3.5V23"/></symbol>
+  </defs>
+</svg>
+<!-- @sprite:end -->
+
+<!-- 0. Intro (включается на этапе анимаций) -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__cols"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <span class="intro__h"></span>
+  <svg class="intro__mark" viewBox="0 0 120 48">
+    <path class="intro__stroke" d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square" stroke-linejoin="miter"/>
+  </svg>
+  <span class="intro__hint">Нажмите, чтобы пропустить</span>
+</div>
+
+<!-- @header:start -->
+<header class="header" id="header">
+  <div class="header__progress" aria-hidden="true"><span></span></div>
+  <div class="header__inner container">
+    <a class="brand" href="index.html" aria-label="Сибнефтекарт-сервис — на главную">
+      <svg class="brand__mark" viewBox="0 0 120 48" aria-hidden="true">
+        <path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square"/>
+      </svg>
+      <span class="brand__text">
+        <span class="brand__name">Сибнефтекарт-сервис</span>
+        <span class="brand__sub">общество с ограниченной ответственностью</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Главное меню">
+      <ul class="nav__list">
+        <li class="nav__item has-dd" data-nav="company">
+          <button class="nav__link nav__trigger" type="button" aria-expanded="false" aria-controls="dd-company">
+            О компании <svg class="nav__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </button>
+          <div class="dd" id="dd-company">
+            <ul class="dd__list">
+              <li><a class="dd__link" href="company.html">О компании <span class="dd__dot" aria-hidden="true"></span></a></li>
+              <li><a class="dd__link" href="company.html#actions">Направления деятельности <span class="dd__dot" aria-hidden="true"></span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav__item has-dd" data-nav="equipment">
+          <button class="nav__link nav__trigger" type="button" aria-expanded="false" aria-controls="dd-equipment">
+            Оборудование <svg class="nav__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </button>
+          <div class="dd dd--mega" id="dd-equipment">
+            <ul class="dd__list">
+              <li><a class="dd__link" href="equipment/kontrollery-upravleniya.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-ctrl"/></svg><span>Контроллеры управления ТРК</span><small class="mono">9</small></a></li>
+              <li><a class="dd__link" href="equipment/preobrazovateli-interfejsov.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-conv"/></svg><span>Преобразователи интерфейсов</span><small class="mono">9</small></a></li>
+              <li><a class="dd__link" href="equipment/pos-terminaly.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-term"/></svg><span>Терминалы СНК</span><small class="mono">3</small></a></li>
+              <li><a class="dd__link" href="equipment/schityvateli.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-read"/></svg><span>Считыватели карт</span><small class="mono">1</small></a></li>
+              <li><a class="dd__link" href="equipment/modemy-gprs.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-modem"/></svg><span>Модемы GPRS</span><small class="mono">1</small></a></li>
+              <li><a class="dd__link" href="equipment/gromkaya-svyaz.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-voice"/></svg><span>Громкая связь</span><small class="mono">3</small></a></li>
+              <li><a class="dd__link" href="equipment/rasshiriteli-som-portov.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-com"/></svg><span>Расширители СОМ портов</span><small class="mono">4</small></a></li>
+              <li><a class="dd__link" href="equipment/komplektatsiya-dlya-tbr.html"><svg class="dd__ic" aria-hidden="true"><use href="#c-tbr"/></svg><span>Комплектация для ТБР</span><small class="mono">4</small></a></li>
+              <li class="dd__all"><a class="dd__link" href="equipment/index.html"><span>Весь каталог</span><small class="mono">34</small></a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav__item has-dd" data-nav="cards">
+          <button class="nav__link nav__trigger" type="button" aria-expanded="false" aria-controls="dd-cards">
+            Изготовление карт <svg class="nav__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </button>
+          <div class="dd" id="dd-cards">
+            <ul class="dd__list">
+              <li><a class="dd__link" href="cards.html#rfid">Бесконтактные карты Mifare <span class="dd__dot" aria-hidden="true"></span></a></li>
+              <li><a class="dd__link" href="cards.html#examples">Примеры дизайна карт <span class="dd__dot" aria-hidden="true"></span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav__item has-dd" data-nav="docs">
+          <button class="nav__link nav__trigger" type="button" aria-expanded="false" aria-controls="dd-docs">
+            Документация <svg class="nav__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </button>
+          <div class="dd" id="dd-docs">
+            <ul class="dd__list">
+              <li><a class="dd__link" href="docs.html#equipment">Оборудование для АЗС <span class="dd__dot" aria-hidden="true"></span></a></li>
+              <li><a class="dd__link" href="docs.html#useful">Полезное <span class="dd__dot" aria-hidden="true"></span></a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav__item has-dd" data-nav="contacts">
+          <button class="nav__link nav__trigger" type="button" aria-expanded="false" aria-controls="dd-contacts">
+            Контакты <svg class="nav__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </button>
+          <div class="dd" id="dd-contacts">
+            <ul class="dd__list">
+              <li><a class="dd__link" href="contacts.html#main">Основные <span class="dd__dot" aria-hidden="true"></span></a></li>
+              <li><a class="dd__link" href="contacts.html#admin">Администрация <span class="dd__dot" aria-hidden="true"></span></a></li>
+              <li><a class="dd__link" href="contacts.html#adress">Местоположение на карте <span class="dd__dot" aria-hidden="true"></span></a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <a class="btn btn--outline btn--cart" href="cart.html" data-cart-link aria-label="Корзина">
+      <svg class="cart-ic" aria-hidden="true"><use href="#i-cart"/></svg>
+      <span class="btn--cart__label">Корзина</span>
+      <span class="cart-badge mono" data-cart-count hidden>0</span>
+    </a>
+
+    <button class="burger" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Открыть меню">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Мобильное меню -->
+<div class="mmenu" id="mobile-menu" hidden>
+  <div class="mmenu__inner container">
+    <ul class="mmenu__list">
+      <li>
+        <details class="mmenu__group">
+          <summary class="mmenu__link">О компании <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+          <a href="company.html">О компании</a>
+          <a href="company.html#actions">Направления деятельности</a>
+        </details>
+      </li>
+      <li>
+        <details class="mmenu__group">
+          <summary class="mmenu__link">Оборудование <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+          <a href="equipment/kontrollery-upravleniya.html">Контроллеры управления ТРК</a>
+          <a href="equipment/preobrazovateli-interfejsov.html">Преобразователи интерфейсов</a>
+          <a href="equipment/pos-terminaly.html">Терминалы СНК</a>
+          <a href="equipment/schityvateli.html">Считыватели карт</a>
+          <a href="equipment/modemy-gprs.html">Модемы GPRS</a>
+          <a href="equipment/gromkaya-svyaz.html">Громкая связь</a>
+          <a href="equipment/rasshiriteli-som-portov.html">Расширители СОМ портов</a>
+          <a href="equipment/komplektatsiya-dlya-tbr.html">Комплектация для ТБР</a>
+          <a href="equipment/index.html">Весь каталог</a>
+        </details>
+      </li>
+      <li>
+        <details class="mmenu__group">
+          <summary class="mmenu__link">Изготовление карт <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+          <a href="cards.html#rfid">Бесконтактные карты Mifare</a>
+          <a href="cards.html#examples">Примеры дизайна карт</a>
+        </details>
+      </li>
+      <li>
+        <details class="mmenu__group">
+          <summary class="mmenu__link">Документация <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+          <a href="docs.html#equipment">Оборудование для АЗС</a>
+          <a href="docs.html#useful">Полезное</a>
+        </details>
+      </li>
+      <li>
+        <details class="mmenu__group">
+          <summary class="mmenu__link">Контакты <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+          <a href="contacts.html#main">Основные</a>
+          <a href="contacts.html#admin">Администрация</a>
+          <a href="contacts.html#adress">Местоположение на карте</a>
+        </details>
+      </li>
+    </ul>
+    <div class="mmenu__foot">
+      <a class="btn btn--outline" href="cart.html"><svg class="cart-ic" aria-hidden="true"><use href="#i-cart"/></svg><span>Корзина</span><span class="cart-badge mono" data-cart-count hidden>0</span></a>
+      <a class="mmenu__phone mono" href="tel:+73822651145">+7 (3822) 65-11-45</a>
+    </div>
+  </div>
+</div>
+<!-- @header:end -->
+
+<main id="main">
+
+<!-- 1. Hero — суть направления -->
+<section class="hero hero--device" id="top">
+  <div class="container">
+    <div class="sheet">
+      <div class="sheet__zones" aria-hidden="true">
+        <span>А</span><span>Б</span><span>В</span><span>Г</span><span>Д</span><span>Е</span>
+      </div>
+      <div class="sheet__rows" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span></div>
+
+      <div class="hero__grid">
+        <div class="hero__text">
+          <p class="eyebrow mono"><span class="eyebrow__dot" aria-hidden="true"></span> ТОМСК</p>
+          <h1 class="hero__title"><span class="u-mark u-mark--block">Оборудование для автоматизации АЗС и&nbsp;нефтебаз<svg class="u-mark__line" viewBox="0 0 300 10" preserveAspectRatio="none" aria-hidden="true"><path d="M2 6 H298" /></svg></span></h1>
+          <p class="hero__lead">Контроллеры ТРК, преобразователи интерфейсов, терминалы и&nbsp;считыватели карт&nbsp;— разрабатываем, выпускаем мелкими сериями, поставляем и&nbsp;ремонтируем сами.</p>
+
+          <ol class="verbs mono" aria-label="Что мы делаем">
+            <li class="verb is-active" data-verb="0"><span class="verb__n">01</span>Разработка</li>
+            <li class="verb" data-verb="1"><span class="verb__n">02</span>Производство</li>
+            <li class="verb" data-verb="2"><span class="verb__n">03</span>Поставка</li>
+            <li class="verb" data-verb="3"><span class="verb__n">04</span>Ремонт</li>
+          </ol>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary magnetic" href="equipment/index.html"><span>Каталог оборудования</span></a>
+            <a class="btn btn--outline" href="#contacts"><span>Связаться</span></a>
+          </div>
+
+          <dl class="legend" aria-label="Условные обозначения схемы">
+            <div><dt><svg viewBox="0 0 32 8" aria-hidden="true"><path d="M0 4h32" stroke="#9FB0C3" stroke-width="1.5" stroke-dasharray="4 3"/></svg></dt><dd>Линия данных</dd></div>
+            <div><dt><svg viewBox="0 0 32 8" aria-hidden="true"><path d="M0 4h32" stroke="#D5DDE6" stroke-width="1" stroke-dasharray="6 4"/></svg></dt><dd>Ось сборки</dd></div>
+            <div><dt><svg viewBox="0 0 32 8" aria-hidden="true"><circle cx="16" cy="4" r="2.6" fill="#D32F2F"/></svg></dt><dd>Пакет данных</dd></div>
+          </dl>
+        </div>
+
+        <div class="hero__scene" id="scene">
+          <svg class="scene" viewBox="0 0 800 620" role="img" aria-labelledby="scene-t scene-d">
+            <title id="scene-t">Концентратор ТРК СНК в разобранном виде</title>
+            <desc id="scene-d">Корпус, два контроллера канала ТРК из восьми возможных, материнская плата и основание разнесены по оси сборки. Разъём RS232 или USB связывает контроллер с компьютером, к компьютеру подключён считыватель карт, клеммник каналов — с топливораздаточной колонкой.</desc>
+
+            <!-- Слой 1: координатная разметка -->
+            <g class="layer layer--back" data-depth="0.25">
+              <g class="bp-tick">
+                <path d="M10 20h10M15 15v10 M780 20h10M785 15v10 M10 600h10M15 595v10 M780 600h10M785 595v10"/>
+                <path d="M0 110h6M0 210h6M0 310h6M0 410h6M0 510h6 M794 110h6M794 210h6M794 310h6M794 410h6M794 510h6"/>
+              </g>
+              <text class="bp-coord" x="26" y="614">X 0.00</text>
+              <text class="bp-coord" x="774" y="614" text-anchor="end">X 8.00</text>
+              <circle cx="465" cy="300" r="238" class="bp-guide"/>
+            </g>
+
+            <!-- Слой 2: линии данных (под устройством), внешние узлы -->
+            <g class="layer" data-depth="0.6">
+              <g class="data-lines">
+<!-- gen:lines -->
+                  <path class="data" id="d-pc" d="M345 355H214V124H190"/>
+                  <path class="data" id="d-rd" d="M115 172V236"/>
+                  <path class="data" id="d-trk" d="M467 421H236V430H142"/>
+                  <!-- /gen:lines -->
+              </g>
+
+              <!-- ПК с ПО СНК-АЗС -->
+              <g class="node" data-node="pc" tabindex="0" aria-label="Компьютер с системой управления СНК-АЗС">
+                <g class="node__stroke">
+                  <rect class="bp fill-w" x="40" y="62" width="150" height="102" rx="5"/>
+                  <rect class="screen" x="50" y="72" width="130" height="74" rx="2"/>
+                  <path class="bp-thin" d="M58 94h52M58 104h70M58 114h40M58 124h60"/>
+                  <path class="bp" d="M104 164v10M82 176h44"/>
+                </g>
+                <text class="digits" x="58" y="86">СНК-АЗС</text>
+                <text class="bp-label" x="40" y="50">ПК-01</text>
+              </g>
+
+              <!-- Считыватель карт -->
+              <g class="node" data-node="reader" tabindex="0" aria-label="Считыватель бесконтактных карт Mifare">
+                <g class="node__stroke">
+                  <rect class="bp fill-w" x="70" y="236" width="90" height="58" rx="9"/>
+                  <path class="bp-thin" d="M84 265h40"/>
+                  <path class="bp-thin wave" d="M170 252a15 15 0 0 1 0 26"/>
+                  <path class="bp-thin wave" d="M180 244a26 26 0 0 1 0 42"/>
+                </g>
+                <text class="bp-label" x="70" y="314">СЧ-01 · MIFARE</text>
+              </g>
+
+              <!-- ТРК -->
+              <g class="node" data-node="trk" tabindex="0" aria-label="Топливораздаточная колонка ТРК-01">
+                <g class="node__stroke">
+                  <rect class="bp fill-w" x="62" y="400" width="80" height="150" rx="5"/>
+                  <rect class="screen" x="74" y="414" width="56" height="30" rx="2"/>
+                  <path class="bp-thin" d="M74 462h56M74 474h56M74 486h40"/>
+                  <path class="bp" d="M142 470h8v28h-8"/>
+                  <path class="bp-thin" d="M150 490c18 10 18 40 6 60"/>
+                  <rect class="bp fill-w" x="54" y="550" width="96" height="8"/>
+                </g>
+                <text class="digits" x="102" y="434" text-anchor="middle" data-digits>24.35</text>
+                <text class="bp-label" x="62" y="388">ТРК-01</text>
+              </g>
+
+              <!-- Устройство в разобранном виде -->
+              <g class="exploded node" data-node="device" tabindex="0" aria-label="Концентратор ТРК СНК">
+<!-- gen:exploded -->
+                <g class="ex-axes"><path class="bp-soft-dash" d="M308.8 454L308.8 100"/><path class="bp-soft-dash" d="M620.5 494L620.5 140"/><path class="bp-soft-dash" d="M499.3 564L499.3 210"/></g>
+                <g class="ex-layer" data-layer="base"><path class="bp fill-s" d="M308.8 454L499.3 564L499.3 556L308.8 446Z"/><path class="bp fill-s" d="M620.5 494L499.3 564L499.3 556L620.5 486Z"/><path class="bp fill-w" d="M430 376L620.5 486L499.3 556L308.8 446Z"/><path class="bp" d="M308.8 424L430 354L620.5 464"/><path class="bp-thin" d="M430 376L430 354"/><ellipse class="bp-thin fill-w" cx="430" cy="390.0" rx="5" ry="3"/><ellipse class="bp-thin fill-w" cx="589.3" cy="482.0" rx="5" ry="3"/><ellipse class="bp-thin fill-w" cx="339.9" cy="442.0" rx="5" ry="3"/><ellipse class="bp-thin fill-w" cx="499.3" cy="534.0" rx="5" ry="3"/><path class="bp fill-w" d="M308.8 446L499.3 556L499.3 534L308.8 424Z"/><path class="bp fill-w" d="M620.5 486L499.3 556L499.3 534L620.5 464Z"/><path class="bp-thin fill-s" d="M327.8 451L362.5 471L362.5 461L327.8 441Z"/><path class="bp-thin fill-s" d="M374.6 478L391.9 488L391.9 480L374.6 470Z"/><path class="bp-thin fill-s" d="M404 495L416.1 502L416.1 492L404 485Z"/><path class="bp-thin fill-s" d="M438.7 515L485.4 542L485.4 532L438.7 505Z"/></g>
+                <g class="ex-layer" data-layer="board"><path class="bp fill-w" d="M308.8 346L499.3 456L499.3 450L308.8 340Z"/><path class="bp fill-w" d="M620.5 386L499.3 456L499.3 450L620.5 380Z"/><path class="bp fill-w" d="M430 270L620.5 380L499.3 450L308.8 340Z"/><g class="ex-traces"><path class="bp-thin trace" d="M436.1 321.5L475 344L499.3 330L530.5 348"/><path class="bp-thin trace" d="M427.4 326.5L475 354L490.6 345L521.8 363"/><path class="bp-thin trace" d="M418.7 331.5L475 364L482 360L513.1 378"/><path class="bp-thin trace" d="M410.1 336.5L473.3 373L468.1 376L501 395"/><path class="bp-thin trace" d="M391 332.5L369.4 345L381.5 352"/><path class="bp-thin trace" d="M398 336.5L381.5 346L386.7 349"/><path class="bp-thin trace" d="M398.8 362L409.2 368L395.4 376"/><path class="bp-thin trace" d="M378 362L360.7 352L359 353"/><path class="bp-thin trace" d="M473.3 391L466.4 395L478.5 402L471.6 406"/><path class="bp-thin trace" d="M499.3 406L485.4 414"/><path class="bp-thin trace" d="M516.6 416L509.7 420L504.5 417L497.5 421"/></g><path class="bp fill-s" d="M375.4 323.5L404 340L404 335L375.4 318.5Z"/><path class="bp fill-s" d="M443 317.5L404 340L404 335L443 312.5Z"/><path class="bp fill-w" d="M414.4 296L443 312.5L404 335L375.4 318.5Z"/><path class="bp-thin" d="M438.7 318L442.1 320"/><path class="bp-thin" d="M432.6 321.5L436.1 323.5"/><path class="bp-thin" d="M426.5 325L430 327"/><path class="bp-thin" d="M420.5 328.5L423.9 330.5"/><path class="bp-thin" d="M414.4 332L417.9 334"/><path class="bp-thin" d="M408.4 335.5L411.8 337.5"/><path class="bp fill-s" d="M371.1 358L388.4 368L388.4 364L371.1 354Z"/><path class="bp fill-s" d="M409.2 356L388.4 368L388.4 364L409.2 352Z"/><path class="bp fill-w" d="M391.9 342L409.2 352L388.4 364L371.1 354Z"/><path class="bp fill-w" d="M459.4 317L473.3 325L473.3 321L459.4 313Z"/><path class="bp fill-w" d="M480.2 321L473.3 325L473.3 321L480.2 317Z"/><path class="bp fill-w" d="M466.4 309L480.2 317L473.3 321L459.4 313Z"/><path class="bp fill-w" d="M416.1 368L421.3 371L421.3 364L416.1 361Z"/><path class="bp fill-w" d="M426.5 368L421.3 371L421.3 364L426.5 361Z"/><path class="bp fill-w" d="M421.3 358L426.5 361L421.3 364L416.1 361Z"/><path class="bp fill-w" d="M424.8 373L430 376L430 369L424.8 366Z"/><path class="bp fill-w" d="M435.2 373L430 376L430 369L435.2 366Z"/><path class="bp fill-w" d="M430 363L435.2 366L430 369L424.8 366Z"/><path class="bp fill-w" d="M433.5 378L438.7 381L438.7 374L433.5 371Z"/><path class="bp fill-w" d="M443.9 378L438.7 381L438.7 374L443.9 371Z"/><path class="bp fill-w" d="M438.7 368L443.9 371L438.7 374L433.5 371Z"/><path class="bp fill-s slot slot--on" d="M537.4 343L540.8 345L468.1 387L464.6 385Z"/><path class="bp fill-s slot slot--on" d="M546 348L549.5 350L476.8 392L473.3 390Z"/><path class="bp-soft-dash slot" d="M554.7 353L558.2 355L485.4 397L482 395Z"/><path class="bp-soft-dash slot" d="M563.4 358L566.8 360L494.1 402L490.6 400Z"/><path class="bp-soft-dash slot" d="M572 363L575.5 365L502.7 407L499.3 405Z"/><path class="bp-soft-dash slot" d="M580.7 368L584.1 370L511.4 412L507.9 410Z"/><path class="bp-soft-dash slot" d="M589.3 373L592.8 375L520.1 417L516.6 415Z"/><path class="bp-soft-dash slot" d="M598 378L601.5 380L528.7 422L525.3 420Z"/><path class="bp fill-w" d="M443.9 412L490.6 439L490.6 429L443.9 402Z"/><path class="bp fill-w" d="M509.7 428L490.6 439L490.6 429L509.7 418Z"/><path class="bp fill-s" d="M462.9 391L509.7 418L490.6 429L443.9 402Z"/><circle class="bp-thin fill-w" cx="459.4" cy="400" r="1.8"/><circle class="bp-thin fill-w" cx="466.8" cy="404.3" r="1.8"/><circle class="bp-thin fill-w" cx="474.2" cy="408.5" r="1.8"/><circle class="bp-thin fill-w" cx="481.5" cy="412.8" r="1.8"/><circle class="bp-thin fill-w" cx="488.9" cy="417" r="1.8"/><circle class="bp-thin fill-w" cx="496.2" cy="421.3" r="1.8"/><path class="bp fill-w" d="M327.8 351L362.5 371L362.5 359L327.8 339Z"/><path class="bp fill-w" d="M378 362L362.5 371L362.5 359L378 350Z"/><path class="bp fill-w" d="M343.4 330L378 350L362.5 359L327.8 339Z"/><path class="bp-thin fill-s" d="M332.1 350.5L358.1 365.5L355.5 357L334.7 345Z"/><path class="bp fill-w" d="M374.6 378L391.9 388L391.9 381L374.6 371Z"/><path class="bp fill-w" d="M404 381L391.9 388L391.9 381L404 374Z"/><path class="bp fill-w" d="M386.7 364L404 374L391.9 381L374.6 371Z"/><path class="bp fill-w" d="M404 395L416.1 402L416.1 390L404 383Z"/><path class="bp fill-w" d="M430 394L416.1 402L416.1 390L430 382Z"/><path class="bp fill-w" d="M417.9 375L430 382L416.1 390L404 383Z"/><circle class="bp-thin fill-s" cx="410.1" cy="392.5" r="3"/></g>
+                <g class="ex-layer" data-layer="mods"><g class="node__stroke"><path class="bp-soft-dash" d="M511.4 370L511.4 311"/><path class="bp fill-w" d="M547.8 290L475 332L475 270L547.8 228Z"/><path class="bp-thin" d="M539.1 295L539.1 300"/><path class="bp-thin" d="M531.8 299.3L531.8 304.3"/><path class="bp-thin" d="M524.4 303.5L524.4 308.5"/><path class="bp-thin" d="M517 307.8L517 312.8"/><path class="bp-thin" d="M509.7 312L509.7 317"/><path class="bp-thin" d="M502.3 316.3L502.3 321.3"/><path class="bp-thin" d="M494.9 320.5L494.9 325.5"/><path class="bp-thin" d="M487.6 324.8L487.6 329.8"/><path class="bp-thin fill-s" d="M532.2 281L506.2 296L506.2 270L532.2 255Z"/><path class="bp-thin fill-w" d="M499.3 296L485.4 304L485.4 292L499.3 284Z"/><path class="bp-soft-dash" d="M502.7 365L502.7 306"/><path class="bp fill-w" d="M539.1 285L466.4 327L466.4 265L539.1 223Z"/><path class="bp-thin" d="M530.5 290L530.5 295"/><path class="bp-thin" d="M523.1 294.3L523.1 299.3"/><path class="bp-thin" d="M515.7 298.5L515.7 303.5"/><path class="bp-thin" d="M508.4 302.8L508.4 307.8"/><path class="bp-thin" d="M501 307L501 312"/><path class="bp-thin" d="M493.7 311.3L493.7 316.3"/><path class="bp-thin" d="M486.3 315.5L486.3 320.5"/><path class="bp-thin" d="M478.9 319.8L478.9 324.8"/><path class="bp-thin fill-s" d="M523.5 276L497.5 291L497.5 265L523.5 250Z"/><path class="bp-thin fill-w" d="M490.6 291L476.8 299L476.8 287L490.6 279Z"/></g></g>
+                <g class="ex-layer" data-layer="cover"><path class="bp fill-w" d="M308.8 130L499.3 240L499.3 210L308.8 100Z"/><path class="bp fill-w" d="M620.5 170L499.3 240L499.3 210L620.5 140Z"/><path class="bp fill-w" d="M430 30L620.5 140L499.3 210L308.8 100Z"/><path class="bp-thin" d="M544.3 114L499.3 140"/><path class="bp-thin" d="M551.2 118L506.2 144"/><path class="bp-thin" d="M558.2 122L513.1 148"/><path class="bp-thin" d="M565.1 126L520.1 152"/><path class="bp-thin" d="M572 130L527 156"/><path class="bp-thin" d="M579 134L533.9 160"/><path class="bp-thin" d="M585.9 138L540.8 164"/><circle class="led" cx="334.7" cy="130" r="2.6"/><circle class="srv-led" cx="346.9" cy="137" r="2.6"/><circle class="srv-led srv-led--2" cx="359" cy="144" r="2.6"/><text class="ex-plate" transform="matrix(0.866 0.5 -0.866 0.5 364.2 92)">КОНЦЕНТРАТОР ТРК</text><text class="ex-plate ex-plate--sm" transform="matrix(0.866 0.5 -0.866 0.5 348.6 101)">СНК · RS232 / USB</text></g>
+                <!-- /gen:exploded -->
+              </g>
+
+              <!-- Пакеты (статичное состояние) -->
+              <g class="packets" id="packets">
+                <circle class="packet" cx="280" cy="355" r="3"/>
+                <circle class="packet" cx="214" cy="200" r="3"/>
+                <circle class="packet" cx="320" cy="421" r="3"/>
+                <circle class="packet" cx="115" cy="210" r="3"/>
+              </g>
+            </g>
+
+            <!-- Слой 3: выноски деталей -->
+            <g class="layer layer--front" data-depth="1">
+<!-- gen:callouts -->
+              <g class="callout" data-part="cover"><path class="leader" d="M560 190L632 150H650"/><circle class="callout__dot" cx="560" cy="190" r="2.5"/><text class="bp-label bp-label--accent" x="656" y="146">01 Корпус</text></g>
+              <g class="callout" data-part="mods"><path class="leader" d="M503 274L632 258H650"/><circle class="callout__dot" cx="503" cy="274" r="2.5"/><text class="bp-label bp-label--accent" x="656" y="254">02 Канал ТРК</text><text class="bp-label bp-label--sm" x="656" y="270">2 в базе · до 8</text></g>
+              <g class="callout" data-part="board"><path class="leader" d="M586 403L632 376H650"/><circle class="callout__dot" cx="586" cy="403" r="2.5"/><text class="bp-label bp-label--accent" x="656" y="372">03 Мат. плата</text><text class="bp-label bp-label--sm" x="656" y="388">RS232 или USB</text></g>
+              <g class="callout" data-part="base"><path class="leader" d="M560 511L632 500H650"/><circle class="callout__dot" cx="560" cy="511" r="2.5"/><text class="bp-label bp-label--accent" x="656" y="496">04 Основание</text></g>
+              <!-- /gen:callouts -->
+            </g>
+          </svg>
+
+          <!-- Чипы: реальные категории каталога -->
+          <a class="chip-spec chip-link" data-for="pc" href="equipment/preobrazovateli-interfejsov.html" style="left:0;top:31%"><b>Преобразователи интерфейсов</b><span>9 товаров · от 12 800 ₽</span></a>
+          <a class="chip-spec chip-link" data-for="reader" href="equipment/schityvateli.html" style="left:4%;top:52%"><b>Считыватели карт</b><span>Mifare · 11 670 ₽</span></a>
+          <a class="chip-spec chip-link" data-for="trk" href="equipment/kontrollery-upravleniya.html" style="left:21%;top:74%"><b>Контроллеры управления ТРК</b><span>9 товаров · от 12 500 ₽</span></a>
+          <a class="chip-spec chip-link" data-for="device" href="equipment/kontrollery-upravleniya/kontsentrator-trk-snk.html" style="right:0;top:84%"><b>Концентратор ТРК СНК</b><span>2 рукава, расширяется до 8</span><span>36 750 ₽</span></a>
+
+          <div class="stamp mono" aria-hidden="true">
+            <span>СНК-КТ</span><span>Концентратор ТРК · вид разнесённый</span><span>Лист 1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Оборудование -->
+<section class="directions catalog-home" id="equipment" aria-labelledby="eq-title">
+  <div class="container">
+    <div class="section-head section-head--row">
+      <div class="section-head__col">
+        <h2 class="h2" id="eq-title">Оборудование</h2>
+        <p class="section-head__text">34 позиции в&nbsp;восьми категориях&nbsp;— от&nbsp;кабеля до&nbsp;терминала самообслуживания.</p>
+      </div>
+      <a class="link-more" href="equipment/index.html">Весь каталог <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+
+    <!-- gen:home-bento -->
+      <ul class="bento bento--cat">
+      <li class="card card--xl" data-cat="kontrollery-upravleniya">
+        <span class="card__spot" aria-hidden="true"></span>
+        <div class="card__top"><span class="card__num mono">01</span><svg class="card__icon" aria-hidden="true"><use href="#c-ctrl"/></svg></div>
+        <div class="card__art" aria-hidden="true">
+          <svg viewBox="0 0 520 220">
+            <!-- Концентратор: вид сверху, 8 мест под каналы, 2 заняты -->
+            <rect class="bp fill-w" x="150" y="40" width="220" height="140" rx="6"/>
+            <rect class="bp-thin fill-s" x="170" y="62" width="44" height="44" rx="2"/>
+            <path class="bp-thin" d="M214 72h24M214 84h24M214 96h24"/>
+            <g class="mini-slots">
+              <rect class="bp fill-s" x="252" y="56" width="10" height="78"/><rect class="bp fill-s" x="266" y="56" width="10" height="78"/>
+              <rect class="bp-soft-dash" x="280" y="56" width="10" height="78"/><rect class="bp-soft-dash" x="294" y="56" width="10" height="78"/>
+              <rect class="bp-soft-dash" x="308" y="56" width="10" height="78"/><rect class="bp-soft-dash" x="322" y="56" width="10" height="78"/>
+              <rect class="bp-soft-dash" x="336" y="56" width="10" height="78"/><rect class="bp-soft-dash" x="350" y="56" width="10" height="78"/>
+            </g>
+            <rect class="bp fill-w" x="176" y="150" width="54" height="30"/>
+            <rect class="bp fill-w" x="258" y="152" width="70" height="28"/>
+            <!-- Связи: ПК слева, две ТРК справа -->
+            <path class="data mini-data" id="mini-d1" d="M176 165H96V120H70"/>
+            <path class="data mini-data" id="mini-d2" d="M293 180V200H440V160H452"/>
+            <path class="data mini-data" id="mini-d3" d="M370 100H452"/>
+            <rect class="bp fill-w" x="10" y="92" width="60" height="44" rx="3"/><rect class="screen" x="16" y="98" width="48" height="28" rx="1.5"/>
+            <rect class="bp fill-w" x="452" y="70" width="44" height="66" rx="4"/><rect class="screen" x="458" y="78" width="32" height="16" rx="1.5"/>
+            <rect class="bp fill-w" x="452" y="146" width="44" height="66" rx="4" transform="translate(0 -6)"/><rect class="screen" x="458" y="148" width="32" height="16" rx="1.5"/>
+            <text class="bp-label bp-label--sm" x="150" y="30">КОНЦЕНТРАТОР ТРК · 2 из 8</text>
+            <circle class="packet mini-packet" cx="120" cy="165" r="3"/>
+          </svg>
+        </div>
+        <h3 class="card__title"><a class="card__cover-link" href="equipment/kontrollery-upravleniya.html">Контроллеры управления ТРК</a></h3>
+        <p class="card__text">Концентраторы ТРК, блоки сопряжения с&nbsp;ГНК&nbsp;УЗСГ и&nbsp;весовыми установками УНСГ, блок управления СНК-МВ и&nbsp;контроллеры расширения.</p>
+        <p class="card__meta mono">9 товаров · от 12 500 ₽</p>
+        <span class="card__arrow" aria-hidden="true"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+      </li>
+
+      <li class="card card--half" data-cat="preobrazovateli-interfejsov">
+        <span class="card__spot" aria-hidden="true"></span>
+        <div class="card__top"><span class="card__num mono">02</span><svg class="card__icon" aria-hidden="true"><use href="#c-conv"/></svg></div>
+        
+        <h3 class="card__title"><a class="card__cover-link" href="equipment/preobrazovateli-interfejsov.html">Преобразователи интерфейсов</a></h3>
+        <p class="card__text">USB, RS232 и&nbsp;Ethernet в&nbsp;токовую петлю, RS485 и&nbsp;интерфейс ТРК Tokheim.</p>
+        <p class="card__meta mono">9 товаров · от 12 800 ₽</p>
+        <span class="card__arrow" aria-hidden="true"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+      </li>
+
+      <li class="card" data-cat="pos-terminaly">
+        <span class="card__spot" aria-hidden="true"></span>
+        <div class="card__top"><span class="card__num mono">03</span><svg class="card__icon" aria-hidden="true"><use href="#c-term"/></svg></div>
+        
+        <h3 class="card__title"><a class="card__cover-link" href="equipment/pos-terminaly.html">Терминалы СНК</a></h3>
+        <p class="card__text">ТБР, СНК-S380 и&nbsp;PinPad СНК-Р90.</p>
+        <p class="card__meta mono">3 товара · от 20 160 ₽</p>
+        <span class="card__arrow" aria-hidden="true"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+      </li>
+
+      <li class="card" data-cat="schityvateli">
+        <span class="card__spot" aria-hidden="true"></span>
+        <div class="card__top"><span class="card__num mono">04</span><svg class="card__icon" aria-hidden="true"><use href="#c-read"/></svg></div>
+        
+        <h3 class="card__title"><a class="card__cover-link" href="equipment/schityvateli.html">Считыватели карт</a></h3>
+        <p class="card__text">Бесконтактные карты Mifare, подключение по&nbsp;USB.</p>
+        <p class="card__meta mono">1 товар · 11 670 ₽</p>
+        <span class="card__arrow" aria-hidden="true"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+      </li>
+
+      <li class="card" data-cat="modemy-gprs">
+        <span class="card__spot" aria-hidden="true"></span>
+        <div class="card__top"><span class="card__num mono">05</span><svg class="card__icon" aria-hidden="true"><use href="#c-modem"/></svg></div>
+        
+        <h3 class="card__title"><a class="card__cover-link" href="equipment/modemy-gprs.html">Модемы GPRS</a></h3>
+        <p class="card__text">Кабель DB9M-DB9F.</p>
+        <p class="card__meta mono">1 товар · 550 ₽</p>
+        <span class="card__arrow" aria-hidden="true"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+      </li>
+
+      <li class="card" data-cat="gromkaya-svyaz">
+        <span class="card__spot" aria-hidden="true"></span>
+        <div class="card__top"><span class="card__num mono">06</span><svg class="card__icon" aria-hidden="true"><use href="#c-voice"/></svg></div>
+        
+        <h3 class="card__title"><a class="card__cover-link" href="equipment/gromkaya-svyaz.html">Громкая связь</a></h3>
+        <p class="card__text">ПГУ «Клиент» для АЗС и&nbsp;АЗК, рупорный громкоговоритель 25ГРДП.</p>
+        <p class="card__meta mono">3 товара · от 8 400 ₽</p>
+        <span class="card__arrow" aria-hidden="true"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+      </li>
+
+      <li class="card" data-cat="rasshiriteli-som-portov">
+        <span class="card__spot" aria-hidden="true"></span>
+        <div class="card__top"><span class="card__num mono">07</span><svg class="card__icon" aria-hidden="true"><use href="#c-com"/></svg></div>
+        
+        <h3 class="card__title"><a class="card__cover-link" href="equipment/rasshiriteli-som-portov.html">Расширители СОМ портов</a></h3>
+        <p class="card__text">Платы Orient на&nbsp;2 и&nbsp;4 порта для PCI и&nbsp;PCI-E.</p>
+        <p class="card__meta mono">4 товара · от 1 970 ₽</p>
+        <span class="card__arrow" aria-hidden="true"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+      </li>
+
+      <li class="card" data-cat="komplektatsiya-dlya-tbr">
+        <span class="card__spot" aria-hidden="true"></span>
+        <div class="card__top"><span class="card__num mono">08</span><svg class="card__icon" aria-hidden="true"><use href="#c-tbr"/></svg></div>
+        
+        <h3 class="card__title"><a class="card__cover-link" href="equipment/komplektatsiya-dlya-tbr.html">Комплектация для ТБР</a></h3>
+        <p class="card__text">Переходник, блок питания и&nbsp;кабели для терминала.</p>
+        <p class="card__meta mono">4 товара · от 1 320 ₽</p>
+        <span class="card__arrow" aria-hidden="true"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+      </li>
+    </ul>
+      <!-- /gen:home-bento -->
+  </div>
+</section>
+
+<!-- 3. Полный цикл -->
+<section class="system cycle" id="cycle" aria-labelledby="cycle-title">
+  <div class="system__pin">
+    <div class="container system__grid">
+      <div class="system__side">
+        <h2 class="h2" id="cycle-title">Полный цикл</h2>
+        <p class="system__intro">От&nbsp;принципиальной схемы до&nbsp;ремонта&nbsp;— в&nbsp;одной компании.</p>
+        <div class="steps">
+          <div class="steps__bar" aria-hidden="true"><span></span></div>
+          <ol class="steps__list">
+            <li class="step is-active" data-step="0">
+              <span class="step__num mono">01</span>
+              <div><h3 class="step__title">Разработка</h3><p class="step__text">Схемы, печатные платы и&nbsp;прошивки контроллеров СНК. Схемы, спецификации и&nbsp;текущие версии ПО открыты в&nbsp;разделе «Документация».</p></div>
+            </li>
+            <li class="step" data-step="1">
+              <span class="step__num mono">02</span>
+              <div><h3 class="step__title">Мелкосерийное производство</h3><p class="step__text">Выпускаем контроллеры ТРК и&nbsp;преобразователи интерфейсов небольшими партиями.</p></div>
+            </li>
+            <li class="step" data-step="2">
+              <span class="step__num mono">03</span>
+              <div><h3 class="step__title">Поставка</h3><p class="step__text">34 позиции в&nbsp;каталоге. Заказ оформляется через корзину на&nbsp;сайте.</p></div>
+            </li>
+            <li class="step" data-step="3">
+              <span class="step__num mono">04</span>
+              <div><h3 class="step__title">Ремонт и&nbsp;сервис</h3><p class="step__text">Ремонтируем оборудование для АЗС и&nbsp;нефтебаз. Прошивки контроллеров и&nbsp;терминалов обновляются программой FirmwareApp.</p></div>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="system__stage">
+        <div class="stage">
+          <div class="stage__hud mono" aria-hidden="true"><span class="stage__zone">Этап 1/4 · Разработка</span><span>М 1:1</span></div>
+          <svg class="stage__svg" viewBox="0 0 1600 760" role="img" aria-label="Одна и та же плата на четырёх этапах: чертёж, сборка, упаковка для отгрузки, диагностика при ремонте">
+            <defs>
+              <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                <path d="M0 0V8" stroke="#D5DDE6" stroke-width="1.2"/>
+              </pattern>
+            </defs>
+            <g class="cam">
+              <!-- Общая линия потока -->
+              <path class="bp-soft-line" id="s-flow" d="M40 640H1560"/>
+              <g class="s-packets"></g>
+              <rect x="40" y="640" width="1520" height="10" fill="url(#hatch)"/>
+              <g class="flow-marks">
+                <path class="bp-tick" d="M200 632v16M600 632v16M1000 632v16M1400 632v16"/>
+              </g>
+
+              <!-- Z1 Разработка: чертёж платы -->
+              <g class="zone" data-zone="0">
+                <text class="bp-label" x="60" y="140">01 · Разработка</text>
+                <rect class="bp-soft-dash draw" x="70" y="220" width="270" height="200" rx="6"/>
+                <rect class="bp-soft-dash draw" x="96" y="250" width="70" height="70"/>
+                <rect class="bp-soft-dash draw" x="190" y="250" width="16" height="140"/><rect class="bp-soft-dash draw" x="214" y="250" width="16" height="140"/>
+                <rect class="bp-soft-dash draw" x="238" y="250" width="16" height="140"/><rect class="bp-soft-dash draw" x="262" y="250" width="16" height="140"/>
+                <rect class="bp-soft-dash draw" x="96" y="360" width="60" height="30"/>
+                <path class="bp-thin bp-dash draw" d="M166 270h24M166 290h48M166 310h72"/>
+                <g class="dim">
+                  <path d="M70 460H340 M70 452v16 M340 452v16"/>
+                  <path d="M70 460l8-3v6z M340 460l-8-3v6z" class="dim-arrow"/>
+                  <path d="M372 220V420 M364 220h16 M364 420h16"/>
+                  <path d="M372 220l-3 8h6z M372 420l-3-8h6z" class="dim-arrow"/>
+                </g>
+                <text class="bp-coord" x="205" y="484" text-anchor="middle">L</text>
+                <text class="bp-coord" x="388" y="324">B</text>
+                <g class="title-block">
+                  <rect class="bp-thin fill-w" x="70" y="528" width="270" height="56"/>
+                  <path class="bp-thin" d="M70 556H340M190 528V584"/>
+                  <text class="bp-label bp-label--sm" x="80" y="546">СХЕМА ЭЛ. ПРИНЦ.</text>
+                  <text class="bp-label bp-label--sm" x="200" y="546">СНК</text>
+                  <text class="bp-label bp-label--sm" x="80" y="574">РАЗМЕЩЕНИЕ</text>
+                  <text class="bp-label bp-label--sm" x="200" y="574">ЛИСТ 1</text>
+                </g>
+              </g>
+
+              <!-- Z2 Производство: собранная плата, малая партия -->
+              <g class="zone" data-zone="1">
+                <text class="bp-label" x="460" y="140">02 · Производство</text>
+                <rect class="bp fill-s draw" x="492" y="196" width="270" height="200" rx="6"/>
+                <rect class="bp fill-s draw" x="481" y="208" width="270" height="200" rx="6"/>
+                <rect class="bp fill-w draw" x="470" y="220" width="270" height="200" rx="6"/>
+                <rect class="bp fill-s draw" x="496" y="250" width="70" height="70" rx="2"/>
+                <path class="bp-thin draw" d="M566 262h6M566 274h6M566 286h6M566 298h6M566 310h6 M490 262h6M490 274h6M490 286h6M490 298h6M490 310h6"/>
+                <rect class="bp fill-s draw" x="590" y="250" width="16" height="140"/><rect class="bp fill-s draw" x="614" y="250" width="16" height="140"/>
+                <rect class="bp-soft-dash draw" x="638" y="250" width="16" height="140"/><rect class="bp-soft-dash draw" x="662" y="250" width="16" height="140"/>
+                <rect class="bp fill-w draw" x="496" y="360" width="60" height="30"/>
+                <path class="bp draw" d="M572 270h18M572 290h42M572 310h60 M526 320v40"/>
+                <circle class="led" cx="716" cy="244" r="4"/>
+                <text class="bp-label bp-label--accent" x="605" y="458" text-anchor="middle">ПАРТИЯ · СЕРИЯ</text>
+              </g>
+
+              <!-- Z3 Поставка: упаковка -->
+              <g class="zone" data-zone="2">
+                <text class="bp-label" x="860" y="140">03 · Поставка</text>
+                <path class="bp fill-w draw" d="M900 330L1010 270L1140 330L1030 390Z"/>
+                <path class="bp fill-w draw" d="M900 330V500L1030 560V390Z"/>
+                <path class="bp fill-s draw" d="M1030 390V560L1140 500V330Z"/>
+                <path class="bp-thin draw" d="M955 300L1085 360V420 M968 470l-14-7v-26 M990 480l-14-7v-26"/>
+                <path class="bp-thin draw" d="M961 434l-7-10-7 3 M983 444l-7-10-7 3"/>
+                <text class="ex-plate" transform="matrix(0.908 0.419 0 1 914 372)">СНК</text><text class="ex-plate ex-plate--sm" transform="matrix(0.908 0.419 0 1 914 392)">КОНЦЕНТРАТОР ТРК</text>
+                <path class="data draw" id="s-ship" d="M1150 470H1250"/>
+                <text class="bp-label bp-label--accent" x="1020" y="610" text-anchor="middle">ОТГРУЗКА</text>
+              </g>
+
+              <!-- Z4 Ремонт: диагностика -->
+              <g class="zone" data-zone="3">
+                <text class="bp-label" x="1260" y="140">04 · Ремонт</text>
+                <rect class="bp fill-w draw" x="1270" y="200" width="270" height="150" rx="8"/>
+                <rect class="screen" x="1286" y="216" width="170" height="104" rx="3"/>
+                <path class="bp-thin" d="M1286 268H1456 M1371 216V320"/>
+                <path class="scope-wave" d="M1290 268c8-30 14-30 22 0s14 30 22 0 14-30 22 0 14 30 22 0 14-30 22 0 14 30 22 0 14-30 22 0"/>
+                <circle class="bp fill-w" cx="1494" cy="236" r="14"/><circle class="bp fill-w" cx="1494" cy="290" r="14"/>
+                <path class="bp draw" d="M1494 304V330 M1494 350V400 Q1494 420 1470 420H1380"/>
+                <rect class="bp fill-s draw" x="1300" y="400" width="80" height="44" rx="4"/>
+                <g class="checklist">
+                  <rect class="bp-thin fill-w" x="1270" y="480" width="14" height="14" rx="3"/><text class="bp-label" x="1296" y="492">Диагностика</text>
+                  <rect class="bp-thin fill-w" x="1270" y="508" width="14" height="14" rx="3"/><text class="bp-label" x="1296" y="520">Ремонт</text>
+                  <rect class="bp-thin fill-w" x="1270" y="536" width="14" height="14" rx="3"/><text class="bp-label" x="1296" y="548">Прошивка · FirmwareApp</text>
+                  <rect class="bp-thin fill-w" x="1270" y="564" width="14" height="14" rx="3"/><text class="bp-label" x="1296" y="576">Проверка</text>
+                  <path class="check-mark" d="M1273 487l3 3 6-7 M1273 515l3 3 6-7 M1273 543l3 3 6-7 M1273 571l3 3 6-7"/>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Изготовление карт -->
+<section class="cardlab" id="cards" aria-labelledby="cards-title">
+  <div class="container cardlab__grid">
+    <div class="cardlab__stage">
+      <div class="cardlab__desk">
+        <div class="pcard pcard--3" aria-hidden="true"></div>
+        <div class="pcard pcard--2" aria-hidden="true"></div>
+        <div class="pcard pcard--top" id="pcard" aria-hidden="true">
+          <div class="pcard__face pcard__front">
+            <span class="pcard__glare"></span>
+            <svg class="pcard__mark" viewBox="0 0 120 48"><path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square"/></svg>
+            <svg class="pcard__nfc" viewBox="0 0 24 24"><path d="M8 7a7 7 0 0 1 0 10M12 5a10.5 10.5 0 0 1 0 14M16 3a14 14 0 0 1 0 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="pcard__type mono">MIFARE 1K · 13,56 МГц</span>
+            <span class="pcard__name">Топливная карта</span>
+          </div>
+          <div class="pcard__face pcard__back">
+            <svg class="pcard__coil" viewBox="0 0 860 540">
+              <path d="M60 60h740v420H60z M84 84h692v372H84z M108 108h644v324H108z M132 132h596v276H132z" fill="none" stroke="currentColor" stroke-width="3"/>
+              <path d="M132 270H300" fill="none" stroke="currentColor" stroke-width="3"/>
+              <rect x="300" y="236" width="80" height="68" rx="6" fill="none" stroke="#D32F2F" stroke-width="3"/>
+            </svg>
+            <span class="pcard__type mono">Антенна · чип Mifare</span>
+          </div>
+        </div>
+        <svg class="cardlab__dims" viewBox="0 0 520 360" aria-hidden="true">
+          <path d="M40 18H480 M40 10v16 M480 10v16"/>
+          <path d="M504 44V316 M496 44h16 M496 316h16"/>
+        </svg>
+        <span class="cardlab__dim cardlab__dim--w mono" aria-hidden="true">86 мм</span>
+        <span class="cardlab__dim cardlab__dim--h mono" aria-hidden="true">54 мм</span>
+        <svg class="cardlab__waves" viewBox="0 0 60 120" aria-hidden="true"><path d="M8 40a24 24 0 0 1 0 40"/><path d="M20 28a40 40 0 0 1 0 64"/><path d="M32 16a56 56 0 0 1 0 88"/></svg>
+      </div>
+      <p class="cardlab__hint mono" hidden>Нажмите на карту, чтобы перевернуть</p>
+    </div>
+
+    <div class="cardlab__text">
+      <h2 class="h2" id="cards-title">Изготовление пластиковых карт</h2>
+      <p class="cardlab__lead">Карты со&nbsp;штрих-кодом, магнитной полосой и&nbsp;бесконтактные Mifare&nbsp;1k с&nbsp;печатью по&nbsp;вашему макету.</p>
+      <dl class="spec">
+        <div><dt>Тиражи</dt><dd class="mono">100 — 50 000 шт.</dd></div>
+        <div><dt>Цена за карту</dt><dd class="mono">от 7,64 ₽ с НДС</dd></div>
+        <div><dt>Размер карты</dt><dd class="mono">86 × 54 мм</dd></div>
+        <div><dt>Макет</dt><dd class="mono">CDR, PSD, AI, PDF · CMYK · 300 dpi</dd></div>
+      </dl>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="cards.html#rfid"><span>Цены и требования к макету</span></a>
+        <a class="btn btn--outline" href="cards.html#examples"><span>Примеры дизайна</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Контакты -->
+<section class="reach" id="contacts" aria-labelledby="reach-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="h2" id="reach-title">Контакты</h2>
+      <p class="section-head__text">Вопросы по&nbsp;оборудованию, заказам и&nbsp;ремонту.</p>
+    </div>
+
+    <div class="reach__grid">
+      <article class="office">
+        <div class="office__plan" aria-hidden="true">
+          <svg viewBox="0 0 640 340" preserveAspectRatio="xMidYMid slice">
+            <!-- Район офиса по данным OpenStreetMap (ODbL), ул. Розы Люксембург, 55 -->
+            <defs><path id="st-0" d="M310.2 311.4 313.8 113.1"/><path id="st-1" d="M341.9 302.8 331.7 246.7 333.3 232.1 352.3 161.9"/></defs>
+            <g class="office__water"><path d="M-40 380 -40 32.6 -30.3 54.1 16.2 174.9 38.6 236.6 51.3 284.7 62.7 311 70.6 338.7 68.6 363 69.6 380Z"/><path d="M605 289.2 605 289.2Z"/></g>
+            <defs><clipPath id="bld-reveal"><circle cx="320" cy="170" r="400"/></clipPath></defs>
+            <path class="office__buildings" clip-path="url(#bld-reveal)" d="M664 339 672 352 678 349 670 338 677 334 684 345 687 343 686 342 688 340 679 326 677 328 676 326 664 333 666 337ZM493 124 513 109 516 113 496 129ZM301 11 308 11 308 19 301 19ZM293 1 299 1 299 7 293 7ZM345 3 352 3 352 13 345 13ZM283 28 289 28 289 51 283 51ZM389 51 389 56 375 56 375 63 374 63 374 65 389 66 389 71 370 71 370 69 369 69 369 66 367 66 367 56 368 56 368 52 371 52 371 51 373 51 373 50 386 50 386 51ZM326 49 350 49 349 72 335 72 335 65 342 66 342 55 326 55ZM371 18 362 18 362 43 371 43 371 32 381 32 381 30 382 30 382 26 381 26 381 24 371 24ZM304 2 308 2 309 7 304 7ZM317 65 324 65 324 71 317 71ZM300 23 300 28 308 28 308 23ZM337 17 344 17 344 41 332 41 331 39 327 41 326 38 324 32 324 26 325 23 327 17ZM291 64 291 70 307 70 307 56 302 56 302 64ZM610 -26 611 -26 612 -23 610 -17 607 -18ZM543 -34 538 -39 534 -34 540 -30ZM92 340 102 340 101 388 90 387ZM136 340 136 343 134 343 134 347 158 348 158 344 157 344 157 341 154 340 154 339 151 339 151 340 148 340 148 339 144 339 144 340 141 340 141 339 139 339 139 340ZM136 340 139 340 139 339 141 339 142 324 151 324 151 339 154 339 154 340 157 341 157 340 159 340 160 323 159 323 159 317 154 317 154 316 145 316 145 315 140 315 140 317 135 317 135 322 134 322 133 339 136 339ZM109 313 114 313 114 314 114 342 108 342ZM169 373 176 373 176 378 184 378 184 385 169 385ZM182 373 182 371 193 372 193 375 188 375 188 380 194 380 194 385 184 385 184 373ZM185 368 185 371 199 372 199 365 191 365 191 368ZM201 370 204 370 204 375 201 375ZM204 366 212 366 212 374 204 374ZM222 377 216 376 216 384 221 384 221 385 227 386 229 384 230 382 230 357 228 354 225 354 223 355 222 357ZM211 333 216 333 216 336 217 336 217 359 215 358 215 363 210 363ZM189 358 189 362 183 361 183 358ZM169 368 182 368 182 371 169 371ZM169 358 179 358 179 361 176 361 176 365 169 364ZM169 350 180 350 180 355 169 355ZM191 347 201 347 201 350 191 350ZM169 339 180 340 180 332 174 332 174 331 169 331ZM186 330 186 333 188 333 188 334 191 334 191 333 197 334 197 331ZM190 316 194 316 194 323 190 323ZM227 316 232 317 232 324 227 324ZM227 297 232 297 232 311 226 311ZM216 327 231 328 230 338 223 338 223 335 220 335 220 333 216 333ZM205 281 211 282 211 284 221 284 221 282 227 282 227 288 223 288 223 290 210 290 210 288 205 287ZM191 283 196 283 196 294 191 294ZM188 299 198 299 198 306 188 306ZM179 289 186 289 186 294 179 294ZM170 298 178 298 178 304 170 304ZM170 282 176 282 176 285 175 285 175 287 177 287 177 290 170 290ZM191 237 196 237 196 277 191 277ZM208 237 214 237 213 265 208 265ZM217 265 221 265 221 269 217 268ZM226 246 233 246 233 268 225 268ZM223 237 234 237 234 241 223 241ZM182 242 182 238 184 238 184 236 188 236 188 239 187 239 187 242ZM170 261 170 267 179 267 179 261ZM170 252 170 255 172 255 172 257 180 257 180 252ZM171 245 178 245 178 249 171 248ZM117 309 128 309 127 314 114 314 114 313 109 313 109 312 108 312 108 306 107 306 107 300 108 300 108 298 113 298 114 292 117 292 117 287 123 287 123 293 120 293 120 299 117 298ZM133 279 138 279 138 307 132 307ZM147 301 147 305 153 305 153 301ZM156 299 156 305 160 305 160 299ZM152 291 159 291 159 294 159 295 152 295ZM153 279 159 279 159 291 152 291ZM149 261 155 262 155 277 149 277ZM143 227 143 233 162 234 162 227 158 227 158 228ZM129 237 136 237 136 253 129 253ZM110 278 111 285 115 284 114 278ZM112 264 115 264 115 263 121 263 120 272 112 273 112 270 111 270 108 270 107 263 112 262ZM104 250 110 249 111 257 106 257ZM103 242 109 241 110 245 103 246ZM99 217 111 216 111 224 99 224ZM90 287 97 287 97 293 90 293ZM81 285 86 286 86 293 81 293ZM76 286 69 288 70 294 78 292ZM87 278 88 284 99 282 98 276ZM90 272 97 271 98 275 90 275ZM91 264 97 264 97 268 91 268ZM96 260 92 261 91 257 95 257ZM61 263 66 262 69 270 70 270 71 271 72 271 72 272 73 272 72 265 73 265 73 263 76 262 77 263 78 263 81 278 66 281ZM59 256 64 254 66 259 66 262 61 263ZM56 246 54 237 59 236 62 245ZM81 255 74 256 70 242 74 241 77 252 80 251ZM78 241 92 239 93 247 79 249ZM86 232 91 231 92 237 87 237ZM78 230 78 231 77 231 77 236 76 237 73 237 72 230ZM54 229 63 227 63 228 66 227 67 232 56 235 55 234 53 232 54 230ZM63 220 68 219 69 221 70 221 70 224 64 225ZM81 218 88 217 89 222 82 223ZM74 211 87 208 88 214 75 216ZM77 197 84 196 85 200 78 201ZM69 199 75 198 75 203 69 203ZM55 202 64 200 66 206 57 208ZM123 191 139 191 139 222 124 222ZM43 192 52 189 53 195 45 198ZM53 181 58 179 60 186 61 186 62 192 56 194ZM63 181 71 179 73 190 66 191ZM52 161 54 170 60 168 63 181 69 180 68 176 66 167 72 166 70 157ZM77 175 80 185 90 183 91 181 90 179 92 179 93 178 93 176 92 175 89 175 89 173 88 172ZM27 172 29 179 34 177 32 171ZM92 162 93 166 94 166 94 167 100 165 99 160ZM134 180 134 169 135 169 134 164 122 164 122 171 121 171 121 177 123 177 123 179 129 179 129 180ZM117 165 110 166 111 170 118 169ZM108 157 115 155 117 162 110 164ZM104 143 109 141 112 151 107 153ZM106 119 114 117 118 139 107 141 107 137 111 136 108 122 106 122ZM100 129 105 128 106 133 101 134ZM122 128 126 128 125 138 121 138ZM120 115 126 114 127 123 121 124ZM91 155 97 154 96 149 89 151ZM94 145 88 147 86 140 92 138ZM98 121 102 120 103 123 99 124ZM139 112 150 112 149 108 139 108ZM155 108 155 111 167 112 167 108ZM138 117 142 117 142 123 138 123ZM138 123 142 124 141 135 137 134ZM82 125 87 123 89 128 83 130ZM74 133 71 134 70 128 73 128ZM67 129 60 131 62 137 67 135 66 134 68 133ZM48 138 49 138 49 141 56 139 55 134 56 134 56 131 47 133ZM50 153 63 150 61 142 48 145ZM31 149 40 148 39 146 36 146 36 144 34 145 34 144 30 144ZM34 159 38 158 37 156 39 156 38 153 32 154ZM41 182 46 181 45 177 40 178ZM224 227 230 227 230 213 225 213ZM223 210 233 210 233 203 223 203ZM206 206 216 206 216 201 206 201ZM189 220 195 220 195 189 189 189ZM214 227 219 227 219 211 213 211 213 219 214 219ZM171 227 181 227 181 223 176 223 176 222 171 222ZM177 218 171 218 171 210 177 210ZM176 205 172 205 172 199 176 199ZM172 192 177 192 178 192 178 188 172 188ZM172 180 181 181 181 185 172 185ZM172 176 181 176 181 165 172 165ZM192 184 192 172 228 173 228 180 234 180 234 176 235 166 190 165 190 168 187 168 186 187 189 187 189 184ZM197 184 197 190 223 190 223 185ZM228 180 234 180 234 198 226 198 226 196 225 196 225 195 224 195 224 193 225 193 226 190 223 190 223 185 227 185ZM178 153 188 153 188 145 179 145ZM204 154 208 154 208 149 209 149 209 139 204 139ZM208 154 211 154 211 150 208 149ZM228 156 234 156 234 153 235 153 235 150 236 150 235 147 230 147 231 153 228 153ZM232 136 236 136 236 132 232 132ZM208 132 213 132 213 128 208 127ZM181 128 181 133 186 133 186 136 198 136 198 134 203 134 203 128 198 128 198 131 187 131 187 128ZM226 118 235 118 235 113 226 113ZM219 123 214 123 214 100 220 101ZM237 108 229 108 229 103 237 103ZM223 96 223 98 235 98 235 96ZM224 78 223 85 231 85 231 83 238 83 238 79ZM217 77 216 83 221 83 221 81 223 81 223 78ZM209 77 209 85 213 85 213 83 214 83 215 78ZM192 77 201 77 201 84 199 84 198 102 208 102 208 111 191 110 191 109 187 109 188 102 188 97 189 97 189 89 191 89ZM164 64 164 77 174 77 174 87 178 87 178 54 174 54 174 64ZM197 63 202 64 205 52 200 51ZM207 51 214 53 214 58 212 58 211 63 204 61ZM202 67 211 68 211 64 205 64 202 64ZM214 67 222 68 222 62 214 62ZM223 68 229 68 229 65 223 64ZM232 65 232 68 237 68 238 65ZM218 60 222 60 223 52 222 52 223 34 220 34 219 52 218 52ZM239 42 231 41 232 37 239 38ZM233 34 239 34 239 30 233 30ZM234 28 239 28 239 23 234 23ZM235 15 235 22 240 22 240 15ZM233 11 240 11 240 7 233 7ZM233 2 233 5 240 5 240 2ZM220 17 228 17 228 3 221 3ZM214 9 209 7 211 0 216 1ZM202 43 207 44 214 15 208 13ZM8 122 13 121 11 112 5 113ZM27 120 24 121 23 118 26 117ZM21 115 28 113 27 109 20 111ZM19 106 27 104 26 98 17 101ZM12 107 5 109 2 99 9 97ZM13 89 20 87 18 81 11 83ZM25 86 30 85 29 79 23 80ZM33 95 41 93 40 87 31 89ZM70 81 75 79 77 85 71 87ZM69 77 74 76 73 69 67 71ZM57 65 61 63 60 59 56 60ZM44 69 48 68 47 63 43 64ZM34 71 40 69 39 65 33 66ZM11 79 16 77 14 71 9 73ZM-8 70 0 67 -3 56 -7 57 -6 61 -11 62ZM6 64 14 61 13 57 5 59ZM18 50 23 49 25 56 31 55 28 42 32 41 31 35 23 37 25 42 16 45ZM37 55 43 53 42 48 36 50ZM47 52 52 50 51 46 45 47ZM4 53 9 51 7 44 5 45 3 37 -1 38ZM6 44 12 42 9 35 4 37ZM-13 55 -8 53 -10 46 -15 47ZM-19 42 -17 42 -17 43 -14 42 -14 41 -11 40 -15 29 -17 30 -17 29 -21 30 -20 31 -23 32ZM9 31 14 30 13 27 15 27 13 22 12 22 11 20 7 21 7 25 4 26 5 30 9 29ZM3 29 4 32 -1 33 -1 31 -3 32 -4 25 -3 25 -4 23 -5 23 -8 15 -6 15 -8 9 -9 9 -11 3 -10 3 -11 0 -6 -1 -5 1 -4 1 -3 3 -1 2 -1 1 -1 0 -1 -3 4 -4 4 -3 6 -3 8 4 7 5 7 6 2 7 2 5 -3 7 -3 8 -2 8 0 15 1 15 2 19 1 20 2 25 3 25 5 29ZM12 16 17 15 15 6 10 7ZM16 30 34 25 57 20 58 23 35 27 17 32ZM53 35 47 36 46 32 52 31ZM60 43 61 45 58 46 59 49 66 47 65 41ZM44 19 50 17 44 -3 39 -2 38 -7 17 -2 18 4 39 -2ZM-40 8 -29 31 -18 26 -17 29 -13 27 -14 24 -12 24 -13 21 -25 26 -35 5ZM-33 4 -28 2 -19 22 -24 24ZM-24 0 -18 -2 -12 18 -17 20ZM95 106 101 105 103 110 96 112ZM91 97 96 95 96 96 98 95 97 91 90 93ZM108 107 113 105 113 106 116 105 114 100 113 100 108 85 106 85 105 81 101 83 103 88 101 88 105 102 107 101ZM106 85 109 84 109 83 115 81 115 80 122 78 122 79 127 78 126 72 122 73 122 71 112 74 113 75 107 77 107 78 104 79ZM121 88 121 92 127 93 127 88ZM122 100 124 104 129 102 128 98ZM91 79 92 81 106 77 107 73 105 68 100 69 101 73 90 76ZM109 45 111 51 119 49 122 57 114 60 115 65 124 63 124 61 128 60 123 43 119 44 119 43ZM96 54 100 53 100 54 111 51 109 44 94 48ZM93 64 95 69 100 68 99 62ZM78 53 80 59 86 57 85 56 84 51ZM86 57 80 59 80 62 86 60ZM91 79 86 80 83 70 84 70 83 64 87 63ZM86 80 91 79 93 85 92 85 93 87 88 89ZM137 70 137 74 144 74 144 70ZM138 48 138 52 144 52 144 48ZM139 36 139 41 144 41 144 36ZM138 58 138 63 145 63 145 58ZM75 39 77 44 85 42 83 36ZM72 -18 74 -13 94 -18 92 -24ZM62 -10 63 -4 66 -5 65 -10ZM68 15 70 20 76 18 74 13ZM64 1 66 8 73 6 71 -1ZM94 -6 101 22 111 20 107 0 118 -3 119 4 125 3 122 -12ZM114 -26 115 -18 120 -18 119 -27ZM121 -30 121 -25 129 -25 129 -30ZM149 1 149 7 170 7 170 1ZM140 8 147 8 147 3 140 3ZM142 10 142 14 147 15 147 11ZM141 17 141 20 145 20 145 17ZM90 32 92 40 101 37 98 29ZM102 32 103 36 109 35 107 31ZM124 24 125 29 129 28 128 23ZM116 29 117 33 121 32 120 28ZM124 15 124 18 130 18 130 15ZM140 -11 140 -1 147 -1 147 -11ZM140 -19 140 -15 142 -15 145 -15 145 -20 142 -20 142 -19ZM140 -31 140 -26 146 -26 146 -31ZM166 -32 166 -25 175 -25 175 -32ZM189 -31 188 -29 192 -28 192 -25 188 -25 187 -21 193 -20 194 -23 197 -22 196 -19 202 -18 203 -24 200 -25 200 -28 204 -27 204 -33 200 -34 199 -30 195 -31 196 -32 192 -33 191 -31ZM217 -38 223 -37 218 -9 212 -10ZM234 -53 241 -52 240 -29 233 -29ZM225 -18 225 -13 231 -12 231 -9 239 -9 239 -11 241 -11 241 -14 238 -14 239 -25 235 -25 235 -26 232 -26 232 -21 233 -21 233 -18ZM52 -32 53 -28 60 -30 59 -34ZM65 -36 66 -31 72 -33 71 -38ZM37 -32 38 -27 43 -28 42 -33ZM20 -54 27 -25 33 -26 25 -55ZM12 -27 13 -24 16 -25 17 -20 25 -22 24 -27 27 -27 26 -31ZM0 -49 6 -50 13 -24 14 -21 8 -20ZM-18 -34 -13 -13 -7 -15 -6 -12 7 -16 5 -22 -7 -19 -12 -36ZM-33 -9 -31 -4 -23 -6 -25 -11ZM-38 -18 -37 -15 -33 -16 -32 -14 -25 -15 -27 -21ZM-49 -11 -38 -16 -32 -3 -42 2ZM-36 -34 -35 -29 -30 -30 -31 -35ZM-1 89 0 94 5 93 4 88ZM290 -30 290 -25 298 -24 298 -30ZM303 -31 303 -22 308 -22 308 -31ZM294 -22 294 -19 293 -19 293 -17 297 -16 297 -22ZM297 -13 296 -7 303 -6 308 -11 308 -16 303 -16 302 -14 301 -13ZM279 -12 285 -12 286 -43 280 -43ZM268 -33 268 -25 271 -24 271 -27 273 -27 273 -33ZM253 -35 252 -13 258 -13 259 -35ZM270 2 270 9 259 9 258 18 251 18 252 2ZM270 2 270 10 286 10 286 2ZM251 20 251 35 258 35 258 20ZM266 26 266 34 274 34 274 26ZM251 37 251 51 256 51 256 37ZM264 38 264 41 274 41 274 38ZM251 51 251 52 251 63 251 64 252 65 252 66 253 66 253 68 256 68 256 69 262 69 261 70 275 70 275 63 257 63 257 53 256 53 256 51ZM252 79 251 110 253 110 253 113 255 113 255 114 260 114 261 111 262 105 258 105 259 79ZM274 80 274 108 280 108 281 80ZM254 118 254 125 271 125 278 125 278 118ZM271 125 271 147 261 147 260 149 259 151 260 153 262 154 287 154 287 147 278 147 278 125ZM249 130 249 144 255 144 255 130ZM292 126 291 129 298 129 298 125 296 125 296 120 298 120 298 117 292 117ZM290 132 290 136 297 136 297 132ZM301 117 300 125 302 125 301 128 307 128 307 117ZM302 109 302 114 307 114 307 109ZM285 95 285 108 290 108 290 97 289 97 289 95ZM293 99 293 104 307 104 307 95 303 95 303 99ZM285 79 285 85 296 85 295 93 302 93 302 85 298 85 298 79ZM299 149 299 158 305 158 305 149ZM248 162 248 170 256 171 256 170 257 170 257 165 256 165 256 163ZM248 173 248 180 254 180 254 182 260 182 260 176 254 176 254 173ZM260 167 260 178 272 178 272 166 267 166 267 167ZM278 166 278 171 298 171 298 166ZM302 167 302 174 306 174 306 167ZM247 183 247 212 253 212 253 210 256 210 257 207 270 208 270 201 259 200 259 183ZM247 212 247 227 252 227 253 212ZM276 183 276 191 291 191 291 185 281 185 281 183ZM291 186 291 191 305 191 305 184 302 184 302 186ZM297 194 297 198 305 198 305 194ZM298 201 298 204 305 204 305 201ZM297 207 297 212 304 212 304 207ZM278 205 278 212 284 212 284 205ZM287 206 287 212 290 212 290 206ZM297 219 297 227 299 227 303 227 303 219ZM263 211 263 227 266 227 267 211ZM256 211 256 227 260 227 260 211ZM275 219 273 219 273 221 275 221 275 223 273 223 273 226 274 226 274 228 279 228 279 217 275 217ZM246 237 246 244 251 244 251 239 253 239 253 237ZM268 237 268 244 275 244 275 237ZM281 239 281 244 288 244 288 239ZM298 238 298 253 302 253 302 238ZM296 255 296 265 304 265 304 255ZM245 255 245 258 247 260 252 260 252 255ZM245 264 245 271 251 271 251 265 252 265 252 263 248 263 248 264ZM256 264 255 277 261 277 261 264ZM266 257 271 257 271 276 269 278 266 278 266 277 264 277 264 274 263 273 266 271ZM245 277 245 285 252 285 252 282 250 282 251 277ZM245 289 244 306 258 307 258 303 251 303 251 293 265 293 265 289ZM288 277 288 284 301 284 301 282 303 281 302 279 301 279 301 277ZM298 302 298 307 303 307 303 302ZM287 300 287 302 283 302 283 306 280 306 280 300ZM247 358 243 358 243 365 249 366 249 359 247 359ZM245 318 245 335 244 335 244 339 256 339 256 354 302 355 302 319ZM249 359 249 366 273 366 273 359ZM243 373 243 383 246 387 255 387 255 381 252 381 252 376 253 375 252 373ZM273 363 273 369 276 369 276 371 287 372 289 372 289 371 294 372 294 373 297 373 299 373 299 372 300 372 301 367 301 364 299 364 300 362 294 362 294 363ZM248 151 248 157 254 157 254 151ZM440 372 446 385 451 382 445 369ZM393 374 393 378 399 378 399 379 408 379 410 379 411 377 410 376 409 375ZM369 355 369 361 382 359 381 354ZM411 360 413 363 417 360 415 357ZM408 351 411 355 415 352 412 348ZM403 344 404 349 409 348 408 341 406 342 407 343ZM424 360 427 365 431 363 429 358ZM431 357 433 362 447 357 445 352ZM425 347 428 355 432 354 429 346ZM428 342 429 345 433 343 432 341ZM411 325 408 329 414 332 416 328ZM456 336 442 341 445 348 446 348 447 350 444 351 447 357 462 352 459 346 451 349 449 343 457 340ZM440 327 445 337 449 336 445 325ZM445 297 441 293 434 299 438 303ZM454 300 458 309 459 308 462 313 466 311 460 294 455 297 456 299ZM472 327 466 311 462 313 462 315 456 317 461 331ZM470 306 475 319 470 322 465 307ZM473 323 476 331 473 332 470 322 482 316 483 318 477 323ZM477 335 479 339 484 337 485 338 490 336 484 322 480 324 484 333ZM451 286 455 297 460 294 459 290 464 288 463 286 465 285 467 289 464 290 466 294 468 293 469 296 467 297 469 302 478 298 472 278 470 277ZM441 293 445 297 453 292 451 286 448 287ZM426 305 429 309 438 303 434 299ZM458 369 459 371 467 368 464 361 458 364 460 368ZM456 376 462 387 465 386 462 379 465 378 464 376 465 375 464 373ZM471 359 473 364 477 362 475 357ZM478 357 479 360 480 359 481 362 487 360 485 354ZM491 351 493 356 499 354 497 349ZM484 365 486 368 489 367 489 368 499 364 498 364 502 362 501 359ZM503 350 504 353 508 352 511 360 509 361 511 367 517 365 516 363 517 363 512 347ZM514 347 515 350 516 349 518 352 521 351 519 345ZM522 352 528 350 533 361 539 359 534 347 546 342 544 337 531 342 531 343 526 345 526 344 519 347ZM511 327 514 335 520 333 517 325ZM526 320 527 322 530 328 537 326 535 321 534 321 533 317ZM520 308 525 320 526 320 530 318 525 306ZM518 299 520 308 525 306 523 299ZM506 297 509 306 514 305 511 295ZM515 289 517 300 525 298 524 295 527 295 520 286 520 285 517 285 517 289ZM503 285 504 290 509 290 509 293 513 293 511 283ZM485 288 487 295 492 294 490 287ZM491 305 493 309 497 308 496 303ZM494 312 497 321 503 319 500 310ZM547 346 548 348 550 353 553 351 553 350 556 349 553 342ZM562 343 563 346 570 343 567 336 561 339ZM545 335 546 338 551 337 553 340 556 339 555 338 559 337 556 331ZM570 323 574 330 578 328 575 321ZM550 310 553 317 567 312 573 309 573 310 575 309 573 304 572 304 568 296 561 299 563 305ZM538 307 542 318 540 318 542 323 550 319 548 313 546 314 542 305ZM532 312 534 317 538 315 536 311ZM534 297 535 300 536 300 538 307 544 305 543 301 549 299 550 302 554 301 551 290 545 292 545 294ZM552 276 552 280 554 280 558 289 564 287 559 275ZM488 247 496 261 492 263 484 249ZM494 262 497 267 499 268 508 266 507 263 524 259 524 262 535 260 537 266 522 269 522 266 519 266 520 269 514 270 514 268 512 268 513 272 498 275 496 274 492 272 487 262 490 260 492 263ZM509 229 510 231 510 232 511 234 512 234 513 237 529 229 525 221ZM517 237 518 246 530 244 528 235 523 236 523 235 519 236 519 237ZM533 245 534 250 539 249 537 244ZM486 241 487 244 492 241 491 238ZM468 227 477 243 495 233 495 232 510 224 506 217 495 223 494 221 489 223 488 220 483 222 486 228 480 231 476 223ZM461 195 476 188 472 181 458 189 458 190 457 191 455 187 448 191 466 224 472 221 470 217 472 216 473 217 490 208 486 202 469 211 469 212 468 212 459 195 461 194ZM489 184 494 195 501 191 495 181ZM481 188 484 194 492 190 489 184ZM448 186 444 187 442 178 445 177ZM501 202 510 218 517 214 509 198ZM518 202 520 206 531 201 529 197ZM503 185 507 197 510 196 506 184ZM542 216 536 220 535 218 533 220 529 215 534 212 532 209 539 205 541 207 538 209ZM541 239 541 243 545 243 545 239ZM541 255 544 259 543 260 545 263 551 260 549 257 551 255 553 257 557 254 556 252 559 250 560 253 565 250 564 248 565 248 564 245 562 246 560 242 555 246 556 247 555 247 552 244 548 244 547 245 545 249 547 252 546 253ZM562 239 563 242 564 241 570 238 568 236ZM560 219 565 228 568 227 573 235 581 231 576 223 572 225 566 215ZM545 221 554 236 561 231 551 217ZM567 212 570 217 575 214 572 209ZM525 166 539 188 546 183 531 162ZM578 245 582 252 587 249 583 242ZM588 241 591 247 602 241 598 235ZM587 231 589 235 596 231 594 228ZM601 233 605 239 611 235 611 234 613 233 612 232 617 229 615 226 616 226 615 223 610 226 608 224 600 229 602 232ZM618 224 621 229 626 226 623 220ZM624 218 626 222 628 221 629 224 641 217 638 213 631 217 630 215ZM665 239 675 233 681 243 671 249ZM657 246 664 257 664 259 666 259 667 261 667 264 666 265 664 266 661 265 660 264 659 262 661 259 660 259 659 259 657 257 654 250 655 247ZM675 223 679 231 688 225 684 218ZM652 211 647 214 644 209 649 206ZM625 159 627 162 631 168 631 169 633 172 634 172 638 178 637 179 639 182 642 180 643 181 645 179 643 175 642 176 640 173 644 171 641 167 640 167 637 163 635 164 632 159 633 158 632 157 648 147 643 140 635 145 636 147 628 152 630 155 627 156 628 157ZM629 174 624 177 615 163 619 160 625 170 626 169ZM650 173 651 174 647 176 649 179 655 175 653 171ZM645 163 650 173 653 171 648 161ZM665 176 670 185 661 190 661 189 658 190 659 191 651 195 658 208 653 210 649 204 648 205 645 200 647 199 644 193 646 192 645 191 647 191 646 190 652 187 661 182 659 179ZM667 175 674 186 679 183 675 177 678 175 682 182 685 181 678 169 672 173 672 172ZM656 200 659 203 659 202 661 205 665 203 664 201 663 202 660 197ZM664 196 668 202 676 197 673 192 670 194 668 192 666 193 667 194ZM677 190 680 195 687 191 684 186ZM618 154 611 158 608 153 615 149ZM601 137 603 141 610 137 607 133ZM606 128 607 130 612 127 610 125ZM614 137 618 144 623 142 619 135ZM624 136 627 140 634 136 632 131ZM616 117 618 121 622 119 619 115ZM632 127 636 133 641 130 637 124ZM621 114 623 118 626 116 624 112ZM589 113 592 118 597 115 594 110ZM632 109 638 119 639 118 642 123 643 122 645 125 648 123 649 124 652 122 652 121 654 120 654 121 657 118 660 116 656 111 646 118 638 106ZM648 103 653 110 656 107 653 103 652 104 650 101ZM653 97 655 100 657 100 658 102 661 101 658 94ZM646 130 647 132 653 129 652 126ZM663 108 665 113 670 110 668 106ZM669 123 672 128 677 125 675 120ZM673 130 675 134 681 131 679 128 678 129 677 128ZM669 141 672 147 685 141 682 135ZM484 373 486 374 490 378 494 374 492 372 490 374 487 370ZM496 373 500 376 504 370 499 368ZM510 374 508 378 516 382 517 379 514 378 515 376ZM516 371 518 376 523 374 522 369ZM524 368 526 373 528 372 529 373 532 372 530 366ZM542 363 544 369 547 369 546 367 549 366 548 361ZM558 369 560 376 565 375 566 378 568 378 571 392 574 391 575 395 583 393 590 393 587 370 578 372 577 367 590 365 589 360 590 359 589 353 584 355 586 361 566 365 566 367ZM595 360 594 369 598 369 599 360ZM553 360 555 366 561 365 559 358ZM582 349 584 355 595 350 593 345ZM565 355 568 361 573 358 570 353ZM572 351 574 355 577 353 576 350ZM611 351 610 358 615 358 616 352ZM608 373 607 380 616 381 617 374ZM611 340 611 345 618 346 618 342 617 342 617 340ZM628 339 628 343 638 343 638 339ZM645 338 649 344 653 343 650 337ZM279 -12 279 -7 259 -7 259 -13ZM677 362 681 369 690 364 688 360 684 363 682 359ZM441 261 446 267 461 254 461 250 457 244 450 249 452 252ZM424 288 428 284 423 279 422 281 420 283 423 285 422 286ZM411 286 418 293 420 291 414 284ZM403 299 407 304 413 299 409 294ZM394 306 395 310 386 313 385 308ZM386 300 386 305 379 305 379 300ZM390 288 391 292 392 292 392 294 385 294 384 289ZM392 280 393 286 389 286 389 287 386 288 386 285 385 285 384 281ZM391 272 391 273 392 273 392 274 393 274 393 278 390 278 390 279 387 279 387 277 385 277 385 274 386 274 386 272ZM382 269 380 271 377 268 379 267ZM387 263 390 266 394 262 390 257 388 259 389 261ZM398 278 398 282 405 282 405 278ZM405 273 405 278 398 278 398 274 401 274 401 273 402 272 403 273ZM409 262 413 265 417 261 413 258ZM415 256 421 261 419 263 413 258ZM392 256 396 260 401 255 397 252ZM403 246 406 250 401 254 398 250ZM409 239 413 243 408 247 405 244ZM428 241 430 243 430 242 436 247 438 245 443 249 448 243 443 238 451 229 445 223ZM421 223 426 228 430 224 425 219ZM447 238 452 244 458 238 453 232ZM431 217 434 221 437 218 434 215ZM444 212 439 216 432 210 435 206 436 208 439 205 445 210ZM412 212 416 218 426 212 423 207 418 210 417 209ZM434 188 436 191 430 195 428 192ZM398 199 404 208 410 204 410 205 416 201 428 194 425 188 405 199 403 196ZM384 186 386 193 392 191 390 184ZM381 193 381 200 374 200 374 193ZM380 206 381 206 384 209 384 210 390 210 389 205 386 205 388 204 386 201 384 203 384 201 380 201ZM375 214 376 220 383 220 382 214ZM394 228 390 231 389 230 386 229 385 230 382 226 386 224 387 225 390 226 391 225ZM398 208 394 209 396 215 401 217 406 215 405 211 402 212 399 211ZM360 151 360 160 364 160 364 161 370 161 370 162 377 162 377 163 387 163 387 153 377 153 377 152ZM363 168 363 174 355 173 356 167ZM361 128 361 134 365 134 365 128ZM404 132 403 137 399 137 399 132ZM370 318 371 325 375 324 375 320 376 320 376 317ZM332 389 332 367 323 367 323 371 326 371 325 382 322 382 322 388ZM320 368 320 377 317 377 313 377 313 368ZM313 360 313 366 323 366 323 365 324 365 324 362 320 362 320 358 316 358 316 360ZM313 344 314 350 336 350 336 347 326 347 324 344ZM313 333 313 340 317 340 317 339 320 339 320 333ZM313 326 313 330 317 330 317 328 320 328 320 326ZM314 316 314 323 332 323 332 316ZM334 366 334 370 345 370 344 366ZM339 358 339 363 333 363 333 361 330 361 330 360 328 360 328 358 327 358 327 357 326 357 326 354 326 353 332 353 332 354 333 355 334 355 334 357 336 357 336 358ZM345 372 345 374 337 374 337 372ZM352 356 352 362 358 362 357 356ZM351 346 351 351 360 351 360 345ZM349 331 350 335 357 334 356 330ZM356 320 357 327 361 326 361 319ZM351 309 352 314 347 315 346 310ZM353 295 354 304 360 304 359 296 357 296 357 294ZM341 284 342 291 348 290 347 283ZM337 268 339 277 343 277 343 274 344 274 344 270 342 270 341 267ZM346 257 350 274 354 273 353 271 359 269 357 265 355 265 353 256ZM339 243 339 249 334 249 333 243ZM343 240 349 240 349 233 343 233ZM335 301 336 309 340 308 339 301ZM314 281 314 289 318 289 318 290 321 290 325 290 325 286 320 286 320 281ZM333 273 333 279 328 279 328 277 323 277 323 279 320 279 320 277 314 277 314 273ZM319 267 319 272 314 272 314 267ZM323 258 323 264 332 264 332 258ZM315 238 315 254 324 254 324 247 326 247 326 240 323 240 323 238ZM315 221 315 228 322 228 322 225 318 225 318 221ZM335 216 332 229 326 228 327 223 329 223 330 215ZM347 221 346 230 351 230 351 221ZM315 205 315 213 321 213 321 205ZM336 206 334 215 328 213 329 207 328 206 328 200 331 200ZM345 211 343 216 339 215 341 210ZM345 206 348 208 351 202 347 200ZM315 178 315 187 317 187 317 189 319 191 321 191 321 184 322 184 322 178ZM321 185 321 192 338 192 338 191 341 191 342 186 336 185ZM327 166 326 172 338 172 336 185 342 186 346 173 344 168 341 168 341 166ZM319 152 319 158 326 158 326 152ZM345 152 345 159 350 159 350 153ZM317 125 317 132 322 132 323 125ZM334 115 334 126 338 126 338 123 337 123 337 120 340 120 340 124 349 124 350 118 337 117 337 115ZM373 108 373 113 369 113 369 108ZM388 85 388 97 394 97 395 85ZM373 83 373 87 379 87 379 83ZM385 116 384 127 389 127 390 116ZM409 85 404 83 397 103 395 112 395 128 400 128 399 112 401 105 402 105ZM340 96 340 103 349 103 349 97ZM346 108 345 114 350 114 350 108ZM317 81 317 87 321 87 321 81ZM317 98 317 104 327 104 327 98ZM396 5 396 10 399 10 399 5ZM399 23 398 29 402 29 403 23ZM396 35 396 40 402 40 402 35ZM396 44 395 49 402 50 402 45ZM408 61 407 67 413 67 414 62ZM415 41 415 43 415 46 416 46 416 48 421 48 422 41ZM412 23 411 38 420 38 420 28 429 29 430 24ZM464 -25 466 -19 486 -25 485 -31ZM495 -22 501 -19 504 -25 497 -28ZM455 -11 454 -2 459 -1 459 -11ZM478 6 483 7 487 -6 483 -8ZM415 -20 414 -4 426 -3 426 -7 428 -7 428 -17 424 -17 424 -20ZM430 -8 430 -3 434 -3 434 -8ZM380 -17 380 -4 388 -4 388 -16ZM338 -12 338 -6 351 -6 351 -12ZM319 -21 319 -7 334 -7 334 -14 329 -14 329 -13 326 -13 326 -15 327 -15 327 -21ZM325 -32 322 -30 321 -24 331 -24 331 -34 328 -34 328 -32ZM346 -40 339 -32 337 -32 337 -27 339 -27 342 -25 350 -34 350 -39 349 -40 348 -40ZM611 102 614 106 611 108 609 104 608 104 607 101 608 100 610 103ZM618 99 618 98 621 102 617 104 615 101 613 103 611 100 613 98 612 97 614 96 614 97 616 96ZM624 95 626 99 623 101 620 96ZM632 91 634 96 631 97 628 93ZM635 77 641 83 645 80 647 83 646 84 649 88 639 94 637 89 640 87 633 79ZM652 84 650 85 651 87 656 84 654 80 651 82ZM644 76 648 80 651 77 646 73ZM620 61 624 63 626 60 623 57ZM591 100 595 105 599 102 595 97ZM587 90 589 94 596 91 593 86ZM583 92 585 96 579 99 577 95ZM574 85 576 90 583 86 580 81ZM603 81 605 85 600 87 598 83ZM588 78 590 83 585 85 582 80ZM573 86 575 90 569 94 567 89ZM630 66 628 64 630 61 632 63ZM613 56 616 58 620 54 616 51ZM595 43 599 45 600 43 604 46 606 43 599 38ZM588 36 589 37 588 39 591 42 596 34 591 31 589 35 587 34 587 35 586 34 584 36 586 38ZM579 27 584 31 587 27 581 24ZM564 32 571 36 576 27 570 23ZM541 27 546 30 549 26 544 23ZM566 18 570 21 573 17 569 15ZM561 19 563 20 566 16 564 14ZM556 12 558 13 561 10 558 8ZM550 8 554 10 556 7 553 4ZM511 -19 514 -16 518 -22 515 -24ZM517 -15 520 -13 523 -18 520 -19ZM523 -11 528 -8 531 -12 526 -15ZM533 -2 535 0 538 -4 541 -3 542 -5 533 -11 531 -8 536 -5ZM542 7 546 10 544 13 545 14 542 17 539 15 540 14 539 12ZM461 109 473 123 475 121 488 133 490 132 466 106ZM449 124 449 129 454 129 454 130 478 131 478 132 482 132 482 130 478 126ZM467 120 467 123 458 122 458 119ZM511 98 517 107 522 104 515 94ZM464 41 469 51 473 48 468 39ZM485 40 504 61 507 59 486 36 482 32 481 30 476 22 474 23 477 30 478 31ZM520 92 523 90 514 78 517 77 515 74 513 75 510 69 508 71 512 79ZM648 26 646 25 646 26 638 20 636 20 629 30 632 32 629 36 641 43 639 46 641 47 646 49 646 47 651 40 648 37 651 33 653 34 656 31 653 29 655 26 651 22ZM672 19 685 29 681 36 676 32 674 35 679 39 667 51 664 48 657 43 659 41 658 40 663 34 662 33 665 29 666 30 667 28 667 27ZM670 56 676 61 681 56 685 60 702 41 697 37 696 37 694 36 692 39 688 36 686 39 685 39ZM668 69 667 68 666 70 670 72 673 67 671 66 670 67 669 67ZM672 75 675 80 688 72 685 67ZM676 82 686 99 690 96 680 80ZM283 139 288 139 288 142 283 142ZM247 358 251 358 251 343 244 343 243 358ZM273 369 269 369 269 366 273 366ZM248 311 249 312 248 312 247 313 246 313 246 311 247 311ZM353 369 357 370 357 366 356 366 355 368 353 368ZM562 331 569 327 572 333 565 337ZM387 5 387 9 392 9 392 5ZM154 19 159 18 159 23 155 24ZM16 19 18 26 20 26 18 18 16 18ZM246 249 246 253 254 253 254 249ZM319 76 320 77 322 76 321 75 319 75ZM581 -30 582 -29 581 -27 586 -24 589 -22 591 -26 584 -29 586 -32 591 -30 592 -34 585 -38ZM601 -32 607 -28 603 -21 597 -25ZM595 -25 598 -29 596 -30 597 -32 595 -33 592 -27ZM526 72 520 67 518 63 509 58 489 36 482 24 479 20 481 15 484 15 483 20 492 35 512 55 520 60 523 65 528 70ZM527 52 531 55 528 59 524 57ZM614 83 616 87 621 85 618 81ZM582 57 584 53 580 51 578 54ZM589 53 586 58 590 60 593 55ZM593 46 597 48 595 51 591 49ZM533 44 536 46 534 49 530 47ZM551 94 555 91 553 87 549 90ZM545 46 549 41 551 42 548 47ZM583 63 584 61 588 64 587 66ZM599 77 604 76 603 70 597 71ZM526 88 534 82 537 86 535 88 534 86 527 90ZM570 51 570 52 567 50 570 45 575 48 573 52ZM513 63 524 77 526 75 529 79 524 82 511 64ZM609 91 612 89 609 85 606 87ZM543 51 546 53 547 52 548 53 547 55 546 54 544 58 540 55ZM578 4 582 7 585 2 581 0ZM605 23 609 26 614 18 609 16ZM585 9 589 11 591 8 588 6ZM599 19 603 21 606 16 602 14ZM570 -1 575 3 577 0 575 -2 575 -3 572 -5ZM611 27 616 30 618 26 615 25 615 26 613 25ZM597 17 600 13 598 12 598 11 596 10 593 15ZM646 370 659 361 662 365 649 375ZM667 376 673 373 675 376 669 380ZM668 368 670 372 666 374 664 371ZM643 355 646 353 649 357 646 360ZM653 354 657 352 659 356 656 358ZM582 349 580 346 584 344 586 348ZM453 136 453 135 442 134 442 131 453 132 453 133 456 133 486 135 486 137ZM425 178 437 178 435 171 423 168ZM483 110 484 106 476 104 475 107ZM417 180 420 179 420 172 419 172 418 164 416 165ZM670 285 672 283 674 286 671 287ZM604 331 608 329 607 327 608 326 607 323 606 322 605 321 601 323 603 327 602 328ZM577 339 576 337 575 338 572 333 569 335 570 337 572 341 573 341 574 341ZM575 330 579 339 581 338 578 331 580 330 578 328ZM528 298 528 300 524 301 523 299ZM538 307 531 309 529 302 536 300ZM448 368 449 370 447 370 448 372 446 373 445 369ZM413 322 415 320 419 322 417 325ZM469 375 473 374 476 381 472 382ZM202 331 202 334 205 334 205 331ZM352 20 351 41 344 40 344 24 345 24 345 20ZM288 272 287 276 283 275 284 272ZM270 291 273 291 273 295 270 295ZM277 300 277 303 279 303 279 300ZM223 274 223 278 219 278 219 274ZM207 358 207 361 200 361 200 358ZM268 280 272 280 272 282 268 282ZM182 280 187 280 187 283 182 283ZM218 24 218 39 217 39 215 39 216 24ZM287 302 287 307 290 307 290 300 287 300ZM219 20 225 20 224 28 221 28 222 25 219 25ZM330 282 334 281 337 290 334 291 332 286 331 286ZM217 39 217 42 215 41 215 45 212 45 212 41 211 41 211 39ZM505 30 507 27 505 26 508 22 510 24 511 23 515 26 514 29 512 28 509 32ZM529 29 531 25 535 27 532 31ZM501 18 506 21 503 25 498 22ZM539 20 541 17 538 15 536 18ZM448 -6 448 -2 444 -2 444 -6ZM453 9 458 9 458 12 458 13 453 13ZM502 8 506 10 504 13 500 10ZM523 6 527 9 526 10 527 11 525 13 520 10ZM525 1 527 -2 530 0 530 -1 533 1 531 5ZM521 113 533 103 535 106 539 104 539 105 542 103 543 105 534 113 532 111 525 117ZM612 58 614 60 612 63 609 61ZM542 44 545 41 541 37 538 40ZM386 47 386 41 389 42 389 47ZM566 113 572 109 568 103 562 107ZM571 114 573 117 569 119 567 116ZM554 98 557 102 563 98 559 93ZM566 134 571 130 569 127 563 130ZM536 120 539 118 541 120 538 122ZM547 115 549 117 545 120 544 118ZM550 119 553 115 558 118 555 121 552 121ZM548 56 549 55 555 58 552 62 549 61 551 58ZM374 46 374 38 379 38 379 43 381 43 381 46ZM525 102 528 100 529 101 533 98 530 95 523 100ZM532 122 528 118 533 114 535 115 537 117ZM563 119 565 121 563 122 565 124 562 127 558 123ZM554 142 551 137 554 135 557 139ZM566 62 570 64 568 68 566 66 567 66 565 65ZM411 60 411 57 410 56 411 52 418 54 417 61ZM385 31 394 31 394 27 392 27 392 25 391 25 391 21 385 21ZM543 107 547 104 550 106 552 105 555 108 555 111 552 114 550 113 548 114ZM526 142 527 144 526 145 528 146 526 149 527 149 526 151 524 149 525 147 523 145ZM514 7 516 5 517 6 519 2 509 -4 507 -1 509 0 510 -1 512 0 509 4ZM536 136 539 140 535 143 536 144 534 146 532 143 529 145 528 144 531 141 532 141 534 140 533 139ZM520 24 517 22 519 19 518 18 517 20 515 19 516 19 514 18 515 17 517 17 519 13 524 16 522 18 525 20 523 23 522 22ZM383 147 387 148 388 142 384 142ZM526 43 529 38 525 35 522 40ZM593 129 599 125 601 128 595 132ZM392 20 398 20 398 24 392 24ZM538 148 540 152 538 153 535 150ZM620 124 624 122 626 127 622 129ZM388 132 393 132 392 135 387 135ZM595 80 598 78 596 74 593 75ZM556 53 558 50 554 48 552 51ZM524 130 527 128 523 125 521 127ZM563 31 566 27 564 26 561 30ZM391 147 395 147 395 145 391 145ZM507 33 509 35 506 38 504 37ZM618 -5 623 -4 622 1 617 -1ZM625 85 627 84 629 87 626 88ZM597 -15 601 -13 599 -9 595 -11ZM553 20 556 15 551 11 547 16ZM642 2 643 -1 647 0 646 3ZM443 -2 443 -6 440 -6 440 -2ZM540 142 543 146 540 149 537 144ZM533 20 535 17 532 15 531 18ZM517 48 522 51 524 46 519 43 518 45 519 45ZM511 44 514 40 511 37 510 38 509 37 506 40ZM563 58 564 56 565 57 566 55 562 53 560 56ZM527 161 531 158 527 153 525 154 526 155 524 156ZM554 83 557 81 559 85 557 86 556 85 555 85ZM400 66 400 73 396 73 395 73 395 66ZM516 125 518 127 522 123 521 122 524 120 522 118 519 121 520 122ZM526 133 527 131 528 132 529 131 532 134 528 138 526 136 528 135ZM503 29 505 30 502 34 500 32 499 33 498 31 500 28 502 30ZM285 254 285 256 282 256 282 254ZM78 298 78 300 80 300 81 302 92 299 90 297 81 297ZM390 371 389 371 389 375 390 375ZM410 357 412 355 413 357 411 358ZM414 349 415 348 416 350 415 350ZM417 354 419 353 420 355 418 356ZM407 353 408 355 407 357 405 354ZM415 353 415 355 417 354 416 353ZM381 266 378 262 382 259 385 262ZM405 262 402 264 405 267 407 265ZM633 352 633 358 631 358 631 352ZM625 352 625 355 620 355 621 352ZM632 362 632 368 637 368 637 362ZM569 249 572 247 572 249 570 250ZM662 -4 663 -8 659 -9 658 -5ZM89 333 85 325 89 323 93 331ZM340 342 341 343 340 344 339 343 332 343 332 326 333 326 333 319 337 319 338 318 339 319 340 319ZM111 203 94 204 95 211 111 209ZM418 271 422 275 420 278 419 277 417 279 415 278 418 275 416 273ZM568 40 570 37 565 34 563 38ZM621 64 617 61 615 64 614 64 613 65 615 66 616 65 618 67ZM276 279 281 279 280 290 279 290 279 295 274 295 274 289 275 289ZM678 302 681 308 676 310 676 311 672 311 672 313 670 313 670 311 668 311 666 306 668 303 671 302 672 303 675 302 676 303ZM569 249 568 250 569 251 570 250ZM436 196 438 198 435 200 436 202 430 207 427 202ZM292 126 283 126 283 111 292 112ZM490 138 498 148 501 146 494 135ZM486 141 493 151 497 149 490 138ZM270 370 273 370 273 371 270 371ZM265 15 265 21 274 21 274 24 280 24 280 21 293 21 293 9 290 9 290 15ZM664 48 667 51 659 59 656 55ZM64 59 67 68 70 67 72 66 69 57ZM321 3 321 15 326 17 326 4 326 3ZM326 4 326 17 327 17 337 17 337 4ZM364 -29 363 -5 374 -5 375 -29ZM396 -28 396 -4 406 -4 406 -28ZM649 237 651 236 652 237 650 239ZM640 251 641 249 643 250 645 253 645 257 644 261 643 262 641 260 642 258 642 255 641 253ZM634 248 631 249 628 253 631 254 632 252 634 251 636 250 638 251 639 248 636 247ZM628 259 630 258 630 256 627 255ZM609 365 615 365 615 371 609 370ZM624 373 628 372 629 377 624 377ZM342 136 342 147 347 147 347 136ZM370 152 370 141 362 141 362 140 360 140 360 151ZM372 118 372 138 378 138 378 118ZM339 83 339 90 348 90 348 83ZM349 192 352 193 354 188 351 187ZM39 -2 37 -13 40 -14 40 -13 45 -14 46 -14 47 -13 48 -14 50 -8 51 -5ZM622 79 625 75 629 78 626 82ZM680 168 691 161 694 166 697 164 699 168 685 176ZM562 -6 565 -10 569 -8 566 -3ZM543 4 546 0 549 2 546 6ZM576 58 577 55 580 57 579 60ZM586 43 589 45 587 47 585 46ZM577 30 575 33 579 35 580 32ZM609 46 612 48 608 54 605 52ZM162 223 162 226 160 226 160 223ZM160 179 160 184 163 184 163 179ZM158 172 158 179 163 179 163 172ZM159 172 159 167 163 167 163 172ZM175 92 174 95 176 96 177 93ZM176 90 175 92 177 93 178 90ZM150 95 150 98 174 98 174 95ZM149 99 149 102 174 103 174 99ZM378 173 384 173 384 169 378 169ZM84 52 90 50 90 53 85 55ZM451 -30 456 -29 456 -25 450 -26ZM542 132 546 136 551 130 547 126ZM538 125 540 127 542 125 540 123ZM459 343 460 345 462 345 461 342ZM449 319 458 341 460 340 452 318ZM465 346 467 350 469 349 467 345ZM472 327 473 332 468 334 467 332 469 331 468 328ZM91 60 92 62 95 61 94 59ZM86 60 94 58 93 54 85 56ZM132 112 137 112 136 126 131 125ZM129 180 126 180 126 185 135 185 135 181 134 181 134 180ZM122 182 115 182 116 186 122 186ZM72 230 71 227 80 226 81 230ZM65 256 69 255 69 258 66 259ZM62 245 64 254 59 256 56 246ZM59 236 72 233 73 237 60 241ZM80 226 85 226 85 229 81 230ZM71 227 70 221 74 220 75 227ZM80 251 84 251 85 254 81 255ZM84 251 94 249 95 255 88 256 88 257 85 257ZM85 226 90 226 90 231 85 231ZM107 227 112 226 114 237 108 238ZM47 207 55 205 57 211 48 213ZM298 79 304 79 304 90 302 90 302 85 298 85ZM404 83 409 85 411 81 406 79ZM117 16 117 18 120 18 119 16ZM127 -11 127 -8 130 -8 130 -11ZM291 221 295 221 295 227 291 227ZM185 242 185 258 182 258 182 256 181 256 181 242ZM202 213 202 220 205 220 205 213ZM493 289 494 294 499 293 497 287ZM484 264 486 267 487 267 486 264ZM372 240 374 242 379 238 378 236ZM366 245 368 248 373 244 371 241ZM371 252 373 255 378 251 376 248ZM409 226 414 231 419 226 414 221ZM404 231 407 234 410 230 407 227ZM560 139 558 135 561 133 563 136ZM630 -10 630 -13 634 -12 633 -9ZM617 -21 616 -18 620 -17 622 -20ZM632 -2 638 -1 637 1 632 0ZM603 -8 607 -7 606 -5 602 -6ZM445 303 448 309 449 309 449 310 453 308 451 301ZM421 328 426 329 425 333 420 332ZM517 27 512 34 514 35 516 32 520 35 523 31ZM416 18 430 18 430 6 416 6ZM447 7 447 6 448 6 449 7 448 8 447 8ZM25 162 27 166 29 165 28 161ZM37 161 40 160 41 163 38 164ZM-6 75 2 73 4 80 -4 83ZM442 300 445 303 451 301 445 297ZM279 295 300 295 300 289 296 289 296 290 279 290ZM413 97 420 78 423 79 416 98ZM490 208 505 200 502 194 486 202ZM137 100 137 103 139 103 139 100ZM328 331 323 331 323 333 328 333ZM496 175 483 181 480 174 486 171 473 146 480 142ZM434 144 454 182 477 170 473 163 458 171 441 140ZM623 -36 620 -31 625 -29 627 -34ZM19 9 22 8 23 12 23 13 20 14ZM22 14 22 16 26 15 25 12 23 12 23 13ZM444 10 444 8 443 8 443 10 444 10ZM458 10 464 10 464 12 458 12ZM421 235 418 232 415 236 417 238ZM636 -30 638 -29 637 -27 635 -28ZM673 2 678 3 677 9 671 7ZM506 178 521 200 539 188 525 166ZM564 287 566 293 560 295 558 289ZM348 15 350 15 350 18 348 18ZM105 181 105 182 105 183 104 184 103 183 103 182ZM495 135 502 145 506 143 499 132ZM67 170 74 168 75 174 68 176ZM73 175 74 179 71 179 69 180 68 176ZM74 182 73 184 73 185 74 186 76 185 77 184 76 183 75 182ZM365 -47 373 -46 372 -29 364 -29ZM581 131 541 158 550 172 556 168 551 160 579 141 584 148 590 144ZM581 181 564 193 554 179 560 175 566 184 578 175ZM25 130 25 132 28 131 27 129ZM595 151 604 164 587 176 583 171 595 163 589 155ZM572 125 574 128 577 126 575 123ZM263 211 260 211 260 215 263 215ZM33 127 50 123 48 118 56 117 56 119 83 113 79 95 52 102 52 104 40 107 42 112 54 109 55 115 48 117 48 116 34 119 33 116 30 117Z"/>
+            <g class="office__minor"><path d="M434.8 180.7 438.1 183.9 450.4 210.7 476.5 258.6"/><path d="M585.3 306.6 577.5 288.6 579.5 281.2"/><path d="M430 373 441.7 388.5"/><path d="M448.2 2 412.6 -0 403.8 1 356.3 -0.1"/><path d="M90.5 193 86.1 191 42.2 201.2"/><path d="M392.1 216.4 393 196.8 393.7 193.8 395.5 192 417.7 183.2 428.3 180.1 434.8 180.7"/><path d="M594.2 335.9 589.4 336.3 550.7 356.7 533.8 362.9 522 365.3 508 370.3"/><path d="M479 285.3 500.3 344.5"/><path d="M402.6 77.3 356.3 76.9 314.3 78.6"/><path d="M164.4 352.4 108.4 351.1"/><path d="M112.5 390.5 113.1 351.2"/><path d="M-28.8 -42.5 42.2 201.2"/><path d="M105 336.2 102.8 329.4 102.8 296.5"/><path d="M91 117.1 121 109.6 133.3 104.7"/><path d="M402.6 77.3 406.7 37.4 410.4 -44.1"/><path d="M555.6 381.7 555.4 375.9 550.7 356.7"/><path d="M459.2 271.8 477.6 260.6"/><path d="M479 285.3 498.7 280.9"/><path d="M587.5 124.7 664.4 84.8"/><path d="M611.5 161 587.5 124.7"/><path d="M641 208 611.5 161"/><path d="M520.2 114.7 546.8 142.7 549.8 143.8 553.4 143.5 583.3 124.4 587.5 124.7"/><path d="M569.8 -43.8 564.5 -31.7 586.3 -20.4 610.5 -12.5"/><path d="M155.6 31.5 137.6 30.1 75.9 49.4 39 59.3 2.9 67.5"/><path d="M-17.2 -3.6 46.8 -22.3 99 -32.6 134.5 -36.4 144.5 -35.6 172.8 -36"/><path d="M186.8 -90.3 178.3 -39.1 172.8 -36"/><path d="M166.3 231.2 312.2 232.8"/><path d="M129.7 351.7 130.7 320"/><path d="M396.1 294.4 395 267.1 450.4 210.7"/><path d="M448.2 2 465.6 -46.3"/><path d="M611.3 112.4 596.8 86.2 593 84.1 554.3 104.8"/><path d="M669.4 0.1 610.5 -12.5"/><path d="M238 310 343.5 312"/><path d="M124.2 289.7 125.8 306.7 130.4 307.9 133.4 310 165.3 310.5"/><path d="M538.3 86.6 540.7 90.4 554.3 104.8"/><path d="M610.5 -12.5 613.1 -25.8 590 -41.2"/><path d="M39.8 -62 91 117.1"/><path d="M471.6 249.1 441.8 273.3 415.5 296.6"/><path d="M597.9 34.5 588.6 51.1 580.5 63 572.2 63.9 558.1 57.6 542.6 47 533.7 38.2 533.3 34.9 511.2 21.3"/><path d="M516.8 -26.8 518.5 -22 597.9 34.5"/><path d="M597.9 34.5 649.5 73.6 655.8 80.4 659.9 87.1"/><path d="M168.7 159.4 241.3 160.5"/><path d="M108.4 351.1 107.8 390.5"/><path d="M88.1 343.1 87.3 362.6 88 393.4"/><path d="M575.2 278 575.2 278"/><path d="M586 314.3 586 314.3"/><path d="M586 308.2 598.3 303"/><path d="M585.8 276.8 583.5 282.4"/><path d="M628.9 266.8 632.2 259 639.1 250.9 649.9 229.2"/><path d="M598.6 305.2 586.9 310.2 586 314.3"/><path d="M579.5 281.2 581.1 275.4"/><path d="M585.3 306.6 596.7 331 599.4 333.6"/><path d="M595 286.1 597.6 280.4"/><path d="M533.3 34.9 541.4 22.3 547.8 10.2"/><path d="M554.3 104.8 575.1 129.6"/><path d="M165.3 310.5 170.9 310.1 238 313.6"/><path d="M108.7 184.6 104.8 187.4 93.8 190.1 90.5 193"/><path d="M654.2 334.6 627.2 336.8 611 337.1 594.2 335.9"/><path d="M102.8 296.5 101.5 265.3 91.9 210.7"/><path d="M91.9 210.7 89.7 196.7 90.5 193"/><path d="M108.4 351.1 105 336.2"/><path d="M500.3 344.5 508 370.3"/><path d="M575.6 276.5 580.8 276.6 603.6 283.3"/><path d="M24 136.6 91 117.1"/><path d="M91 117.1 101.4 153.8"/><path d="M133.3 104.7 178.8 104.8"/><path d="M133.3 104.7 135.4 -90.2"/><path d="M101.4 153.8 108.4 178.4 108.7 184.6"/><path d="M508 370.3 496.3 392.1"/><path d="M630.3 255 642.4 256.2"/><path d="M241.3 160.5 352.3 161.9"/><path d="M602.6 96.6 611.4 92.1 624.1 83.6"/><path d="M113.4 189.2 112.2 194.4 112.7 223 119.1 222.8 121.3 232.1 125.6 233.3 133.7 233.8 136.4 231.5 139.4 231 140.8 223.3 157.7 223.6"/><path d="M639.1 250.9 640.3 262.8 645.9 265.7"/><path d="M575.6 276.5 584.5 282 602.1 287.3"/><path d="M598.6 305.2 607.1 320.1 611.1 323.7 621.1 326.1 637.6 325.1 641.1 324.1 661.1 309.3 666.1 301 661.1 278.1"/><path d="M661.1 278.1 658.7 274 653.1 268.7 645.9 265.7 627.8 266.9 619.5 269.5 608.2 277.5 603.6 283.3 601.1 289.6 598.6 305.2"/><path d="M626.5 326.8 626.5 325.8"/><path d="M624 267.8 622.5 266.9"/><path d="M609.9 331.6 609 331 609.2 322.4"/><path d="M593.3 307.5 592.1 304.9"/><path d="M467.5 269.8 473.3 272.5 475.5 275.9 479 285.3"/><path d="M645.4 216.1 641 208"/><path d="M476.5 258.6 477.6 260.6"/><path d="M352.3 161.9 387.9 164.6"/><path d="M477.6 260.6 485 272.5 492 279.6"/><path d="M311.2 -1.7 245.8 -3.4 206.9 -5.7"/><path d="M315.4 -1.4 311.2 -1.7"/><path d="M356.3 -0.1 315.4 -1.4"/><path d="M527.3 162.3 553.4 143.5"/></g>
+            <g class="office__streets"><path class="st-1" d="M446.9 364.1 467.5 355.9 527.3 335.9 581.1 312"/><path class="st-1" d="M413.7 387.3 423.6 378.3"/><path class="st-1" d="M164.5 385.5 167.7 163.8 178.4 110.9 178.8 104.8 188.1 70.2"/><path class="st-1" d="M356.3 -0.1 355.8 142.3"/><path class="st-1" d="M592.3 450.1 604.1 364.6 603.3 353.2 594.2 335.9"/><path class="st-1" d="M243.3 73.6 307.5 76.8 314.3 78.6"/><path class="st-1" d="M188.1 70.2 243.3 73.6"/><path class="st-1" d="M594.2 335.9 581.1 312"/><path class="st-1" d="M572.1 290 572.7 266.9"/><path class="st-1" d="M562.6 269.6 572.1 290"/><path class="st-1" d="M188.1 70.2 195.6 44.2 206.9 -5.7 217.6 -66.9"/><path class="st-1" d="M352.3 161.9 333.3 232.1 331.7 246.7 341.9 302.8"/><path class="st-1" d="M572.1 290 581.1 312"/><path class="st-1" d="M423.6 378.3 426 376.1"/><path class="st-1" d="M426 376.1 430 373"/><path class="st-1" d="M430 373 438.8 367.3 446.9 364.1"/><path class="st-1" d="M341.9 302.8 343.5 312"/><path class="st-1" d="M343.5 312 346.6 331.2 349.7 385.4"/><path class="st-1" d="M355.8 142.3 355.1 153.4 352.3 161.9"/><path class="st-1" d="M357.1 -43 356.3 -0.1"/><path class="st-2" d="M355.5 383 357.4 378.4"/><path class="st-2" d="M562.6 269.6 572.7 266.9"/><path class="st-2" d="M459.2 271.8 463 270.1 471.2 270.2 489 278.6 495 280.5 503.9 280.1"/><path class="st-2" d="M238 313.6 238.4 270.8"/><path class="st-2" d="M237 385.2 237.2 368.6"/><path class="st-2" d="M535.1 -17.4 502.6 -43"/><path class="st-2" d="M470.1 -49.1 505.5 -32.8 535.1 -17.4"/><path class="st-2" d="M243.3 73.6 244.8 35.3"/><path class="st-2" d="M664.4 84.8 655.7 72.8 643.9 61 564.1 3.3"/><path class="st-2" d="M357.4 378.4 366.1 351.8 372.3 342.9 380.4 335.5 459.2 271.8"/><path class="st-2" d="M564.1 3.3 539.4 -14.4"/><path class="st-2" d="M608.2 247.7 649.3 223.7"/><path class="st-2" d="M572.7 266.9 583.4 262.2"/><path class="st-2" d="M237.2 368.6 237.4 350.6"/><path class="st-2" d="M237.4 350.6 238 313.6"/><path class="st-2" d="M238.4 270.8 238.6 261.2"/><path class="st-2" d="M238.6 261.2 239.9 201.7"/><path class="st-2" d="M239.9 201.7 240.6 182.1"/><path class="st-2" d="M240.6 182.1 240.7 178.8"/><path class="st-2" d="M241 171.8 241.3 160.5"/><path class="st-2" d="M240.7 178.8 241 171.8"/><path class="st-2" d="M242.1 128.3 243.3 73.6"/><path class="st-2" d="M244.8 35.3 246.3 -27"/><path class="st-2" d="M246.3 -27 247.3 -53.7"/><path class="st-2" d="M539.4 -14.4 535.1 -17.4"/><path class="st-2" d="M503.9 280.1 562.6 269.6"/><path class="st-2" d="M583.4 262.2 608.2 247.7"/><path class="st-2" d="M241.3 160.5 242.1 128.3"/></g>
+            <path class="office__street--main" d="M311.8 -43.8 311.2 -1.7 M313.8 113.1 314.3 78.6 M314.3 78.6 315.5 -40 M311.2 -1.7 310 77.2 M308.8 161.3 306 311.3 305.5 387.8 M310.1 387.9 310.2 311.4 313.8 113.1 M310 77.2 308.8 161.3"/>
+            <g class="office__labels"><text class="office__stname" dy="-5"><textPath href="#st-0" startOffset="50%" text-anchor="middle">ул. Розы Люксембург</textPath></text><text class="office__stname" dy="-5"><textPath href="#st-1" startOffset="50%" text-anchor="middle">Большая Подгорная ул.</textPath></text></g>
+            <text class="bp-label bp-label--sm office__wlabel" x="18" y="262">← р. Томь, 0,7 км</text>
+            <text class="bp-label bp-label--sm office__wlabel" x="622" y="262" text-anchor="end">оз. Белое, 0,7 км →</text>
+            <path class="office__building" d="M316.2 167.5 316.2 175 322.3 175 322.4 172 323.4 172 323.6 168.1 322 166.4 317.7 166.4 316.2 167.5Z"/>
+            <path class="leader" d="M320 160V108H412"/>
+            <text class="bp-label bp-label--accent" x="418" y="112">д. 55</text>
+            <circle class="net-hub" cx="320" cy="170" r="8"/>
+            <circle class="office__dot" cx="320" cy="170" r="3"/>
+          </svg>
+        </div>
+        <div class="office__body">
+          <h3 class="office__title">Офис в Томске</h3>
+          <p class="office__addr">634009, г. Томск, ул. Розы Люксембург, д. 55</p>
+          <p class="office__coords mono">56°29′55″ с. ш. · 84°57′05″ в. д.</p>
+          <a class="link-more" href="https://2gis.ru/tomsk/firm/422740746045356" target="_blank" rel="noopener">Маршрут в 2ГИС <svg aria-hidden="true"><use href="#i-route"/></svg></a>
+        </div>
+      </article>
+
+      <div class="reach__lines">
+        <div class="line-card">
+          <span class="line-card__label">Приёмная, многоканальный</span>
+          <a class="line-card__value" href="tel:+73822651145">+7 (3822) 65-11-45</a>
+          <button class="copy" type="button" data-copy="+7 (3822) 65-11-45" aria-label="Скопировать телефон">
+            <svg class="copy__icon" aria-hidden="true"><use href="#i-copy"/></svg>
+            <svg class="copy__done" aria-hidden="true"><use href="#i-check"/></svg>
+          </button>
+        </div>
+        <div class="line-card">
+          <span class="line-card__label">Электронная почта</span>
+          <a class="line-card__value" href="mailto:sncard-service@sncard.ru">sncard-service@sncard.ru</a>
+          <button class="copy" type="button" data-copy="sncard-service@sncard.ru" aria-label="Скопировать адрес почты">
+            <svg class="copy__icon" aria-hidden="true"><use href="#i-copy"/></svg>
+            <svg class="copy__done" aria-hidden="true"><use href="#i-check"/></svg>
+          </button>
+        </div>
+        <a class="line-card line-card--link" href="docs.html">
+          <span class="line-card__label">Схемы, паспорта, прошивки</span>
+          <span class="line-card__value">Документация</span>
+          <span class="card__arrow" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
+        </a>
+      </div>
+
+      <div class="dept dept--wide">
+        <h3 class="dept__title">Администрация</h3>
+        <ul class="dept__people">
+          <li><span class="dept__name">Матусевич Леонид Робертович</span><span class="dept__role">генеральный директор</span><a class="dept__mail mono" href="mailto:mlr@sncard.ru">mlr@sncard.ru</a></li>
+          <li><span class="dept__name">Белоусова Елена Игоревна</span><span class="dept__role">главный бухгалтер</span><a class="dept__mail mono" href="mailto:bei@sncard.ru">bei@sncard.ru</a></li>
+        </ul>
+        <a class="dept__phone mono" href="tel:+73822651145">8 (3822) 65-11-45</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta__box">
+      <svg class="cta__dim" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 12H1000 M0 4v16 M1000 4v16"/>
+      </svg>
+      <h2 class="cta__title" id="cta-title">Обсудим вашу задачу?</h2>
+      <p class="cta__text">Подберём оборудование для вашей АЗС или нефтебазы и&nbsp;ответим по&nbsp;ремонту.</p>
+      <a class="btn btn--primary btn--lg magnetic" href="mailto:sncard-service@sncard.ru?subject=%D0%97%D0%B0%D0%BF%D1%80%D0%BE%D1%81%20%D1%81%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0%20snc-service.sncard.ru"><span>Написать нам</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- @footer:start -->
+<footer class="footer">
+  <svg class="footer__mark" viewBox="0 0 120 48" aria-hidden="true">
+    <path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37"/>
+  </svg>
+  <div class="container footer__grid">
+    <div class="fcol">
+      <h2 class="fcol__title">Контактная информация</h2>
+      <ul class="contacts">
+        <li><svg aria-hidden="true"><use href="#i-pin"/></svg><span>634009, г. Томск, ул. Розы Люксембург, д. 55</span></li>
+        <li><svg aria-hidden="true"><use href="#i-mail"/></svg><a href="mailto:sncard-service@sncard.ru">sncard-service@sncard.ru</a></li>
+        <li><svg aria-hidden="true"><use href="#i-phone"/></svg><span><a href="tel:+73822651145">+7 (3822) 65-11-45</a><small>многоканальный</small></span></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h2 class="fcol__title">Правовая информация</h2>
+      <ul class="legal">
+        <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        <li><a href="cookies.html">Политика использования Cookies</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container footer__bottom-inner">
+      <span>© ООО «Сибнефтекарт-сервис», 2026</span>
+      <span class="mono">Группа компаний «Сибнефтекарт» · 56°29′ с. ш. · 84°57′ в. д.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="cursor" aria-hidden="true"><span class="cursor__ring"></span><span class="cursor__dot"></span></div>
+<!-- @footer:end -->
+
+<!-- Библиотеки лежат локально: cdnjs/jsDelivr (Cloudflare) у части провайдеров РФ зависают,
+     а из-за defer вместе с ними не запускались и наши скрипты. GSAP 3.15.0, Lenis 1.3.26 -->
+<script src="js/vendor/gsap.min.js" defer></script>
+<script src="js/vendor/ScrollTrigger.min.js" defer></script>
+<script src="js/vendor/CustomEase.min.js" defer></script>
+<script src="js/vendor/lenis.min.js" defer></script>
+<script src="js/site.js?v=c19bbecc35" defer></script>
+<script src="js/motion.js?v=150e63c3ca" defer></script>
+<script src="js/home.js?v=0e09ea19f1" defer></script>
+</body>
+</html>

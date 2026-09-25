@@ -1554,3 +1554,8 @@ html:not(.js) .copy { display: none; }
 .check__text a { color: var(--text); border-bottom: 1px solid var(--blueprint-soft); }
 .check__text a:hover { color: var(--accent); border-color: var(--accent); }
 .btn--submit:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; transform: none; }
+.subscribe__status.is-notice {
+  color: var(--text); background: var(--bg);
+  border-left: 3px solid var(--accent); border-radius: var(--r-sm);
+  padding: 10px 14px;
+}

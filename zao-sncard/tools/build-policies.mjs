@@ -76,7 +76,6 @@ function page(key, file) {
       <div class="phead__row">
         <div class="phead__text">
           <h1 class="phead__title">${esc(P.title)}</h1>
-          <p class="phead__lead">Текст документа перенесён с&nbsp;сайта zao.sncard.ru без&nbsp;изменений.</p>
         </div>
       </div>
       <span class="phead__stamp mono" aria-hidden="true">СНК · ${esc(P.title)} · Лист 1</span>
