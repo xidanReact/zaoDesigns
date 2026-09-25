@@ -1112,9 +1112,8 @@ html:not(.js) .copy { display: none; }
   .dd--mega { left: -200px; }
 }
 @media (max-width: 1024px) {
-  .btn--cart { display: inline-flex; margin-left: auto; }
-  .burger { margin-left: 0; }
-  .header .btn--cart__label { display: none; }
+  .header .btn--cart { display: none; }
+  .burger { margin-left: auto; }
   .card--half { grid-column: span 6; }
   .cardlab__stage, .cardlab__text { grid-column: 1 / -1; }
   .cardlab__grid { row-gap: 56px; }
@@ -1132,7 +1131,6 @@ html:not(.js) .copy { display: none; }
   .brand__mark { width: 46px; }
   .brand__text { padding-left: 10px; min-width: 0; }
   .brand__name { font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .btn--cart { --h: 40px; padding: 0 10px; }
   .burger { flex-shrink: 0; }
   .verbs { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
   .verb { padding: 9px 12px; }
