@@ -78,7 +78,7 @@ function page(key, file) {
           <h1 class="phead__title">${esc(P.title)}</h1>
         </div>
       </div>
-      <span class="phead__stamp mono" aria-hidden="true">СНК · ${esc(P.title)} · Лист 1</span>
+      <span class="phead__stamp mono" aria-hidden="true">СНК · ${esc(P.title)} </span>
     </div>
   </div>
 </section>

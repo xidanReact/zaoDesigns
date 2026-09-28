@@ -565,7 +565,7 @@ function pageSoftwareIndex() {
   const main = `${phead({
     r, trail: [['Программное обеспечение']], title: 'Программное обеспечение',
     lead: `${PRODUCTS.length} продуктов СНК в&nbsp;четырёх направлениях: управление АЗС и&nbsp;АЗК, сеть АЗС, процессинг топливных карт, нефтебазы. Поставка по&nbsp;лицензии, сопровождение 12&nbsp;месяцев в&nbsp;составе поставки.`,
-    sheet: 'СНК · ПО · Лист 1',
+    sheet: 'СНК · ПО ',
     aside: facts([['продуктов', PRODUCTS.length], ['направления', SECTIONS.length], ['реестр ПО', '№&nbsp;2022616071']]),
   })}
 
@@ -610,7 +610,7 @@ ${SECTIONS.map(x => `            <li><a class="catnav__link${x.slug === s.slug ?
   const main = `${phead({
     r, trail: [['Программное обеспечение', `${r}software/index.html`], [s.title]], title: esc(s.title),
     lead: esc(s.h1) + '.',
-    sheet: `СНК · ${s.title} · Лист 1`,
+    sheet: `СНК · ${s.title} `,
     aside: facts([['продуктов', list.length]]),
   })}
 
@@ -716,7 +716,7 @@ function pageNewsIndex() {
   const main = `${phead({
     r, trail: [['Новости']], title: 'Новости',
     lead: `Обновления программ СНК, изменения в&nbsp;законодательстве и&nbsp;работе сервисов: <b>${NEWS.length}</b> записей с&nbsp;${NEWS.at(-1).date.slice(0, 4)} года.`,
-    sheet: 'СНК · Новости · Лист 1',
+    sheet: 'СНК · Новости ',
   })}
 
 <section class="nlist" aria-label="Все новости">
@@ -769,7 +769,7 @@ function pageCompany() {
   const main = `${phead({
     r, trail: [['О компании']], title: 'О компании',
     lead: 'ООО «Сибнефтекарт», Томск: собственное программное обеспечение под&nbsp;брендом СНК для&nbsp;автоматизации учёта топлива и&nbsp;товаров на&nbsp;АЗС и&nbsp;нефтебазах, его внедрение и&nbsp;сопровождение.',
-    sheet: 'СНК · О компании · Лист 1',
+    sheet: 'СНК · О компании ',
     aside: facts([['в ИТ', 'с&nbsp;2017'], ['реестр ПО', '№&nbsp;2022616071'], ['ОКВЭД', '62.01']]),
   })}
 
@@ -850,7 +850,7 @@ function pageKkt() {
   const main = `${phead({
     r, trail: [['Обслуживание ККТ']], title: 'Обслуживание ККТ',
     lead: `Контрольно-кассовая техника «Штрих-М» и&nbsp;«Атол», фискальные накопители и&nbsp;сублицензионные договоры. Цены на&nbsp;кассы договорные&nbsp;— напишите нам, подберём модель под&nbsp;вашу АЗС.`,
-    sheet: 'СНК · ККТ · Лист 1',
+    sheet: 'СНК · ККТ ',
     aside: facts([['моделей ККТ', total], ['накопители', KKT.fn.rows.length]]),
   })}
 
@@ -928,7 +928,7 @@ function pageDocs() {
   const main = `${phead({
     r, trail: [['Документация']], title: 'Документация',
     lead: `Руководства, инструкции по&nbsp;подключению оборудования и&nbsp;ссылки на&nbsp;обновления программ СНК: ${filesN(total)} в&nbsp;${DOCS.length} группах.`,
-    sheet: 'СНК · Документация · Лист 1',
+    sheet: 'СНК · Документация ',
     aside: facts([['файлов', total], ['групп', DOCS.length]]),
   })}
 
@@ -977,7 +977,7 @@ function pagePartners() {
   const main = `${phead({
     r, trail: [['Партнёры']], title: 'Партнёры',
     lead: `Производители и&nbsp;поставщики оборудования, разработчики технологий и&nbsp;мобильных сервисов, сервисные компании и&nbsp;сети АЗС, работающие на&nbsp;программах СНК.`,
-    sheet: 'СНК · Партнёры · Лист 1',
+    sheet: 'СНК · Партнёры ',
     aside: facts([['компаний', total], ['групп', PARTNERS.length]]),
   })}
 
@@ -1036,7 +1036,7 @@ function pageContacts() {
   const main = `${phead({
     r, trail: [['Контакты']], title: 'Контакты',
     lead: 'Поддержка программ СНК, вопросы по&nbsp;лицензиям, внедрению, процессингу и&nbsp;обслуживанию ККТ.',
-    sheet: 'СНК · Контакты · Лист 1',
+    sheet: 'СНК · Контакты ',
     aside: facts([['поддержка', '24/7'], ['приёмная', '<a href="tel:+73822651030">65-10-30</a>']]),
   })}
 
@@ -1145,7 +1145,7 @@ function pagePolicy(key, file, page) {
   const P = POLICIES[key];
   const main = `${phead({
     r, trail: [[P.title]], title: esc(P.title),
-    sheet: `СНК · ${P.title} · Лист 1`,
+    sheet: `СНК · ${P.title} `,
   })}
 
 <section class="policy-wrap">

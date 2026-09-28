@@ -393,7 +393,7 @@ function pageEquipmentIndex() {
   const main = `${phead({
     r, trail: [['Оборудование']], title: 'Оборудование',
     lead: `${PRODUCTS.length} позиции в&nbsp;восьми категориях&nbsp;— от&nbsp;кабеля до&nbsp;терминала самообслуживания. Разрабатываем, выпускаем мелкими сериями, поставляем и&nbsp;ремонтируем.`,
-    sheet: 'СНК · Каталог · Лист 1',
+    sheet: 'СНК · Каталог ',
   })}
 
 <section class="directions catalog-home catalog-index" aria-label="Категории оборудования">
