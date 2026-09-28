@@ -457,9 +457,6 @@ function shell({ r, page, here, title, desc, main, scripts = ['js/site.js', 'js/
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(desc)}">
   <script>document.documentElement.classList.add('js');</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
   <!-- Дизайн-система: эталон в designs/, здесь только новые компоненты -->
   <link rel="icon" href="${r}favicon.ico" sizes="any">
   <link rel="icon" href="${r}favicon.svg" type="image/svg+xml">
@@ -1059,7 +1056,7 @@ ${officePlan}
         <div class="line-card line-card--hot">
           <span class="line-card__label">Круглосуточная поддержка СНК-АЗС</span>
           <a class="line-card__value" href="tel:+78002500534">8 800 250-05-34</a>
-          <span class="line-card__sub">горячая линия: <a href="tel:+79138503307">+7 (913) 850-33-07</a> · Telegram <a href="https://t.me/+79833460050" target="_blank" rel="noopener">+7 (983) 346-00-50</a></span>
+          <span class="line-card__sub">горячая линия: <a href="tel:+79138503307">+7 (913) 850-33-07</a> · MAX <a href="tel:+79833460050">+7 (983) 346-00-50</a></span>
           <button class="copy" type="button" data-copy="8 800 250-05-34" aria-label="Скопировать телефон поддержки">
             <svg class="copy__icon" aria-hidden="true"><use href="#i-copy"/></svg>
             <svg class="copy__done" aria-hidden="true"><use href="#i-check"/></svg>

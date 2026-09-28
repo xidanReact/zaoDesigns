@@ -14,7 +14,8 @@
       исходники данных (data/*.js и прочее из SITES[].exclude), если
       страницы их не подключают.
    2. Склеивает designs/styles.css + <site>/styles.css в один styles.css
-      без комментариев: прод не зависит от папки designs/.
+      без комментариев, копирует designs/fonts/ в fonts/: прод не зависит
+      от папки designs/ и не грузит шрифты со сторонних CDN.
    3. В страницах: одна ссылка на стили, ?v=<хеш> у своих css/js (сброс
       кеша после выкладки), превью соседних сайтов на github.io заменены
       их боевыми доменами, canonical и Open Graph.
@@ -29,6 +30,7 @@ import { fileURLToPath } from 'node:url';
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DESIGNS_CSS = path.join(REPO, 'designs', 'styles.css');
+const DESIGNS_FONTS = path.join(REPO, 'designs', 'fonts'); // @font-face из designs/styles.css
 const PREVIEW = 'https://xidanreact.github.io/zaoDesigns/';
 
 const SITES = {
@@ -95,6 +97,7 @@ function build(site) {
     fs.mkdirSync(path.join(OUT, path.dirname(f)), { recursive: true });
     fs.copyFileSync(path.join(SRC, f), path.join(OUT, f));
   }
+  fs.cpSync(DESIGNS_FONTS, path.join(OUT, 'fonts'), { recursive: true });
 
   // хеши своих css/js; vendor/ закреплён версиями библиотек
   const version = { 'styles.css': hash(css) };
@@ -153,9 +156,13 @@ function build(site) {
 
   /* ---------- 5. Проверка ---------- */
   const problems = [];
+  for (const [, ref] of css.matchAll(/url\("?([^")]+)"?\)/g)) {
+    if (isLocal(ref) && !fs.existsSync(path.join(OUT, ref.split(/[?#]/)[0]))) problems.push(`styles.css: нет файла ${ref}`);
+  }
   for (const [page, src] of Object.entries(html)) {
     if (src.includes(PREVIEW)) problems.push(`${page}: осталась ссылка на превью ${PREVIEW}`);
     if (/designs\//.test(src.replace(/<!--[\s\S]*?-->/g, ''))) problems.push(`${page}: осталась ссылка на designs/`);
+    if (/fonts\.g(?:oogleapis|static)\.com/.test(src)) problems.push(`${page}: осталось подключение Google Fonts`);
     for (const [, ref] of src.matchAll(/(?:href|src)="([^"]+)"/g)) {
       if (!isLocal(ref)) continue;
       const file = path.resolve(OUT, path.dirname(page), ref.split(/[?#]/)[0]);

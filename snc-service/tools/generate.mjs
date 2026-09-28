@@ -247,9 +247,6 @@ function shell({ r, page, here, title, desc, main, scripts = ['js/site.js', 'js/
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(desc)}">
   <script>document.documentElement.classList.add('js');</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
   <!-- Дизайн-система: эталон в designs/, здесь только новые компоненты -->
   <link rel="icon" href="${r}favicon.ico" sizes="any">
   <link rel="icon" href="${r}favicon.svg" type="image/svg+xml">
