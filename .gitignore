@@ -2,3 +2,8 @@
 .claude/
 skills-lock.json
 *.png
+
+# прод-сборки (node tools/build-prod.mjs)
+/snc-service-prod/
+/sncard-prod/
+/zao-sncard-prod/
