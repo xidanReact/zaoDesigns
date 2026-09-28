@@ -11,6 +11,9 @@
    ========================================================= */
 .header__inner { gap: 20px; }
 .brand__sub { max-width: 170px; }
+/* Подпись «общество с ограниченной ответственностью» видна вплоть до телефона
+   (перебивает скрытие из designs/styles.css на 1200px) */
+.brand__sub { display: block; }
 .nav__list { gap: 0; }
 .nav__link { padding: 0 9px; font-size: 14.5px; white-space: nowrap; }
 /* Пунктов много: без этого флекс сжимает стрелочки подменю до нуля */
@@ -415,7 +418,6 @@ html:not(.js) .copy { display: none; }
 /* Шесть пунктов меню + телефон: ужимаем по ступеням, чтобы строка не переполнялась
    (при переполнении флекс схлопывает стрелочки подменю) */
 @media (max-width: 1760px) {
-  .brand__sub { display: none; }
   .hotline__label { display: none; }
 }
 @media (max-width: 1560px) {
@@ -427,21 +429,30 @@ html:not(.js) .copy { display: none; }
   .nav__link { padding: 0 7px; font-size: 13.5px; }
   .dd--mega { left: -160px; }
 }
-/* Ниже 1240 шесть пунктов уже не помещаются — уходим в бургер-меню */
+/* Ниже 1240 прячем слово «Сибнефтекарт» (остаются знак и подпись) и разрешаем
+   длинным пунктам переноситься на вторую строку — меню остаётся в шапке до 1024 */
 @media (max-width: 1240px) {
+  .brand__name { display: none; }
+  .brand__text { padding-left: 12px; }
+  .brand__sub { max-width: 120px; margin-top: 0; }
+  /* min-content: после переноса кнопка сужается по тексту, стрелка не отъезжает */
+  .nav__link { width: min-content; padding: 0 6px; font-size: 13px; line-height: 1.15; white-space: normal; text-align: left; }
+}
+
+/* Ниже 1024 шесть пунктов уже не помещаются — уходим в бургер-меню,
+   слово «Сибнефтекарт» возвращается */
+@media (max-width: 1024px) {
+  .brand__name { display: block; }
+  .brand__sub { max-width: 170px; margin-top: 2px; }
   .nav { display: none; }
   html:not(.js) .nav { display: block; }
-  .burger { display: block; margin-left: 0; }
+  .burger { display: block; margin-left: 0; flex-shrink: 0; }
   .hotline-box { margin-left: auto; }
   .hotline { width: auto; padding: 0 14px 0 12px; }
   .hotline__text { display: grid; }
   .hotline__label { display: block; }
   .hotline__tip { display: none; } /* номер и так виден в кнопке */
   .dd--mega { left: -220px; }
-}
-
-@media (max-width: 1024px) {
-  .burger { margin-left: 0; flex-shrink: 0; }
 
   .hero--arch .hero__text, .hero--arch .hero__scene { grid-column: 1 / -1; }
   .eco .system__grid { grid-template-columns: minmax(0, 1fr); }
@@ -470,6 +481,7 @@ html:not(.js) .copy { display: none; }
 
 @media (max-width: 640px) {
   .header__inner { gap: 10px; }
+  .brand__sub { display: none; }
   .brand { gap: 10px; min-width: 0; }
   .brand__mark { width: 46px; }
   .brand__text { padding-left: 10px; min-width: 0; }
@@ -1251,7 +1263,8 @@ html:not(.js) .nfilter { display: none; } /* без JS фильтр не раб�
 .about__dirs.prose h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-top: 0; }
 .certs { padding: 96px 0 120px; border-top: 1px solid var(--line); background: var(--bg-soft); }
 .gallery--certs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
-.gallery--certs .gallery__item { display: grid; gap: 0; background: var(--bg); box-shadow: var(--shadow-sm), 0 0 0 1px var(--line); text-align: left; }
+.gallery--certs > li { display: flex; }
+.gallery--certs .gallery__item { display: grid; grid-template-rows: auto 1fr; width: 100%; gap: 0; background: var(--bg); box-shadow: var(--shadow-sm), 0 0 0 1px var(--line); text-align: left; }
 .gallery--certs img { aspect-ratio: 4 / 3; object-fit: contain; background: var(--bg); padding: 16px; }
 .gallery--certs .noimg { width: 100%; padding: 16px; }
 .gallery__cap { display: block; padding: 14px 18px 18px; font-size: 14px; line-height: 1.4; border-top: 1px solid var(--line); }

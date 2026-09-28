@@ -250,7 +250,7 @@ const NAV = [
   },
   { key: 'software', label: 'Программное обеспечение', mega: true },
   {
-    key: 'equipment', label: 'Оборудование и карты', ext: [
+    key: 'equipment', label: 'Оборудование и&nbsp;карты', ext: [
       [`${SVC}equipment/index.html`, 'Каталог оборудования'],
       [`${SVC}cards.html`, 'Изготовление карт'],
       [ZAO, 'Обслуживание карт'],
