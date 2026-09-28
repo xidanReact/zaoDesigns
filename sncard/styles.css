@@ -424,26 +424,26 @@ html:not(.js) .copy { display: none; }
   .header__inner { gap: 16px; }
   .nav__link { padding: 0 8px; font-size: 14px; }
 }
+/* Ниже 1360 в шапке остаётся только знак СНК — место уходит меню */
 @media (max-width: 1360px) {
   .header__inner { gap: 12px; }
+  .brand__text { display: none; }
   .nav__link { padding: 0 7px; font-size: 13.5px; }
   .dd--mega { left: -160px; }
 }
-/* Ниже 1240 прячем слово «Сибнефтекарт» (остаются знак и подпись) и разрешаем
-   длинным пунктам переноситься на вторую строку — меню остаётся в шапке до 1024 */
+/* Меню остаётся в одну строку до 1024: ещё немного ужимаем пункты */
 @media (max-width: 1240px) {
-  .brand__name { display: none; }
-  .brand__text { padding-left: 12px; }
-  .brand__sub { max-width: 120px; margin-top: 0; }
-  /* min-content: после переноса кнопка сужается по тексту, стрелка не отъезжает */
-  .nav__link { width: min-content; padding: 0 6px; font-size: 13px; line-height: 1.15; white-space: normal; text-align: left; }
+  .nav__link { padding: 0 5px; font-size: 13px; }
+}
+@media (max-width: 1120px) {
+  .header__inner { gap: 8px; }
+  .nav__link { padding: 0 4px; font-size: 12.5px; }
 }
 
 /* Ниже 1024 шесть пунктов уже не помещаются — уходим в бургер-меню,
-   слово «Сибнефтекарт» возвращается */
+   название и подпись возвращаются */
 @media (max-width: 1024px) {
-  .brand__name { display: block; }
-  .brand__sub { max-width: 170px; margin-top: 2px; }
+  .brand__text { display: grid; }
   .nav { display: none; }
   html:not(.js) .nav { display: block; }
   .burger { display: block; margin-left: 0; flex-shrink: 0; }
