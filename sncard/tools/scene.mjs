@@ -169,71 +169,13 @@ for (const c of callouts) {
 add(`</g>`);
 
 
-/* =========================================================
-   Карта-схема АЗС по данным zao-sncard/stations.js
-   Равнопромежуточная проекция: x — долгота × cos(φ₀), y — широта
-   ========================================================= */
+/* АЗС и офис — данные zao-sncard/stations.js */
 const SNK = (() => {
   const src = readFileSync(join(ROOT, '..', 'zao-sncard', 'stations.js'), 'utf8');
   const window = {};
   new Function('window', src)(window);
   return window.SNK;
 })();
-
-function netmap({ x0, y0, w, h, k, labels = true, lngStep = 1, rings = [], prefix = 'm' }) {
-  const pts = [SNK.office, ...SNK.stations];
-  const lat0 = 57.2, cos = Math.cos(lat0 * Math.PI / 180);
-  const lats = pts.map(p => p.lat), lngs = pts.map(p => p.lng);
-  const cLat = (Math.max(...lats) + Math.min(...lats)) / 2;
-  const cLng = (Math.max(...lngs) + Math.min(...lngs)) / 2;
-  const proj = (lat, lng) => [r1(x0 + w / 2 + (lng - cLng) * cos * k), r1(y0 + h / 2 - (lat - cLat) * k)];
-  const out = [];
-  // градусная сетка — реальные параллели и меридианы
-  for (let lat = 55; lat <= 60; lat++) {
-    const [, y] = proj(lat, cLng);
-    if (y < y0 + 8 || y > y0 + h - 8) continue;
-    out.push(`<path class="grat" d="M${x0} ${y}H${x0 + w}"/><text class="bp-coord" x="${x0 + 8}" y="${r1(y - 5)}">${lat}° с. ш.</text>`);
-  }
-  for (let lng = 80; lng <= 86; lng++) {
-    const [x] = proj(cLat, lng);
-    if (x < x0 + 8 || x > x0 + w - 8) continue;
-    out.push(`<path class="grat" d="M${x} ${y0}V${y0 + h}"/>`);
-    if ((lng - 80) % lngStep === 0) out.push(`<text class="bp-coord" x="${r1(x + 5)}" y="${y0 + h - 8}">${lng}° в. д.</text>`);
-  }
-  const [hx, hy] = proj(SNK.office.lat, SNK.office.lng);
-  // кольца расстояний от офиса: 1° широты ≈ 111,2 км (обрезаны рамкой карты)
-  out.push(`<clipPath id="${prefix}-clip"><rect x="${x0}" y="${y0}" width="${w}" height="${h}"/></clipPath><g clip-path="url(#${prefix}-clip)">`);
-  rings.forEach(km => {
-    const r = r1(km / 111.2 * k);
-    out.push(`<circle class="ring" cx="${hx}" cy="${hy}" r="${r}"/><text class="bp-coord ring__t" x="${r1(hx + r * 0.72 + 4)}" y="${r1(hy + r * 0.72 + 12)}">${km} км</text>`);
-  });
-  out.push(`</g>`);
-  // линии данных: офис → каждая АЗС (ломаная по сетке)
-  out.push(`<g class="net-lines">`);
-  SNK.stations.forEach((s, i) => {
-    const [sx, sy] = proj(s.lat, s.lng);
-    out.push(`<path class="data net-line" id="${prefix}-l${i}" d="M${hx} ${hy}V${sy}H${sx}"/>`);
-  });
-  out.push(`</g>`);
-  SNK.stations.forEach(s => {
-    const [sx, sy] = proj(s.lat, s.lng);
-    let label = '';
-    if (labels) {
-      // подпись со стороны, противоположной линии к офису; у близких к Томску точек — сверху
-      const near = Math.abs(sx - hx) < 40 && Math.abs(sy - hy) < 40;
-      const left = sx < hx;
-      const lx = near ? r1(sx + (left ? -8 : 8)) : r1(sx + (left ? -10 : 10));
-      const ly = near ? r1(sy - 12) : r1(sy + 3.5);
-      const anchor = left ? ' text-anchor="end"' : '';
-      label = `<text class="bp-label bp-label--sm net-pt__t" x="${lx}" y="${ly}"${anchor}>${s.place.toUpperCase()}</text>`;
-    }
-    out.push(`<g class="net-pt" data-id="${s.id}" tabindex="0" aria-label="${s.num}, ${s.address}">` +
-      `<circle class="net-hit" cx="${sx}" cy="${sy}" r="16"/><circle class="net-node" cx="${sx}" cy="${sy}" r="5"/>${label}</g>`);
-  });
-  out.push(`<circle class="net-hub" cx="${hx}" cy="${hy}" r="9"/><circle class="office__dot" cx="${hx}" cy="${hy}" r="3.5"/>`);
-  if (labels) out.push(`<text class="bp-label bp-label--accent" x="${r1(hx + 14)}" y="${r1(hy + 20)}">ТОМСК · ОФИС СНК</text>`);
-  return out.join('\n');
-}
 
 /* =========================================================
    Уменьшенная копия карты АЗС с первого экрана zao-sncard:
@@ -247,7 +189,9 @@ const BASE = (() => {
   return window.SNK_BASEMAP;
 })();
 
-function atlasMap({ W = 640, H = 560, pad = 70, padX = 150 } = {}) { // padX — место под подписи АЗС справа и слева
+// padX — место под подписи АЗС справа и слева; sc — масштаб значков, fs — кегль подписи АЗС (как в CSS);
+// ox, oy — сдвиг карты внутри общей схемы; id — префикс id (на главной карта встречается дважды)
+function atlasMap({ W = 640, H = 560, pad = 70, padX = 150, sc = 1, fs = 12.5, ox = 0, oy = 0, id = 'a' } = {}) {
   const mx = lng => lng * Math.PI / 180;
   const my = lat => -Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
   const pts = [SNK.office, ...SNK.stations];
@@ -255,8 +199,8 @@ function atlasMap({ W = 640, H = 560, pad = 70, padX = 150 } = {}) { // padX —
   const [minX, maxX, minY, maxY] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
   const k = Math.min((W - padX * 2) / (maxX - minX), (H - pad * 2) / (maxY - minY));
   const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
-  const proj = (lat, lng) => [r1(W / 2 + (mx(lng) - cx) * k), r1(H / 2 + (my(lat) - cy) * k)];
-  const inView = ([x, y], m = 60) => x > -m && x < W + m && y > -m && y < H + m;
+  const proj = (lat, lng) => [r1(ox + W / 2 + (mx(lng) - cx) * k), r1(oy + H / 2 + (my(lat) - cy) * k)];
+  const inView = ([x, y], m = 60) => x > ox - m && x < ox + W + m && y > oy - m && y < oy + H + m;
   // линия [долгота, широта] → path; точки ближе 1,5 px к предыдущей отбрасываем
   const pathOf = (coords, close = false) => {
     const out = [];
@@ -269,11 +213,11 @@ function atlasMap({ W = 640, H = 560, pad = 70, padX = 150 } = {}) { // padX —
   const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 
   const out = [
-    `<defs><pattern id="a-dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle class="am-dot" cx="1" cy="1" r="1"/></pattern>` +
-      `<clipPath id="a-clip"><rect x="1" y="1" width="${W - 2}" height="${H - 2}" rx="11"/></clipPath></defs>`,
-    `<rect class="am-bg" x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="12"/>`,
-    `<g clip-path="url(#a-clip)">`,
-    `<rect x="0" y="0" width="${W}" height="${H}" fill="url(#a-dots)"/>`,
+    `<defs><pattern id="${id}-dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle class="am-dot" cx="1" cy="1" r="1"/></pattern>` +
+      `<clipPath id="${id}-clip"><rect x="${ox + 1}" y="${oy + 1}" width="${W - 2}" height="${H - 2}" rx="11"/></clipPath></defs>`,
+    `<rect class="am-bg" x="${ox + 0.5}" y="${oy + 0.5}" width="${W - 1}" height="${H - 1}" rx="12"/>`,
+    `<g clip-path="url(#${id}-clip)">`,
+    `<rect x="${ox}" y="${oy}" width="${W}" height="${H}" fill="url(#${id}-dots)"/>`,
   ];
   if (BASE.region) out.push(`<path class="bm-region" d="${pathOf(BASE.region, true)}"/>`);
   const lines = (list, cls) => list.map(r => { const d = pathOf(r.c || r); return d ? `<path class="${cls(r)}" d="${d}"/>` : ''; }).filter(Boolean);
@@ -287,9 +231,9 @@ function atlasMap({ W = 640, H = 560, pad = 70, padX = 150 } = {}) { // padX —
   // …и те, что попадают на значок или подпись АЗС (выноска у Томска смещена вверх-вправо)
   const busy = SNK.stations.map(s => {
     const [px, py] = proj(s.lat, s.lng);
-    return Math.hypot(px - hx, py - hy) < 30 ? [px + 34, py - 46] : [px, py];
+    return Math.hypot(px - hx, py - hy) < 30 * sc ? [px + 34 * sc, py - 46 * sc] : [px, py];
   });
-  const clash = (x, y) => busy.some(([bx, by]) => x > bx - 30 && x < bx + 150 && Math.abs(y - by) < 28);
+  const clash = (x, y) => busy.some(([bx, by]) => x > bx - 30 * sc && x < bx + 150 * sc && Math.abs(y - by) < 28 * sc);
   BASE.places.filter(p => !taken.has(p.t) && p.r <= 6).forEach(p => {
     const [x, y] = proj(p.ll[0], p.ll[1]);
     if (!inView([x, y], -30) || clash(x, y)) return;
@@ -305,7 +249,7 @@ function atlasMap({ W = 640, H = 560, pad = 70, padX = 150 } = {}) { // padX —
   out.push(`<g class="net-lines">`);
   SNK.stations.forEach((s, i) => {
     const [sx, sy] = proj(s.lat, s.lng);
-    out.push(`<path class="mk-link net-line" id="a-l${i}" d="M${hx} ${hy}L${sx} ${sy}"/>`);
+    out.push(`<path class="mk-link net-line" id="${id}-l${i}" d="M${hx} ${hy}L${sx} ${sy}"/>`);
   });
   out.push(`</g>`);
 
@@ -313,38 +257,43 @@ function atlasMap({ W = 640, H = 560, pad = 70, padX = 150 } = {}) { // padX —
   SNK.stations.forEach(s => {
     const [px, py] = proj(s.lat, s.lng);
     // Выноска: значок, стоящий почти на офисе, разводим вверх-вправо, линия ведёт к настоящей точке
-    const onHub = Math.hypot(px - hx, py - hy) < 30;
-    const [sx, sy] = onHub ? [r1(px + 34), r1(py - 46)] : [px, py];
-    const near = !onHub && Math.hypot(sx - hx, sy - hy) < 20;
+    const onHub = Math.hypot(px - hx, py - hy) < 30 * sc;
+    const [sx, sy] = onHub ? [r1(px + 34 * sc), r1(py - 46 * sc)] : [px, py];
+    const near = !onHub && Math.hypot(sx - hx, sy - hy) < 20 * sc;
     const left = !onHub && sx < hx;
-    const tx = near ? sx : r1(sx + (left ? -18 : 18));
-    const ty = near ? r1(sy + (sy < hy ? -24 : 30)) : r1(sy - 1);
-    const anchor = near ? ' text-anchor="middle"' : left ? ' text-anchor="end"' : '';
+    // подпись сбоку не влезает в рамку (узкая карта) — ставим над или под значком
+    const tw = s.place.length * fs * 0.56 + 18 * sc;
+    const fits = left ? sx - tw > ox + 8 : sx + tw < ox + W - 8;
+    const mid = near || !fits;
+    const tx = mid ? sx : r1(sx + (left ? -18 : 18) * sc);
+    const ty = mid ? r1(sy + (sy < hy ? -38 : 30) * sc) : r1(sy - sc); // над значком — обе строки выше кольца
+    const anchor = mid ? ' text-anchor="middle"' : left ? ' text-anchor="end"' : '';
     const leader = onHub ? `<path class="am-leader" d="M${px} ${py}L${sx} ${sy}"/><circle class="am-true" cx="${px}" cy="${py}" r="3"/>` : '';
     out.push(`<g class="net-pt" data-id="${s.id}" tabindex="0" aria-label="${s.num}, ${esc(s.address)}">` +
-      `<circle class="net-hit" cx="${sx}" cy="${sy}" r="16"/>${leader}` +
-      `<g class="am-mk" transform="translate(${sx} ${sy})"><circle class="mk__ring" r="12.5"/>` +
+      `<circle class="net-hit" cx="${sx}" cy="${sy}" r="${r1(16 * sc)}"/>${leader}` +
+      `<g class="am-mk" transform="translate(${sx} ${sy})${sc !== 1 ? ` scale(${sc})` : ''}"><circle class="mk__ring" r="12.5"/>` +
       `<path class="mk__glyph" d="M-5 6v-11a1.5 1.5 0 0 1 1.5-1.5h4.5a1.5 1.5 0 0 1 1.5 1.5v11M-6.5 6h10M-3 -2.5h3.5M2.5 -1.5h1.6l1.4 1.4v4.3a1 1 0 0 0 2 0v-5.6l-1.8-1.8"/></g>` +
-      `<text class="am-label" x="${tx}" y="${ty}"${anchor}>${esc(s.place)}<tspan class="am-label__sub" x="${tx}" dy="13">${esc(s.num)} · ${s.fuel.join(' ')}</tspan></text></g>`);
+      `<text class="am-label" x="${tx}" y="${ty}"${anchor}>${esc(s.place)}<tspan class="am-label__sub" x="${tx}" dy="${r1(13 * sc)}">${esc(s.num)} · ${s.fuel.join(' ')}</tspan></text></g>`);
   });
 
   // Процессинговый центр
-  out.push(`<circle class="am-halo" cx="${hx}" cy="${hy}" r="16"/><circle class="net-hub am-hub" cx="${hx}" cy="${hy}" r="9"/><circle class="office__dot" cx="${hx}" cy="${hy}" r="3.4"/>`);
-  out.push(`<text class="bp-label bp-label--accent am-hub__t" x="${r1(hx + 20)}" y="${r1(hy + 4)}">ОФИС СНК · ТОМСК</text>`);
+  out.push(`<circle class="am-halo" cx="${hx}" cy="${hy}" r="${r1(16 * sc)}"/><circle class="net-hub am-hub" cx="${hx}" cy="${hy}" r="${r1(9 * sc)}"/><circle class="office__dot" cx="${hx}" cy="${hy}" r="${r1(3.4 * sc)}"/>`);
+  out.push(`<text class="bp-label bp-label--accent am-hub__t" x="${r1(hx + 20 * sc)}" y="${r1(hy + 4 * sc)}">ОФИС СНК · ТОМСК</text>`);
 
   // Масштабная линейка (по широте офиса): самая длинная из «круглых» длин, что не шире четверти карты
   const pxPerKm = k / (6378.137 * Math.cos(SNK.office.lat * Math.PI / 180));
   const km = [1, 2, 5, 10, 20, 50, 100, 200].filter(n => n * pxPerKm <= W / 4).pop() || 1;
   const bar = r1(km * pxPerKm);
-  out.push(`<g class="bp-coord am-scale"><path d="M20 ${H - 26}v6h${bar}v-6"/><text x="${r1(20 + bar + 8)}" y="${H - 20}">${km} км</text></g>`);
-  out.push(`<text class="bp-coord" x="${W - 14}" y="${H - 20}" text-anchor="end">Natural Earth</text>`);
+  out.push(`<g class="bp-coord am-scale"><path d="M${ox + 20} ${oy + H - 26}v6h${bar}v-6"/><text x="${r1(ox + 20 + bar + 8)}" y="${oy + H - 20}">${km} км</text></g>`);
+  out.push(`<text class="bp-coord" x="${ox + W - 14}" y="${oy + H - 20}" text-anchor="end">Natural Earth</text>`);
   out.push(`</g>`);
-  out.push(`<rect class="am-frame" x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" rx="12"/>`);
+  out.push(`<rect class="am-frame" x="${ox + 0.5}" y="${oy + 0.5}" width="${W - 1}" height="${H - 1}" rx="12"/>`);
   return out.join('\n');
 }
 
 const zaoMap = atlasMap();
-const ecoMap = netmap({ x0: 1110, y0: 250, w: 420, h: 420, k: 96, labels: false, lngStep: 2, rings: [100, 200], prefix: 'e' });
+// Слой 3 экосистемы — та же карта, что в витрине zao, в рамке слоя (x 1100…1540, y 200…720)
+const ecoMap = atlasMap({ W: 440, H: 520, pad: 90, padX: 100, sc: 1.3, fs: 16, ox: 1100, oy: 200, id: 'e' });
 
 /* План офиса — тот же, что в snc-service (данные OpenStreetMap, ODbL) */
 const svcHtml = readFileSync(join(ROOT, '..', 'snc-service', 'index.html'), 'utf8');

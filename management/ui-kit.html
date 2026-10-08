@@ -1,0 +1,1073 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>СНК · Управление продуктами — UI kit</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../sncard/favicon.svg" type="image/svg+xml">
+  <!-- Дизайн-система: эталон в designs/, здесь только компоненты кабинета -->
+  <link rel="stylesheet" href="../designs/styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ---------- Раскладка страницы UI kit (не часть дизайн-системы) ---------- */
+    body.kit { background: var(--bg-soft); }
+    .kit-wrap { max-width: 1440px; margin: 0 auto; padding: 48px clamp(16px, 4vw, 64px) 96px; display: flex; flex-direction: column; gap: 32px; }
+    .kit-section { background: var(--bg); border: 1px solid var(--line); border-radius: 20px; padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; gap: 28px; scroll-margin-top: 72px; }
+    .kit-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+    .kit-head h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; }
+    .kit-head p { color: var(--text-muted); font-size: 14.5px; max-width: 680px; margin-top: 6px; }
+    .kit-num { font: 400 12px var(--font-mono); color: var(--text-muted); }
+    .kit-sub { font-size: 16px; font-weight: 800; letter-spacing: -0.015em; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    .kit-pv { font: 400 11px var(--font-mono); color: var(--text-muted); padding: 2px 8px; border: 1px solid var(--line); border-radius: 999px; }
+    .kit-row { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+    .kit-row--center { align-items: center; }
+    .kit-cell { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+    .kit-cap { font: 400 11px/1.4 var(--font-mono); color: var(--text-muted); }
+    .kit-block { display: flex; flex-direction: column; gap: 16px; }
+    .kit-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 24px; align-items: start; }
+    .kit-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px; align-items: start; }
+    .kit-canvas { padding: 24px; border-radius: 12px; border: 1px dashed var(--blueprint-soft); background-color: var(--bg-soft); }
+    .kit-canvas--dots { background-color: var(--bg); background-image: radial-gradient(circle at 1px 1px, var(--blueprint-soft) 1px, transparent 1.2px); background-size: 24px 24px; }
+    .kit-note { font-size: 13px; color: var(--text-muted); max-width: 72ch; }
+    .kit-toc { position: sticky; top: 0; z-index: 40; background: rgba(247, 248, 250, .9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+    .kit-toc__in { max-width: 1440px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 64px); display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+    .kit-toc a { flex-shrink: 0; padding: 14px 10px; font: 400 12px var(--font-mono); color: var(--text-muted); border-bottom: 2px solid transparent; }
+    .kit-toc a:hover { color: var(--text); border-color: var(--accent); }
+
+    /* Обложка */
+    .kit-cover { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: end; padding: 48px 0 8px; }
+    .kit-cover svg.logo { width: 120px; height: auto; margin-bottom: 24px; }
+    .kit-cover h1 { font-size: clamp(40px, 5.6vw, 76px); font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
+    .kit-cover p { font-size: 17px; color: var(--text-muted); max-width: 760px; margin-top: 16px; }
+
+    /* Образцы цветов */
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+    .swatch { display: grid; gap: 6px; }
+    .swatch__chip { height: 64px; border-radius: 10px; border: 1px solid var(--line); display: grid; place-items: center; }
+    .swatch b { font-size: 13.5px; font-weight: 700; }
+    .swatch span { font: 400 11px/1.4 var(--font-mono); color: var(--text-muted); }
+    .type-row { display: grid; grid-template-columns: 220px 1fr; gap: 24px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .type-row:last-child { border-bottom: 0; }
+    @media (max-width: 767px) { .type-row { grid-template-columns: minmax(0, 1fr); gap: 6px; } .type-row > * { min-width: 0; overflow-wrap: anywhere; } }
+
+    /* Эмуляция состояний (для импорта в Figma — :hover и :focus не видны) */
+    .btn--primary.is-hover { background: var(--accent-hover); }
+    .btn--outline.is-hover { box-shadow: inset 0 0 0 1.5px var(--text); }
+    .btn--ghost.is-hover { color: var(--text); background: rgba(31, 41, 51, .05); }
+    .btn--danger.is-hover { box-shadow: inset 0 0 0 1.5px var(--accent); }
+    .btn.is-focus { box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent); }
+    .btn.is-pressed { scale: .97; }
+    .icon-btn.is-hover { background: var(--surface); color: var(--text); }
+    .in.is-hover { border-color: var(--blueprint); }
+    .sb__link.is-hover { background: var(--bg-soft); color: var(--text); }
+    .table tbody tr.is-hover { background: var(--bg-soft); }
+    .kit .pop--static { box-shadow: var(--shadow-md); }
+    .kit .tip--static { margin-bottom: 4px; }
+
+    /* Каркас-демо внутри страницы */
+    .kit-shell { height: 620px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--bg-soft); position: relative; transform: translateZ(0); }
+    .kit-shell .app-shell { min-height: 100%; height: 100%; }
+    .kit-shell .sb { height: 100%; }
+    .kit-shell .app-main { overflow: auto; }
+    .kit-shell .top { position: sticky; }
+    @media (max-width: 1023px) { .kit-shell .sb { position: absolute; } .kit-shell .sb-scrim { position: absolute; } }
+  </style>
+</head>
+<body class="app kit">
+
+<!-- @sprite:start -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-chevron" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 16 16"><path d="M10 4L6 8l4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 16 16"><path d="M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 16l4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2h-14zM10 20.5a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-sidebar" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 4.5v15M15.5 10l-2 2 2 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5M6 9.5V19h4.5v-5h3v5H18V9.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><path d="M3.5 12h4l2-5 4 10 2-5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-station" viewBox="0 0 24 24"><path d="M5 20V5.5A1.5 1.5 0 0 1 6.5 4h6A1.5 1.5 0 0 1 14 5.5V20M3.5 20h12M7.5 7.5h4v3.5h-4zM14 9h2.5a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 0 3 0V8l-2.5-2.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-requests" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 3v2.5h6V3M8.5 11h7M8.5 14.5h7M8.5 18h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16M7 16.5V11M11.5 16.5V6.5M16 16.5v-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-shift" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 9.5h16M8.5 3v4M15.5 3v4M8 13.5h3M8 16.5h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v14H6.5A1.5 1.5 0 0 0 5 19.5zM5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3M9 8h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M4 8l8-4 8 4v8.5l-8 4-8-4zM4 8l8 4 8-4M12 12v8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-report" viewBox="0 0 24 24"><path d="M7 3.5h7l4.5 4.5v12.5H7zM14 3.5V8h4.5M10 13h5M10 16.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-org" viewBox="0 0 24 24"><path d="M4 20.5h16M6 20.5V6.5L12 3.5l6 3v14M9.5 9h1M13.5 9h1M9.5 12.5h1M13.5 12.5h1M10.5 20.5v-4h3v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9.5" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 19.5a6 6 0 0 1 12 0M16 5.2a3.5 3.5 0 0 1 0 6.6M17.5 14.2a6 6 0 0 1 3 5.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 12l8-8M16 7l2.5 2.5M14 9l2 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-update" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v4h-4M12 8.5V12l2.5 1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-log" viewBox="0 0 24 24"><path d="M8 6h11M8 12h11M8 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 3.5v2.2M12 18.3v2.2M20.5 12h-2.2M5.7 12H3.5M18 6l-1.6 1.6M7.6 16.4 6 18M18 18l-1.6-1.6M7.6 7.6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.8 9.5a2.3 2.3 0 1 1 3.3 2.1c-.7.4-1.1.9-1.1 1.7v.4M12 16.8h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 4.5H6.5A1.5 1.5 0 0 0 5 6v12a1.5 1.5 0 0 0 1.5 1.5H14M10 12h10M16.5 8.5 20 12l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 19.5a6.5 6.5 0 0 1 13 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 16 16"><path d="M2.5 3.5h11L9.5 8.5v4l-3 1.5V8.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <symbol id="i-columns" viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 4.5v15M14.5 4.5v15" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M5 19l1-4 10-10 3 3-10 10zM14 7l3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V4.5h4V7M7 7l1 13h8l1-13M10.5 11v5M13.5 11v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19 12a7 7 0 0 1-12.2 4.7M5 12a7 7 0 0 1 12.2-4.7M17.5 3.5v4h-4M6.5 20.5v-4h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M3.5 6.5 9 4.5l6 2 5.5-2v13l-5.5 2-6-2-5.5 2zM9 4.5v13M15 6.5v13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-table" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 10h16M4 14.5h16M10 10v9" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 12.3l2.7 2.7L16 9.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5v5.5M12 16.3h.01" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4 21 19.5H3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 10v4.5M12 17h.01" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5.5M12 7.7h.01" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M4 4l16 16M8.5 13.5a5 5 0 0 1 5.5-1M5 10.3a9.5 9.5 0 0 1 4-2M12.5 7.6a9.5 9.5 0 0 1 6.5 2.7M12 17.5h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-file" viewBox="0 0 48 48"><path d="M13 5h15l9 9v29H13zM28 5v9h9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M24 36V22M18.5 27.5 24 22l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M12 3.5s-5.5 6-5.5 10a5.5 5.5 0 0 0 11 0c0-4-5.5-10-5.5-10z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M4 4l16 16M9.9 5.8A9.7 9.7 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-3 3.7M6.3 7.5A16 16 0 0 0 2.5 12S6 18.5 12 18.5a9.3 9.3 0 0 0 4.3-1M9.9 9.9a3 3 0 0 0 4.2 4.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M13.5 4.5h6v6M19.5 4.5l-8 8M17.5 13.5v5a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 18.5v-10A1.5 1.5 0 0 1 6 7h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+<!-- @sprite:end -->
+
+<nav class="kit-toc" aria-label="Разделы UI kit">
+  <div class="kit-toc__in">
+    <a href="#foundations">01 основы</a><a href="#shell">02 каркас</a><a href="#buttons">03 кнопки</a><a href="#status">04 статусы</a>
+    <a href="#forms">05 поля</a><a href="#table">06 таблица</a><a href="#tree">07 дерево</a><a href="#overlays">08 оверлеи</a>
+    <a href="#data">09 данные</a><a href="#nav">10 навигация внутри страницы</a><a href="#states">11 состояния</a><a href="#primevue">12 PrimeVue</a>
+  </div>
+</nav>
+
+<main class="kit-wrap">
+
+  <header class="kit-cover">
+    <div>
+      <svg class="logo" viewBox="0 0 120 48" aria-hidden="true"><path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="5" stroke-linecap="square"/></svg>
+      <h1>Управление продуктами&nbsp;СНК</h1>
+      <p>Компоненты рабочего кабинета management.sncard.ru. Токены, шрифты, кнопки, поле с плавающей подписью, чекбокс и cookie-баннер наследуются из designs/ — здесь только то, чего на сайтах группы нет. У каждого компонента указан аналог в PrimeVue, на котором работает боевое приложение.</p>
+    </div>
+    <div class="tblock" aria-label="Паспорт документа">
+      <div class="tblock__cell"><span class="tblock__k">Документ</span><span class="tblock__v">UI-KIT</span></div>
+      <div class="tblock__cell"><span class="tblock__k">Основа</span><span class="tblock__v">designs/</span></div>
+      <div class="tblock__cell"><span class="tblock__k">Версия</span><span class="tblock__v">0.1</span></div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       01. Основы
+       ========================================================= -->
+  <section class="kit-section" id="foundations" aria-labelledby="h-found">
+    <div class="kit-head">
+      <div><span class="kit-num">01</span><h2 id="h-found">Основы кабинета</h2>
+        <p>Палитра группы не меняется. Добавлены только статусные цвета и цвета серий графиков — без них рабочий интерфейс не читается. Статус всегда показывается знаком, цветом и подписью одновременно: форма знака читается и без цвета.</p></div>
+    </div>
+
+    <div class="kit-block">
+      <div class="kit-sub">Статусы <span class="kit-pv">новые токены</span></div>
+      <div class="swatches">
+        <div class="swatch"><div class="swatch__chip"><span class="st st--ok">В сети</span></div><b>--st-ok</b><span>#1B7F45 · 5.2:1 · круг</span></div>
+        <div class="swatch"><div class="swatch__chip"><span class="st st--info">Идёт налив</span></div><b>--st-info</b><span>#2F6DAE · 5.4:1 · ромб</span></div>
+        <div class="swatch"><div class="swatch__chip"><span class="st st--warn">Нестабильно</span></div><b>--st-warn</b><span>#B26A00 · 4.6:1 · треугольник</span></div>
+        <div class="swatch"><div class="swatch__chip"><span class="st st--err">Проблемная</span></div><b>--st-err = --accent</b><span>#D32F2F · квадрат</span></div>
+        <div class="swatch"><div class="swatch__chip"><span class="st st--off">Не в сети</span></div><b>--st-off</b><span>#7A8795 · кольцо</span></div>
+      </div>
+    </div>
+
+    <div class="kit-block">
+      <div class="kit-sub">Серии графиков <span class="kit-pv">проверены валидатором dataviz</span></div>
+      <div class="swatches">
+        <div class="swatch"><div class="swatch__chip" style="background:var(--series-1)"></div><b>--series-1</b><span>#2F6DAE</span></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--series-2)"></div><b>--series-2</b><span>#C46A1F</span></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--series-3)"></div><b>--series-3</b><span>#15876A</span></div>
+        <div class="swatch"><div class="swatch__chip" style="background:var(--series-4)"></div><b>--series-4</b><span>#7657B0</span></div>
+      </div>
+      <p class="kit-note">Худшая пара для дальтоников ΔE 8.6 (цель ≥ 8), все четыре ≥ 3:1 на белом. Порядок фиксирован: цвет закреплён за сущностью (вид топлива, статус заявки), а не за местом в рейтинге. Пятая и следующие серии сворачиваются в «Прочее». Если на графике статусы (например, группы заявок), берутся статусные цвета со знаками, а не серии; красный появляется только у ошибки.</p>
+    </div>
+
+    <div class="kit-block">
+      <div class="kit-sub">Типографика кабинета</div>
+      <div>
+        <div class="type-row"><span class="kit-cap">Заголовок страницы · 28/800</span><span class="phead__title">Мониторинг ТО</span></div>
+        <div class="type-row"><span class="kit-cap">Заголовок панели · 16/800</span><span class="panel__title">Заявки по часам</span></div>
+        <div class="type-row"><span class="kit-cap">Текст · 14/500</span><span>Точка обслуживания передаёт данные каждые 30 секунд.</span></div>
+        <div class="type-row"><span class="kit-cap">Таблица · 13.5/500</span><span style="font-size:13.5px">АЗС № 14, ул. Демонстрационная, 1</span></div>
+        <div class="type-row"><span class="kit-cap">Коды и числа · Mono 12.5, табличные цифры</span><span class="mono" style="font-size:12.5px">ТО-0142 · 12 480,50 · 30.09.2026 14:05</span></div>
+        <div class="type-row"><span class="kit-cap">KPI · 32/800</span><span class="kpi__value">1 284</span></div>
+      </div>
+    </div>
+
+    <div class="kit-block">
+      <div class="kit-sub">Размеры</div>
+      <div class="kit-row">
+        <div class="kit-cell"><span class="kit-cap">--top-h</span><b class="mono">56 px</b></div>
+        <div class="kit-cell"><span class="kit-cap">--sb-w / --sb-w-min</span><b class="mono">256 / 64 px</b></div>
+        <div class="kit-cell"><span class="kit-cap">--ctl-h (поля, кнопки)</span><b class="mono">40 px</b></div>
+        <div class="kit-cell"><span class="kit-cap">--row-h / compact</span><b class="mono">44 / 34 px</b></div>
+        <div class="kit-cell"><span class="kit-cap">радиусы (из designs/)</span><b class="mono">8 · 12 · 20</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       02. Каркас
+       ========================================================= -->
+  <section class="kit-section" id="shell" aria-labelledby="h-shell">
+    <div class="kit-head">
+      <div><span class="kit-num">02</span><h2 id="h-shell">Каркас: сайдбар, верхняя панель, шапка страницы</h2>
+        <p>Три продукта — три «листа» с кодом. Сайдбар сворачивается до знаков (подписи — во всплывающих подсказках), на планшете и телефоне выезжает слева. Шапка страницы заканчивается штампом, как основная надпись чертежа: код раздела, свежесть данных, объём.</p></div>
+      <span class="kit-pv">PrimeVue: Menu / PanelMenu · Toolbar · Breadcrumb</span>
+    </div>
+
+    <div class="kit-shell">
+      <div class="app-shell">
+        <aside class="sb" aria-label="Разделы">
+          <a class="sb__brand" href="#shell">
+            <svg viewBox="0 0 120 48" aria-hidden="true"><path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="6" stroke-linecap="square"/></svg>
+            <b class="sb__label">Управление<br>продуктами</b>
+          </a>
+          <div class="sb__products" role="group" aria-label="Продукт">
+            <a class="sb__product" href="#shell" aria-current="true"><span class="sb__code">АЗС</span><span class="sb__label">СНК-АЗС</span></a>
+            <a class="sb__product" href="#shell"><span class="sb__code">ОФ</span><span class="sb__label">СНК-Офис</span></a>
+            <a class="sb__product" href="#shell"><span class="sb__code">АДМ</span><span class="sb__label">Администрирование</span></a>
+          </div>
+          <nav class="sb__nav" aria-label="Разделы СНК-АЗС">
+            <div class="sb__group">
+              <a class="sb__link" href="#shell"><svg class="ico" aria-hidden="true"><use href="#i-home"/></svg><span class="sb__label">Главная</span></a>
+            </div>
+            <div class="sb__group">
+              <span class="sb__title">Точки обслуживания</span>
+              <a class="sb__link" href="#shell" aria-current="page"><svg class="ico" aria-hidden="true"><use href="#i-monitor"/></svg><span class="sb__label">Мониторинг ТО</span><span class="sb__count">3</span></a>
+              <a class="sb__link is-hover" href="#shell"><svg class="ico" aria-hidden="true"><use href="#i-station"/></svg><span class="sb__label">Информация по ТО</span></a>
+            </div>
+            <div class="sb__group">
+              <span class="sb__title">Мобильные сервисы</span>
+              <a class="sb__link" href="#shell"><svg class="ico" aria-hidden="true"><use href="#i-activity"/></svg><span class="sb__label">Активность ТО</span></a>
+              <a class="sb__link" href="#shell"><svg class="ico" aria-hidden="true"><use href="#i-requests"/></svg><span class="sb__label">Контроль заявок</span><span class="sb__count">12</span></a>
+              <a class="sb__link" href="#shell"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg><span class="sb__label">Статистика</span></a>
+            </div>
+          </nav>
+          <div class="sb__foot">
+            <a class="sb__link" href="#shell"><svg class="ico" aria-hidden="true"><use href="#i-help"/></svg><span class="sb__label">Инструкция</span></a>
+            <button class="sb__link sb__collapse" type="button" data-sb-collapse aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#i-sidebar"/></svg><span class="sb__label">Свернуть меню</span></button>
+          </div>
+        </aside>
+
+        <div class="app-main">
+          <header class="top">
+            <button class="icon-btn top__burger" type="button" data-sb-open aria-expanded="false" aria-label="Открыть меню"><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg></button>
+            <nav class="crumbs" aria-label="Вы здесь">
+              <a href="#shell">СНК-АЗС</a><span class="crumbs__sep" aria-hidden="true">/</span>
+              <a href="#shell">Точки обслуживания</a><span class="crumbs__sep" aria-hidden="true">/</span>
+              <span aria-current="page">Мониторинг ТО</span>
+            </nav>
+            <div class="top__right">
+              <label class="gsearch"><span class="sr-only">Поиск по разделам</span>
+                <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>
+                <input class="gsearch__input" type="search" placeholder="Поиск по разделам">
+                <span class="kbd" aria-hidden="true">/</span>
+              </label>
+              <div style="position:relative">
+                <button class="icon-btn" type="button" data-pop="pop-notif-shell" aria-expanded="false" aria-controls="pop-notif-shell" aria-label="Уведомления, 2 новых"><svg class="ico" aria-hidden="true"><use href="#i-bell"/></svg><span class="badge">2</span></button>
+                <div class="pop pop--right notif" id="pop-notif-shell">
+                  <div class="notif__head"><b>Уведомления</b><button class="btn btn--ghost btn--xs" type="button">Прочитать все</button></div>
+                  <div class="notif__list">
+                    <div class="notif__item is-unread"><div><p>ТО-0142 не выходит на связь больше 15 минут</p><time>14:05</time></div></div>
+                    <div class="notif__item is-unread"><div><p>Доступно обновление СНК-АЗС 4.12</p><time>11:30</time></div></div>
+                  </div>
+                </div>
+              </div>
+              <div style="position:relative">
+                <button class="user-btn" type="button" data-pop="pop-user-shell" aria-expanded="false" aria-controls="pop-user-shell">
+                  <span class="avatar" aria-hidden="true">ИП</span>
+                  <span class="user-btn__name">И. Петров<small>ООО «Демо»</small></span>
+                </button>
+                <div class="pop pop--right" id="pop-user-shell" style="min-width:220px">
+                  <div class="opts" role="menu">
+                    <a class="opt" role="menuitem" href="#shell"><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg>Профиль</a>
+                    <a class="opt" role="menuitem" href="#shell"><svg class="ico" aria-hidden="true"><use href="#i-help"/></svg>Инструкция</a>
+                    <div class="opt-sep" role="separator"></div>
+                    <button class="opt" role="menuitem" type="button"><svg class="ico" aria-hidden="true"><use href="#i-logout"/></svg>Выйти</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="app-content dotgrid" style="background-color:var(--bg-soft)">
+            <div class="phead">
+              <div>
+                <h1 class="phead__title">Мониторинг ТО</h1>
+                <p class="phead__sub">Состояние точек обслуживания в реальном времени.</p>
+              </div>
+              <div class="tblock" aria-label="Паспорт раздела">
+                <div class="tblock__cell"><span class="tblock__k">Раздел</span><span class="tblock__v">АЗС-01</span></div>
+                <div class="tblock__cell"><span class="tblock__k">Обновлено</span><span class="tblock__v"><span class="live" aria-hidden="true"><span class="live__dot"></span></span>14:05:32</span></div>
+                <div class="tblock__cell"><span class="tblock__k">Точек</span><span class="tblock__v">48</span></div>
+              </div>
+              <div class="phead__actions">
+                <button class="btn btn--primary btn--sm" type="button"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg><span>Добавить ТО</span></button>
+                <button class="btn btn--outline btn--sm" type="button"><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg><span>Выгрузить</span></button>
+              </div>
+            </div>
+            <div class="kpis">
+              <div class="kpi"><span class="kpi__label">Всего ТО</span><span class="kpi__value">48</span></div>
+              <div class="kpi"><span class="kpi__label"><span class="st st--ok">В сети</span></span><span class="kpi__value">41</span></div>
+              <div class="kpi"><span class="kpi__label"><span class="st st--warn">Нестабильно</span></span><span class="kpi__value">4</span></div>
+              <div class="kpi"><span class="kpi__label"><span class="st st--off">Не в сети</span></span><span class="kpi__value">3</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="kit-note">Сайдбар в этом примере живой: «Свернуть меню» внизу, на узком экране — кнопка-бургер. Выбор запоминается. Активный раздел — фон и красная риска слева, активный продукт — красная рамка у кода.</p>
+  </section>
+
+  <!-- =========================================================
+       03. Кнопки
+       ========================================================= -->
+  <section class="kit-section" id="buttons" aria-labelledby="h-btn">
+    <div class="kit-head">
+      <div><span class="kit-num">03</span><h2 id="h-btn">Кнопки кабинета</h2>
+        <p>Та же кнопка-«таблетка» из designs/, но в двух компактных размерах. Красная — одно главное действие на экране. Разрушительные действия — контурные с красным текстом и всегда через подтверждение.</p></div>
+      <span class="kit-pv">PrimeVue: Button · OverlayBadge</span>
+    </div>
+    <div class="kit-block">
+      <div class="kit-sub">Варианты · 40 px (btn--sm)</div>
+      <div class="kit-row kit-row--center">
+        <button class="btn btn--primary btn--sm" type="button"><span>Сохранить</span></button>
+        <button class="btn btn--outline btn--sm" type="button"><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg><span>Выгрузить</span></button>
+        <button class="btn btn--ghost btn--sm" type="button"><span>Отмена</span></button>
+        <button class="btn btn--danger btn--sm" type="button"><svg class="ico" aria-hidden="true"><use href="#i-trash"/></svg><span>Удалить</span></button>
+      </div>
+    </div>
+    <div class="kit-block">
+      <div class="kit-sub">Состояния</div>
+      <div class="kit-row kit-row--center">
+        <div class="kit-cell"><button class="btn btn--primary btn--sm" type="button"><span>Сохранить</span></button><span class="kit-cap">default</span></div>
+        <div class="kit-cell"><button class="btn btn--primary btn--sm is-hover" type="button"><span>Сохранить</span></button><span class="kit-cap">hover</span></div>
+        <div class="kit-cell"><button class="btn btn--primary btn--sm is-focus" type="button"><span>Сохранить</span></button><span class="kit-cap">focus</span></div>
+        <div class="kit-cell"><button class="btn btn--primary btn--sm is-pressed" type="button"><span>Сохранить</span></button><span class="kit-cap">active · scale .97</span></div>
+        <div class="kit-cell"><button class="btn btn--primary btn--sm" type="button" disabled><span>Сохранить</span></button><span class="kit-cap">disabled</span></div>
+        <div class="kit-cell"><button class="btn btn--primary btn--sm" type="button" data-loading="true" aria-label="Сохранение"><span>Сохранить</span><span class="spinner" aria-hidden="true"></span></button><span class="kit-cap">loading</span></div>
+        <div class="kit-cell"><button class="btn btn--outline btn--sm is-hover" type="button"><span>Выгрузить</span></button><span class="kit-cap">outline hover</span></div>
+        <div class="kit-cell"><button class="btn btn--danger btn--sm is-hover" type="button"><span>Удалить</span></button><span class="kit-cap">danger hover</span></div>
+      </div>
+    </div>
+    <div class="kit-block">
+      <div class="kit-sub">32 px (btn--xs) и кнопки-иконки</div>
+      <div class="kit-row kit-row--center">
+        <button class="btn btn--primary btn--xs" type="button"><span>Применить</span></button>
+        <button class="btn btn--outline btn--xs" type="button"><svg class="ico" aria-hidden="true"><use href="#i-refresh"/></svg><span>Обновить</span></button>
+        <button class="btn btn--ghost btn--xs" type="button"><span>Сбросить</span></button>
+        <span style="width:24px"></span>
+        <button class="icon-btn" type="button" aria-label="Уведомления, 3 новых" data-tip="Уведомления"><svg class="ico" aria-hidden="true"><use href="#i-bell"/></svg><span class="badge">3</span></button>
+        <button class="icon-btn is-hover" type="button" aria-label="Ещё" data-tip="Ещё действия"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button>
+        <button class="icon-btn" type="button" aria-label="Обновить" data-tip="Обновить данные"><svg class="ico" aria-hidden="true"><use href="#i-refresh"/></svg></button>
+        <button class="icon-btn icon-btn--sm" type="button" aria-label="Закрыть"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </div>
+      <p class="kit-note">Кнопка без подписи всегда получает aria-label и подсказку. Подсказка появляется через 500 мс, у соседних кнопок — сразу.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       04. Статусы
+       ========================================================= -->
+  <section class="kit-section" id="status" aria-labelledby="h-st">
+    <div class="kit-head">
+      <div><span class="kit-num">04</span><h2 id="h-st">Статусы и живые данные</h2>
+        <p>Условные знаки вместо цветных плашек. Набор статусов — из словаря боевого приложения; каждому назначен один из пяти знаков по смыслу, а не по тексту.</p></div>
+      <span class="kit-pv">PrimeVue: Tag</span>
+    </div>
+    <div class="kit-grid-2">
+      <div class="kit-block">
+        <div class="kit-sub">Состояние ТО</div>
+        <div class="kit-row">
+          <span class="st st--ok">В сети</span><span class="st st--off">Не в сети</span><span class="st st--warn">Нестабильное подключение</span>
+          <span class="st st--warn">Не настроен терминал</span><span class="st st--err">Отсутствует лицензия</span><span class="st st--off">Сервис отключен</span><span class="st st--warn">Чужая система управления</span>
+        </div>
+      </div>
+      <div class="kit-block">
+        <div class="kit-sub">ТРК</div>
+        <div class="kit-row">
+          <span class="st st--ok">Свободна</span><span class="st st--info">Работает</span><span class="st st--info">Пистолет снят</span><span class="st st--warn">Остановлена</span>
+          <span class="st st--err">Нет ответа</span><span class="st st--err">Заблокирована</span><span class="st st--off">Отключена</span>
+        </div>
+      </div>
+      <div class="kit-block">
+        <div class="kit-sub">Заявки мобильных сервисов</div>
+        <div class="kit-row"><span class="st st--ok">Завершена</span><span class="st st--info">Идёт налив</span><span class="st st--off">Без пролива</span><span class="st st--err">Проблемная</span></div>
+      </div>
+      <div class="kit-block">
+        <div class="kit-sub">Договоры и ключи</div>
+        <div class="kit-row"><span class="st st--off">Создан</span><span class="st st--warn">Требуется подпись</span><span class="st st--info">Отправлен в ЭДО</span><span class="st st--ok">Подписан</span><span class="st st--err">Заблокирован</span><span class="st st--warn">Требует активации</span></div>
+      </div>
+    </div>
+    <div class="kit-block">
+      <div class="kit-sub">Индикатор свежести данных</div>
+      <div class="kit-row kit-row--center">
+        <span class="live"><span class="live__dot"></span>Обновлено 14:05:32</span>
+        <span class="live live--stale"><span class="live__dot"></span>Данные могут быть неактуальны</span>
+        <span class="live live--off"><span class="live__dot"></span>Нет соединения</span>
+        <span class="st st--plain st--ok" style="font-weight:600">без рамки — внутри текста</span>
+      </div>
+      <p class="kit-note">Пульс — единственная постоянная анимация в кабинете: он говорит, что данные идут. При потере соединения пульс останавливается и меняет знак. Изменившаяся ячейка таблицы коротко подсвечивается (.is-changed).</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       05. Поля
+       ========================================================= -->
+  <section class="kit-section" id="forms" aria-labelledby="h-forms">
+    <div class="kit-head">
+      <div><span class="kit-num">05</span><h2 id="h-forms">Поля форм</h2>
+        <p>В плотных формах подпись стоит над полем — так форму быстрее читать и сравнивать. Плавающая подпись (.field из designs/) остаётся для экрана входа. Ошибка появляется при уходе с поля, текстом под ним; при отправке форма фокусирует первое ошибочное поле и оно «вздрагивает».</p></div>
+      <span class="kit-pv">PrimeVue: InputText · Textarea · FloatLabel · Message</span>
+    </div>
+
+    <div class="kit-block">
+      <div class="kit-sub">Текстовое поле: состояния</div>
+      <div class="kit-grid-3">
+        <div class="fld"><label class="fld__label" for="f1">Название ТО <span class="fld__req" aria-hidden="true">*</span></label><input class="in" id="f1" placeholder="Например, АЗС № 14" required></div>
+        <div class="fld"><label class="fld__label" for="f2">Hover</label><input class="in is-hover" id="f2" value="АЗС № 14"></div>
+        <div class="fld"><label class="fld__label" for="f3">Focus</label><input class="in is-focus" id="f3" value="АЗС № 14"></div>
+        <div class="fld is-invalid"><label class="fld__label" for="f4">Код ТО <span class="fld__req" aria-hidden="true">*</span></label><input class="in in--mono" id="f4" value="ТО-01" aria-invalid="true" aria-describedby="f4e"><span class="fld__err" id="f4e">Код состоит из 4 цифр после «ТО-»</span></div>
+        <div class="fld"><label class="fld__label" for="f5">Недоступно</label><input class="in" id="f5" value="Определяется автоматически" disabled></div>
+        <div class="fld"><label class="fld__label" for="f6">С подсказкой и иконкой</label><span class="in-wrap"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><input class="in" id="f6" placeholder="ИНН или название" aria-describedby="f6h"></span><span class="fld__hint" id="f6h">Ищет по справочнику юрлиц</span></div>
+      </div>
+    </div>
+
+    <div class="kit-grid-2">
+      <div class="kit-block">
+        <div class="kit-sub">Select <span class="kit-pv">Select</span></div>
+        <div class="fld">
+          <span class="fld__label" id="sel1-l">Организация</span>
+          <div class="sel" data-select data-placeholder="Выберите организацию">
+            <button class="sel__btn" type="button" data-pop="lb-org" aria-expanded="false" aria-controls="lb-org" aria-labelledby="sel1-l"><span class="sel__value"></span><svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+            <div class="pop" id="lb-org">
+              <div class="opts__search"><input class="in" type="search" placeholder="Поиск" aria-label="Поиск организации"></div>
+              <div class="opts" role="listbox" aria-labelledby="sel1-l">
+                <div class="opt" role="option" data-value="1" aria-selected="true"><span class="opt__text">ООО «Демо-Ойл»</span></div>
+                <div class="opt" role="option" data-value="2" aria-selected="false"><span class="opt__text">ООО «Пример-Трейд»</span></div>
+                <div class="opt" role="option" data-value="3" aria-selected="false"><span class="opt__text">АО «Тестовая сеть»</span></div>
+                <div class="opt" role="option" data-value="4" aria-selected="false"><span class="opt__text">ИП Образцов</span></div>
+                <div class="opt" role="option" data-value="5" aria-selected="false" aria-disabled="true"><span class="opt__text">ООО «Архив» — отключена</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fld">
+          <span class="fld__label" id="sel-dis-l">Недоступно</span>
+          <div class="sel"><button class="sel__btn" type="button" disabled aria-labelledby="sel-dis-l"><span class="sel__value">Сначала выберите организацию</span><svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button></div>
+        </div>
+      </div>
+
+      <div class="kit-block">
+        <div class="kit-sub">Multiselect <span class="kit-pv">MultiSelect</span></div>
+        <div class="fld">
+          <span class="fld__label" id="ms1-l">Виды топлива</span>
+          <div class="sel" data-select data-multi data-placeholder="Все виды">
+            <button class="sel__btn" type="button" data-pop="lb-fuel" aria-expanded="false" aria-controls="lb-fuel" aria-labelledby="ms1-l"><span class="sel__value"></span><svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+            <div class="pop" id="lb-fuel">
+              <div class="opts__search"><input class="in" type="search" placeholder="Поиск" aria-label="Поиск вида топлива"></div>
+              <div class="opts" role="listbox" aria-labelledby="ms1-l">
+                <div class="opt" role="option" data-value="92" aria-selected="true"><span class="opt__text">АИ-92</span></div>
+                <div class="opt" role="option" data-value="95" aria-selected="true"><span class="opt__text">АИ-95</span></div>
+                <div class="opt" role="option" data-value="100" aria-selected="false"><span class="opt__text">АИ-100</span></div>
+                <div class="opt" role="option" data-value="dt" aria-selected="true"><span class="opt__text">ДТ</span></div>
+                <div class="opt" role="option" data-value="gas" aria-selected="false"><span class="opt__text">СУГ</span></div>
+              </div>
+              <div class="opts__foot"><button class="btn btn--ghost btn--xs" type="button" data-clear>Сбросить</button><button class="btn btn--ghost btn--xs" type="button" data-all>Выбрать все</button></div>
+            </div>
+          </div>
+        </div>
+        <div class="kit-cell"><span class="kit-cap">открытый список (статично)</span>
+          <div class="pop pop--static" style="width:300px"><div class="opts" role="listbox" aria-label="Пример">
+            <div class="opt" role="option" aria-selected="true">АИ-92<svg class="opt__check" aria-hidden="true"><use href="#i-check"/></svg></div>
+            <div class="opt is-active" role="option" aria-selected="false">АИ-100<svg class="opt__check" aria-hidden="true"><use href="#i-check"/></svg></div>
+            <div class="opt" role="option" aria-selected="false" aria-disabled="true">СУГ — нет на этой ТО</div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kit-grid-2">
+      <div class="kit-block">
+        <div class="kit-sub">Период <span class="kit-pv">DatePicker selectionMode="range"</span></div>
+        <div class="fld" style="max-width:320px">
+          <span class="fld__label" id="dp1-l">Период</span>
+          <div class="sel" data-datepicker>
+            <button class="sel__btn" type="button" data-pop="pop-dp1" aria-expanded="false" aria-controls="pop-dp1" aria-labelledby="dp1-l"><svg class="ico" aria-hidden="true" style="position:static;color:var(--text-muted)"><use href="#i-calendar"/></svg><span class="sel__value"></span><svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+            <div class="pop" id="pop-dp1" style="min-width:auto"><div class="dp"></div></div>
+          </div>
+        </div>
+        <div class="fld" style="max-width:240px">
+          <span class="fld__label" id="dp2-l">Одна дата</span>
+          <div class="sel" data-datepicker data-single>
+            <button class="sel__btn" type="button" data-pop="pop-dp2" aria-expanded="false" aria-controls="pop-dp2" aria-labelledby="dp2-l"><span class="sel__value"></span><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg></button>
+            <div class="pop" id="pop-dp2" style="min-width:auto"><div class="dp"></div></div>
+          </div>
+        </div>
+        <p class="kit-note">Готовые периоды слева — самые частые запросы в отчётах. Клавиатура: стрелки по дням, PageUp/PageDown — месяц, Enter — выбрать.</p>
+      </div>
+
+      <div class="kit-block">
+        <div class="kit-sub">Переключатель, радио, сегменты, чекбокс, число</div>
+        <div class="kit-row">
+          <label class="sw"><input type="checkbox" checked><span class="sw__track"></span>Сервис включён</label>
+          <label class="sw"><input type="checkbox"><span class="sw__track"></span>Уведомлять по почте</label>
+          <label class="sw"><input type="checkbox" disabled><span class="sw__track"></span>Недоступно</label>
+        </div>
+        <div class="kit-row" role="radiogroup" aria-label="Тип заявки">
+          <label class="radio"><input type="radio" name="ot" checked><span class="radio__dot"></span>На литры</label>
+          <label class="radio"><input type="radio" name="ot"><span class="radio__dot"></span>На сумму</label>
+          <label class="radio"><input type="radio" name="ot"><span class="radio__dot"></span>Полный бак</label>
+          <label class="radio"><input type="radio" name="ot" disabled><span class="radio__dot"></span>Недоступно</label>
+        </div>
+        <div class="kit-row kit-row--center">
+          <div class="seg" role="group" aria-label="Вид"><button class="seg__btn" type="button" aria-pressed="true"><svg class="ico" aria-hidden="true"><use href="#i-table"/></svg>Таблица</button><button class="seg__btn" type="button" aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#i-map"/></svg>Карта</button></div>
+          <label class="cb" aria-label="Выбрано"><input type="checkbox" checked><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label>
+          <label class="cb" aria-label="Частично"><input type="checkbox" class="js-indet"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label>
+          <label class="cb" aria-label="Не выбрано"><input type="checkbox"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label>
+        </div>
+        <div class="fld">
+          <label class="fld__label" for="num1">Квота, литров в месяц</label>
+          <div class="num"><button type="button" data-step="-1" aria-label="Уменьшить"><svg class="ico" aria-hidden="true"><use href="#i-minus"/></svg></button><input id="num1" type="number" value="500" min="0" max="100000" step="50"><button type="button" data-step="1" aria-label="Увеличить"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="kit-grid-2">
+      <div class="kit-block">
+        <div class="kit-sub">Загрузка файла <span class="kit-pv">FileUpload</span></div>
+        <label class="drop" data-drop data-files="files1" data-max-mb="200">
+          <input type="file" accept=".zip,.rar,.exe,.msi" multiple>
+          <svg class="drop__ico" aria-hidden="true"><use href="#i-file"/></svg>
+          <span class="drop__title">Перетащите файл обновления или <u>выберите на компьютере</u></span>
+          <span class="drop__hint">zip, rar, exe или msi, до 200 МБ</span>
+        </label>
+        <div class="files" id="files1">
+          <div class="file is-done"><span class="file__ext">zip</span><div style="min-width:0"><div class="file__name">snk-azs-4.12.0.zip</div><div class="file__meta"><span>48,2 МБ</span><span>Загружен</span></div><div class="bar"><i style="--p:1"></i></div></div><button type="button" class="icon-btn icon-btn--sm" aria-label="Убрать файл"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+          <div class="file"><span class="file__ext">msi</span><div style="min-width:0"><div class="file__name">snk-office-setup.msi</div><div class="file__meta"><span>112,0 МБ</span><span>Загрузка… 42%</span></div><div class="bar"><i style="--p:.42"></i></div></div><button type="button" class="icon-btn icon-btn--sm" aria-label="Отменить загрузку"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+          <div class="file is-error"><span class="file__ext">pdf</span><div style="min-width:0"><div class="file__name">readme.pdf</div><div class="file__meta"><span>1,1 МБ</span><span>Нужен файл .zip, .rar, .exe или .msi</span></div><div class="bar"><i style="--p:1"></i></div></div><button type="button" class="icon-btn icon-btn--sm" aria-label="Убрать файл"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+        </div>
+      </div>
+      <div class="kit-block">
+        <div class="kit-sub">Многострочное поле и плавающая подпись</div>
+        <div class="fld"><label class="fld__label" for="ta1">Комментарий</label><textarea class="in" id="ta1" placeholder="Что изменилось и почему" maxlength="500"></textarea><span class="fld__hint">До 500 символов</span></div>
+        <div class="field" style="max-width:420px"><input class="field__input" id="fl1" type="email" placeholder=" " autocomplete="username"><label class="field__label" for="fl1">Электронная почта</label></div>
+        <p class="kit-note">Плавающая подпись — компонент designs/ без изменений, только для экрана входа.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       06. Таблица
+       ========================================================= -->
+  <section class="kit-section" id="table" aria-labelledby="h-table">
+    <div class="kit-head">
+      <div><span class="kit-num">06</span><h2 id="h-table">Таблица данных</h2>
+        <p>Главный компонент кабинета. Поиск, сортировка, фильтр в заголовке, выбор строк с массовыми действиями, плотность, видимые колонки, раскрытие строки, липкие заголовок и первая колонка, пагинация. Числа — моноширинным с табличными цифрами и по правому краю.</p></div>
+      <span class="kit-pv">PrimeVue: DataTable · Paginator · ColumnToggle</span>
+    </div>
+
+    <div class="dt" data-table data-page-size="8" style="--dt-max-h:520px">
+      <div class="dt__bar">
+        <label class="in-wrap"><span class="sr-only">Поиск по таблице</span><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><input class="in" type="search" placeholder="Название, код или адрес" data-dt-search></label>
+        <div class="sel" data-select data-multi data-placeholder="Все состояния" style="width:220px">
+          <button class="sel__btn" type="button" data-pop="lb-dt-st" aria-expanded="false" aria-controls="lb-dt-st" aria-label="Фильтр по состоянию"><span class="sel__value"></span><svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+          <div class="pop" id="lb-dt-st" style="min-width:240px"><div class="opts" role="listbox" aria-label="Состояние">
+            <div class="opt" role="option" data-value="ok" aria-selected="false"><span class="st st--plain st--ok opt__text">В сети</span></div>
+            <div class="opt" role="option" data-value="warn" aria-selected="false"><span class="st st--plain st--warn opt__text">Нестабильно</span></div>
+            <div class="opt" role="option" data-value="off" aria-selected="false"><span class="st st--plain st--off opt__text">Не в сети</span></div>
+            <div class="opt" role="option" data-value="err" aria-selected="false"><span class="st st--plain st--err opt__text">Нет лицензии</span></div>
+          </div></div>
+        </div>
+        <span class="dt__spacer"></span>
+        <div class="seg" role="group" aria-label="Плотность строк" data-dt-density>
+          <button class="seg__btn" type="button" aria-pressed="true" data-density="normal">Обычно</button>
+          <button class="seg__btn" type="button" aria-pressed="false" data-density="compact">Плотно</button>
+        </div>
+        <div style="position:relative" data-dt-cols>
+          <button class="btn btn--outline btn--xs" type="button" data-pop="pop-cols" aria-expanded="false" aria-controls="pop-cols"><svg class="ico" aria-hidden="true"><use href="#i-columns"/></svg><span>Колонки</span></button>
+          <div class="pop pop--right" id="pop-cols" style="min-width:220px"><div class="opts" style="display:grid;gap:4px;padding:10px 12px" role="group" aria-label="Видимые колонки">
+            <label class="check" style="font-size:14px;color:var(--text)"><input type="checkbox" data-col="3" checked><span class="check__box"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>Организация</label>
+            <label class="check" style="font-size:14px;color:var(--text)"><input type="checkbox" data-col="5" checked><span class="check__box"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>Версия ПО</label>
+            <label class="check" style="font-size:14px;color:var(--text)"><input type="checkbox" data-col="6" checked><span class="check__box"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>Продажи за смену</label>
+            <label class="check" style="font-size:14px;color:var(--text)"><input type="checkbox" data-col="7" checked><span class="check__box"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>На связи</label>
+          </div></div>
+        </div>
+        <button class="btn btn--outline btn--xs" type="button"><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg><span>Выгрузить</span></button>
+      </div>
+      <div class="dt__bulk" hidden>
+        <span class="mono" data-dt-count>Выбрано: 0</span>
+        <button class="btn btn--outline btn--xs" type="button" data-demo-toast="ok|Команда отправлена|Точки получат её при следующем подключении"><svg class="ico" aria-hidden="true"><use href="#i-refresh"/></svg><span>Перезапустить сервис</span></button>
+        <button class="btn btn--danger btn--xs" type="button" data-dialog="dlg-confirm"><span>Отключить</span></button>
+        <button class="btn btn--ghost btn--xs" type="button" data-dt-clear style="margin-left:auto">Снять выбор</button>
+      </div>
+      <div class="dt__scroll">
+        <table class="table table--pin">
+          <caption class="sr-only">Точки обслуживания (демо-данные)</caption>
+          <thead><tr>
+            <th class="col-check" scope="col"><label class="cb"><input type="checkbox" aria-label="Выбрать все на странице"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></th>
+            <th class="col-expand" scope="col"><span class="sr-only">Подробнее</span></th>
+            <th scope="col" data-sort="text">Точка обслуживания</th>
+            <th scope="col" data-sort="text">Организация</th>
+            <th scope="col" data-sort="text">Состояние <button class="th-filter is-on" type="button" aria-label="Фильтр по состоянию включён" data-tip="Фильтр: 2 значения"><svg aria-hidden="true"><use href="#i-filter"/></svg></button></th>
+            <th scope="col" data-sort="text">Версия ПО</th>
+            <th scope="col" class="num-cell" data-sort="num">Продажи за смену, ₽</th>
+            <th scope="col" data-sort="num">На связи</th>
+            <th class="col-actions" scope="col"><span class="sr-only">Действия</span></th>
+          </tr></thead>
+          <tbody id="demo-rows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="kit-grid-2">
+      <div class="kit-block">
+        <div class="kit-sub">Загрузка <span class="kit-pv">Skeleton</span></div>
+        <div class="dt" aria-busy="true" aria-label="Загрузка данных">
+          <div class="dt__scroll"><table class="table"><caption class="sr-only">Пример таблицы во время загрузки</caption><thead><tr><th>Точка обслуживания</th><th>Состояние</th><th class="num-cell">Продажи, ₽</th></tr></thead>
+            <tbody>
+              <tr><td><span class="skel" style="width:160px"></span></td><td><span class="skel skel--pill"></span></td><td><span class="skel" style="width:80px;margin-left:auto"></span></td></tr>
+              <tr><td><span class="skel" style="width:120px"></span></td><td><span class="skel skel--pill"></span></td><td><span class="skel" style="width:64px;margin-left:auto"></span></td></tr>
+              <tr><td><span class="skel" style="width:180px"></span></td><td><span class="skel skel--pill"></span></td><td><span class="skel" style="width:90px;margin-left:auto"></span></td></tr>
+            </tbody></table></div>
+        </div>
+      </div>
+      <div class="kit-block">
+        <div class="kit-sub">Пусто</div>
+        <div class="dt">
+          <div class="empty">
+            <svg class="empty__art" viewBox="0 0 176 112" aria-hidden="true">
+              <rect class="bp-soft" x="8" y="8" width="160" height="96" rx="4"/>
+              <path class="bp" d="M28 30h120M28 50h120M28 70h120M28 90h72"/>
+              <path class="bp-soft" d="M60 22v76M112 22v76"/>
+              <circle class="bp-accent" cx="136" cy="84" r="10"/><path class="bp-accent" d="M143 91l9 9"/>
+            </svg>
+            <div class="empty__title">Договоров пока нет</div>
+            <p class="empty__text">Добавьте первый договор с организацией — после подписания к нему можно будет привязать спецификации и лицензии.</p>
+            <div class="empty__actions"><button class="btn btn--primary btn--sm" type="button"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg><span>Добавить договор</span></button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       07. Дерево
+       ========================================================= -->
+  <section class="kit-section" id="tree" aria-labelledby="h-tree">
+    <div class="kit-head">
+      <div><span class="kit-num">07</span><h2 id="h-tree">Дерево привилегий</h2>
+        <p>Для привилегий пользователя и иерархий. Отметка родителя отмечает всех потомков, частично отмеченный узел показывает прочерк. Поиск оставляет совпадения и их родителей. Клавиатура: стрелки вверх/вниз, вправо/влево — раскрыть/свернуть, пробел — отметить.</p></div>
+      <span class="kit-pv">PrimeVue: TreeTable selectionMode="checkbox"</span>
+    </div>
+    <div class="dt" data-tree-wrap>
+      <div class="dt__bar">
+        <label class="in-wrap"><span class="sr-only">Поиск привилегии</span><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><input class="in" type="search" placeholder="Найти привилегию" data-tree-search></label>
+        <span class="dt__spacer"></span>
+        <span class="mono muted" style="font-size:12px">Пользователь: И. Петров · роль «Пользователь»</span>
+      </div>
+      <div class="tree" data-tree role="tree" aria-label="Привилегии пользователя">
+        <div class="tree__row" role="treeitem" aria-level="1" aria-expanded="true"><div class="tree__main"><button class="tree__twist" type="button" tabindex="-1" aria-hidden="true"><svg><use href="#i-chevron-right"/></svg></button><label class="cb"><input type="checkbox" tabindex="-1" aria-label="СНК-АЗС"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label><span class="tree__name">СНК-АЗС</span></div><span class="tree__meta">5 привилегий</span></div>
+        <div class="tree__row" role="treeitem" aria-level="2"><div class="tree__main"><span class="tree__leaf"></span><label class="cb"><input type="checkbox" tabindex="-1" checked aria-label="Мониторинг ТО"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label><span class="tree__name">Мониторинг ТО</span></div><span class="tree__meta">просмотр</span></div>
+        <div class="tree__row" role="treeitem" aria-level="2" aria-expanded="true"><div class="tree__main"><button class="tree__twist" type="button" tabindex="-1" aria-hidden="true"><svg><use href="#i-chevron-right"/></svg></button><label class="cb"><input type="checkbox" tabindex="-1" aria-label="Информация по ТО"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label><span class="tree__name">Информация по ТО</span></div><span class="tree__meta">3</span></div>
+        <div class="tree__row" role="treeitem" aria-level="3"><div class="tree__main"><span class="tree__leaf"></span><label class="cb"><input type="checkbox" tabindex="-1" checked aria-label="Просмотр транзакций"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label><span class="tree__name">Просмотр транзакций</span></div><span class="tree__meta">просмотр</span></div>
+        <div class="tree__row" role="treeitem" aria-level="3"><div class="tree__main"><span class="tree__leaf"></span><label class="cb"><input type="checkbox" tabindex="-1" aria-label="Отправка команд на ТО"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label><span class="tree__name">Отправка команд на ТО</span></div><span class="tree__meta">изменение</span></div>
+        <div class="tree__row" role="treeitem" aria-level="3"><div class="tree__main"><span class="tree__leaf"></span><label class="cb"><input type="checkbox" tabindex="-1" aria-label="Версии файлов"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label><span class="tree__name">Версии файлов</span></div><span class="tree__meta">просмотр</span></div>
+        <div class="tree__row" role="treeitem" aria-level="2"><div class="tree__main"><span class="tree__leaf"></span><label class="cb"><input type="checkbox" tabindex="-1" aria-label="Контроль заявок"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label><span class="tree__name">Контроль заявок</span></div><span class="tree__meta">изменение</span></div>
+        <div class="tree__row" role="treeitem" aria-level="1" aria-expanded="false"><div class="tree__main"><button class="tree__twist" type="button" tabindex="-1" aria-hidden="true"><svg><use href="#i-chevron-right"/></svg></button><label class="cb"><input type="checkbox" tabindex="-1" aria-label="СНК-Офис"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label><span class="tree__name">СНК-Офис</span></div><span class="tree__meta">3 привилегии</span></div>
+        <div class="tree__row" role="treeitem" aria-level="2"><div class="tree__main"><span class="tree__leaf"></span><label class="cb"><input type="checkbox" tabindex="-1" aria-label="Справочники"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label><span class="tree__name">Справочники</span></div><span class="tree__meta">изменение</span></div>
+        <div class="tree__row" role="treeitem" aria-level="2"><div class="tree__main"><span class="tree__leaf"></span><label class="cb"><input type="checkbox" tabindex="-1" aria-label="Управление складом"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label><span class="tree__name">Управление складом</span></div><span class="tree__meta">изменение</span></div>
+        <div class="tree__row" role="treeitem" aria-level="2"><div class="tree__main"><span class="tree__leaf"></span><label class="cb"><input type="checkbox" tabindex="-1" aria-label="Отчёты"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label><span class="tree__name">Отчёты</span></div><span class="tree__meta">просмотр</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       08. Оверлеи
+       ========================================================= -->
+  <section class="kit-section" id="overlays" aria-labelledby="h-ov">
+    <div class="kit-head">
+      <div><span class="kit-num">08</span><h2 id="h-ov">Оверлеи</h2>
+        <p>Модалка — для короткой формы, drawer — чтобы посмотреть детали, не теряя список. Подтверждение перечисляет последствия до кнопки. Тосты входят и уходят справа снизу, таймер останавливается при наведении. Модалки и drawer построены на &lt;dialog&gt;: фокус заперт внутри, Esc закрывает, фокус возвращается на кнопку.</p></div>
+      <span class="kit-pv">PrimeVue: Dialog · ConfirmDialog · Drawer · Toast · Tooltip · Menu · Popover</span>
+    </div>
+
+    <div class="kit-row kit-row--center">
+      <button class="btn btn--primary btn--sm" type="button" data-dialog="dlg-form"><span>Модалка с формой</span></button>
+      <button class="btn btn--danger btn--sm" type="button" data-dialog="dlg-confirm"><span>Подтверждение</span></button>
+      <button class="btn btn--outline btn--sm" type="button" data-dialog="drawer-req"><span>Drawer с деталями</span></button>
+      <button class="btn btn--outline btn--sm" type="button" data-demo-toast="ok|Спецификация сохранена">Тост: успех</button>
+      <button class="btn btn--outline btn--sm" type="button" data-demo-toast="err|Не удалось сохранить|Сервер недоступен. Изменения остались в форме — попробуйте ещё раз.">Тост: ошибка</button>
+      <button class="btn btn--outline btn--sm" type="button" data-demo-toast="ok|Товар удалён" data-undo="1">Тост с отменой</button>
+    </div>
+
+    <div class="kit-grid-3">
+      <div class="kit-block">
+        <span class="kit-cap">тосты (статично)</span>
+        <div class="toast toast--ok toast--static"><svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg><div><div class="toast__title">Изменения сохранены</div></div><button type="button" class="icon-btn icon-btn--sm" aria-label="Закрыть"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+        <div class="toast toast--err toast--static"><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg><div><div class="toast__title">Не удалось сохранить</div><div class="toast__text">Сервер недоступен. Изменения остались в форме — попробуйте ещё раз.</div></div><button type="button" class="icon-btn icon-btn--sm" aria-label="Закрыть"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+        <div class="toast toast--warn toast--static"><svg class="ico" aria-hidden="true"><use href="#i-warn"/></svg><div><div class="toast__title">Ключ истекает через 5 дней</div><button type="button" class="toast__action">Продлить</button></div><button type="button" class="icon-btn icon-btn--sm" aria-label="Закрыть"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+        <div class="toast toast--info toast--static"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg><div><div class="toast__title">Товар удалён</div><button type="button" class="toast__action">Вернуть</button></div><button type="button" class="icon-btn icon-btn--sm" aria-label="Закрыть"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+      </div>
+      <div class="kit-block">
+        <span class="kit-cap">меню действий строки</span>
+        <div class="pop pop--static" style="width:240px"><div class="opts" role="menu" aria-label="Действия">
+          <button class="opt" role="menuitem" type="button"><svg class="ico" aria-hidden="true"><use href="#i-edit"/></svg>Редактировать</button>
+          <button class="opt" role="menuitem" type="button"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg>Копировать код<span class="kbd">C</span></button>
+          <button class="opt" role="menuitem" type="button"><svg class="ico" aria-hidden="true"><use href="#i-refresh"/></svg>Перезапустить сервис</button>
+          <div class="opt-sep" role="separator"></div>
+          <button class="opt opt--danger" role="menuitem" type="button"><svg class="ico" aria-hidden="true"><use href="#i-trash"/></svg>Удалить</button>
+        </div></div>
+        <span class="kit-cap">подсказка</span>
+        <span class="tip tip--static">Включает справочники: Точки обслуживания, Поставщики</span>
+      </div>
+      <div class="kit-block">
+        <span class="kit-cap">панель уведомлений</span>
+        <div class="pop pop--static notif" style="width:100%">
+          <div class="notif__head"><b>Уведомления</b><span class="mono muted" style="font-size:12px">2 новых</span><button class="btn btn--ghost btn--xs" type="button">Прочитать все</button></div>
+          <div class="notif__list">
+            <div class="notif__item is-unread"><div><p>ТО-0142 не выходит на связь больше 15 минут</p><time>Сегодня, 14:05</time></div></div>
+            <div class="notif__item is-unread"><div><p>Доступно обновление СНК-АЗС 4.12</p><time>Сегодня, 11:30</time></div></div>
+            <div class="notif__item"><div><p>Договор № 18-Д подписан</p><time>Вчера, 17:42</time></div></div>
+          </div>
+          <div class="notif__foot"><a class="link-more" href="#overlays">Все уведомления</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       09. Данные
+       ========================================================= -->
+  <section class="kit-section" id="data" aria-labelledby="h-data">
+    <div class="kit-head">
+      <div><span class="kit-num">09</span><h2 id="h-data">KPI и графики</h2>
+        <p>Правила dataviz: одна ось, тонкие метки, подпись только у главного значения, легенда при двух и более сериях, подсказка при наведении и таблица-дубль под каждым графиком. Цифры в плитке — пропорциональные, в таблицах и на осях — табличные.</p></div>
+      <span class="kit-pv">PrimeVue: Card · Chart (замена на SVG из js/charts.js)</span>
+    </div>
+
+    <div class="kpis">
+      <button class="kpi is-active" type="button" aria-pressed="true"><span class="kpi__label">Заявки за сутки</span><span class="kpi__value">1 284</span><span class="kpi__foot"><span class="delta delta--good">▲ 6%</span>к прошлой неделе<svg class="spark" data-spark="820,910,870,1010,990,1080,1120,1060,1190,1210,1170,1284" aria-hidden="true"></svg></span></button>
+      <button class="kpi" type="button" aria-pressed="false"><span class="kpi__label">Проблемные</span><span class="kpi__value">17</span><span class="kpi__foot"><span class="delta delta--bad">▲ 3</span>к вчера<svg class="spark" data-spark="9,12,8,11,14,10,13,12,15,11,14,17" aria-hidden="true"></svg></span></button>
+      <button class="kpi" type="button" aria-pressed="false"><span class="kpi__label">Средний налив</span><span class="kpi__value">38,6<small>л</small></span><span class="kpi__foot">за 30 дней</span></button>
+      <div class="kpi"><span class="kpi__label">Выручка за смену</span><span class="kpi__value">412<small>тыс ₽</small></span><span class="kpi__foot"><span class="skel" style="width:120px;height:10px"></span></span></div>
+    </div>
+
+    <div class="kit-grid-2">
+      <div class="panel">
+        <div class="panel__head"><h3 class="panel__title">Заявки по часам</h3><span class="live"><span class="live__dot"></span>сегодня</span></div>
+        <div class="panel__body"><div id="ch-hours"></div></div>
+      </div>
+      <div class="panel">
+        <div class="panel__head"><h3 class="panel__title">Заявки по статусу</h3><span class="mono muted" style="margin-left:auto;font-size:12px">30.09.2026</span></div>
+        <div class="panel__body"><div id="ch-status"></div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel__head"><h3 class="panel__title">Динамика реализации, литры</h3>
+        <div class="panel__tools"><div class="seg" role="group" aria-label="Период"><button class="seg__btn" type="button" aria-pressed="false">7 дней</button><button class="seg__btn" type="button" aria-pressed="true">30 дней</button></div></div></div>
+      <div class="panel__body"><div id="ch-line"></div></div>
+    </div>
+    <p class="kit-note">Все цифры в этом разделе — демонстрационные.</p>
+  </section>
+
+  <!-- =========================================================
+       10. Навигация внутри страницы
+       ========================================================= -->
+  <section class="kit-section" id="nav" aria-labelledby="h-nav">
+    <div class="kit-head">
+      <div><span class="kit-num">10</span><h2 id="h-nav">Вкладки, аккордеон, степпер</h2>
+        <p>Вкладки — для разделов одной карточки (ТО, смена, организация); индикатор перетекает к выбранной. Степпер — только для настоящей последовательности, например активации ключа.</p></div>
+      <span class="kit-pv">PrimeVue: Tabs · Accordion · Stepper</span>
+    </div>
+
+    <div class="kit-block">
+      <div class="tabs" role="tablist" aria-label="Карточка ТО">
+        <button class="tab" role="tab" id="t1" aria-controls="p1" aria-selected="true" type="button">Информация</button>
+        <button class="tab" role="tab" id="t2" aria-controls="p2" aria-selected="false" type="button">Колонки и пистолеты</button>
+        <button class="tab" role="tab" id="t3" aria-controls="p3" aria-selected="false" type="button">Операции <span class="tab__count">248</span></button>
+        <button class="tab" role="tab" id="t4" aria-controls="p4" aria-selected="false" type="button">События <span class="tab__count">3</span></button>
+        <button class="tab" role="tab" id="t5" aria-controls="p5" aria-selected="false" type="button">Версии файлов</button>
+      </div>
+      <div class="tabpanel" role="tabpanel" id="p1" aria-labelledby="t1"><dl class="row-detail__inner" style="padding:0"><div class="kv"><dt>Код</dt><dd class="mono">ТО-0142</dd></div><div class="kv"><dt>Организация</dt><dd>ООО «Демо-Ойл»</dd></div><div class="kv"><dt>Версия СНК-АЗС</dt><dd class="mono">4.11.3</dd></div><div class="kv"><dt>Последний сеанс</dt><dd class="mono">30.09.2026 14:05</dd></div></dl></div>
+      <div class="tabpanel" role="tabpanel" id="p2" aria-labelledby="t2" hidden><p class="muted">Схема ТРК — на экране «Информация по ТО».</p></div>
+      <div class="tabpanel" role="tabpanel" id="p3" aria-labelledby="t3" hidden><p class="muted">Таблица операций.</p></div>
+      <div class="tabpanel" role="tabpanel" id="p4" aria-labelledby="t4" hidden><p class="muted">Лента событий.</p></div>
+      <div class="tabpanel" role="tabpanel" id="p5" aria-labelledby="t5" hidden><p class="muted">Версии файлов.</p></div>
+    </div>
+
+    <div class="kit-grid-2">
+      <div class="kit-block">
+        <div class="kit-sub">Аккордеон</div>
+        <div>
+          <details class="acc" open><summary>Реквизиты организации<svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="acc__body"><dl class="row-detail__inner" style="padding:0"><div class="kv"><dt>ИНН</dt><dd class="mono">0000000000</dd></div><div class="kv"><dt>КПП</dt><dd class="mono">000000000</dd></div></dl></div></details>
+          <details class="acc"><summary>Контактные лица<svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="acc__body muted">Список контактов.</div></details>
+          <details class="acc"><summary>Настройки обмена<svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="acc__body muted">Параметры.</div></details>
+        </div>
+      </div>
+      <div class="kit-block" data-stepper>
+        <div class="kit-sub">Степпер: активация ключа</div>
+        <ol class="stepper" aria-label="Шаги активации">
+          <li class="stepper__item"><span class="stepper__node">1</span><span class="stepper__label">Ключ</span></li>
+          <li class="stepper__item"><span class="stepper__node">2</span><span class="stepper__label">Точка обслуживания</span></li>
+          <li class="stepper__item"><span class="stepper__node">3</span><span class="stepper__label">Проверка</span></li>
+        </ol>
+        <div data-step-panel><div class="fld"><label class="fld__label" for="k1">Номер Hasp-ключа <span class="fld__req" aria-hidden="true">*</span></label><input class="in in--mono" id="k1" required pattern="[0-9]{6,12}" data-err="Номер ключа — от 6 до 12 цифр" placeholder="000000000"><span class="fld__err"></span></div></div>
+        <div data-step-panel hidden><div class="fld"><label class="fld__label" for="k2">Код ТО <span class="fld__req" aria-hidden="true">*</span></label><input class="in in--mono" id="k2" required placeholder="ТО-0000"><span class="fld__err"></span></div></div>
+        <div data-step-panel hidden><div class="consequences"><span class="consequences__title">После активации</span><ul><li>Ключ будет привязан к выбранной ТО</li><li>Лицензия начнёт действовать с сегодняшнего дня</li></ul></div></div>
+        <div class="kit-row">
+          <button class="btn btn--ghost btn--sm" type="button" data-step-prev>Назад</button>
+          <button class="btn btn--primary btn--sm" type="button" data-step-next><span>Далее</span></button>
+          <button class="btn btn--primary btn--sm" type="button" data-step-finish data-demo-toast="ok|Ключ активирован|Лицензия действует с 30.09.2026" hidden><span>Активировать ключ</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       11. Состояния
+       ========================================================= -->
+  <section class="kit-section" id="states" aria-labelledby="h-states">
+    <div class="kit-head">
+      <div><span class="kit-num">11</span><h2 id="h-states">Баннеры и состояния экрана</h2>
+        <p>Сообщения из словаря боевого приложения переписаны так, чтобы сказать, что случилось и что делать. Ошибки не извиняются и не бывают расплывчатыми.</p></div>
+      <span class="kit-pv">PrimeVue: Message · Skeleton</span>
+    </div>
+    <div class="kit-block">
+      <div class="banner banner--info" role="status"><svg class="ico" aria-hidden="true"><use href="#i-update"/></svg><div class="banner__text">Вышла новая версия кабинета<small>Обновите страницу, чтобы получить исправления. Несохранённые формы сохраните заранее.</small></div><button class="btn btn--outline btn--xs" type="button"><span>Обновить страницу</span></button></div>
+      <div class="banner banner--warn" role="status"><svg class="ico" aria-hidden="true"><use href="#i-wifi-off"/></svg><div class="banner__text">Живые данные не приходят<small>Не удалось подключиться по WebSocket. Статусы ТО обновляются только при перезагрузке страницы.</small></div><button class="btn btn--ghost btn--xs" type="button"><span>Подключиться снова</span></button></div>
+      <div class="banner banner--warn" role="status"><svg class="ico" aria-hidden="true"><use href="#i-warn"/></svg><div class="banner__text">Не удалось обновить данные<small>Показаны данные на 14:02. Они могут быть неактуальны.</small></div></div>
+    </div>
+    <div class="kit-grid-2">
+      <div class="dt">
+        <div class="empty">
+          <svg class="empty__art" viewBox="0 0 176 112" aria-hidden="true">
+            <path class="bp" d="M20 92h136"/><rect class="bp" x="36" y="40" width="32" height="52" rx="2"/><rect class="bp" x="108" y="28" width="32" height="64" rx="2"/>
+            <path class="bp-soft" d="M68 60h40M52 40V20h72v8"/><path class="bp-accent" d="M80 52l16 16M96 52L80 68"/>
+          </svg>
+          <div class="empty__title">Сервер не отвечает</div>
+          <p class="empty__text">Данные раздела сейчас недоступны. Попробуйте через минуту; если ошибка повторится — сообщите в техподдержку, указав код ниже.</p>
+          <div class="empty__actions"><button class="btn btn--primary btn--sm" type="button"><svg class="ico" aria-hidden="true"><use href="#i-refresh"/></svg><span>Повторить</span></button><a class="btn btn--ghost btn--sm" href="tel:88002500534">8 800 250-05-34</a></div>
+          <span class="empty__code">код: 503 · 30.09.2026 14:05</span>
+        </div>
+      </div>
+      <div class="dt">
+        <div class="empty">
+          <svg class="empty__art" viewBox="0 0 176 112" aria-hidden="true">
+            <rect class="bp-soft" x="8" y="8" width="160" height="96" rx="4"/><path class="bp" d="M88 30v24M76 42h24"/><circle class="bp" cx="88" cy="42" r="20"/><path class="bp-soft" d="M40 84h96"/>
+          </svg>
+          <div class="empty__title">Нет доступа к разделу</div>
+          <p class="empty__text">У вашей учётной записи нет привилегии «Управление складом». Её выдаёт администратор организации.</p>
+          <div class="empty__actions"><a class="btn btn--outline btn--sm" href="#states"><span>На главную</span></a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       12. PrimeVue
+       ========================================================= -->
+  <section class="kit-section" id="primevue" aria-labelledby="h-pv">
+    <div class="kit-head">
+      <div><span class="kit-num">12</span><h2 id="h-pv">Соответствие PrimeVue</h2>
+        <p>Для переноса в боевое приложение: какой компонент PrimeVue переоформить под каждый элемент. Подробная спецификация — в итоге работы (design:design-handoff).</p></div>
+    </div>
+    <div class="dt"><div class="dt__scroll"><table class="table">
+      <thead><tr><th>Компонент</th><th>Класс в прототипе</th><th>PrimeVue</th><th>Заметка</th></tr></thead>
+      <tbody>
+        <tr><td class="cell-main">Сайдбар</td><td class="mono">.sb</td><td class="mono">PanelMenu</td><td class="wrap">Режим «только иконки» — через pt-свойства и tooltip</td></tr>
+        <tr><td class="cell-main">Хлебные крошки</td><td class="mono">.crumbs</td><td class="mono">Breadcrumb</td><td class="wrap">Моноширинный шрифт</td></tr>
+        <tr><td class="cell-main">Кнопки</td><td class="mono">.btn--sm/--xs, .icon-btn</td><td class="mono">Button</td><td class="wrap">rounded, size small; icon-only с aria-label</td></tr>
+        <tr><td class="cell-main">Счётчик</td><td class="mono">.badge</td><td class="mono">OverlayBadge</td><td class="wrap"></td></tr>
+        <tr><td class="cell-main">Статус</td><td class="mono">.st--*</td><td class="mono">Tag</td><td class="wrap">Знак через ::before, один компонент StatusTag по ключу статуса</td></tr>
+        <tr><td class="cell-main">Поле</td><td class="mono">.fld + .in</td><td class="mono">InputText, Textarea, Message</td><td class="wrap">Подпись над полем; FloatLabel только на входе</td></tr>
+        <tr><td class="cell-main">Select / multiselect</td><td class="mono">.sel[data-select]</td><td class="mono">Select, MultiSelect</td><td class="wrap">filter, display="chip", maxSelectedLabels=2</td></tr>
+        <tr><td class="cell-main">Период</td><td class="mono">[data-datepicker]</td><td class="mono">DatePicker</td><td class="wrap">selectionMode="range" + слот с готовыми периодами</td></tr>
+        <tr><td class="cell-main">Переключатель, радио, сегменты, чекбокс</td><td class="mono">.sw, .radio, .seg, .cb</td><td class="mono">ToggleSwitch, RadioButton, SelectButton, Checkbox</td><td class="wrap"></td></tr>
+        <tr><td class="cell-main">Число</td><td class="mono">.num</td><td class="mono">InputNumber</td><td class="wrap">showButtons, buttonLayout="horizontal"</td></tr>
+        <tr><td class="cell-main">Загрузка файла</td><td class="mono">.drop, .file</td><td class="mono">FileUpload</td><td class="wrap">Режим advanced, свой шаблон</td></tr>
+        <tr><td class="cell-main">Таблица</td><td class="mono">.dt, .table, .pager</td><td class="mono">DataTable, Paginator</td><td class="wrap">scrollable, frozen-колонка, rowExpansion, selection</td></tr>
+        <tr><td class="cell-main">Дерево</td><td class="mono">.tree</td><td class="mono">TreeTable</td><td class="wrap">selectionMode="checkbox"</td></tr>
+        <tr><td class="cell-main">Модалка, подтверждение, drawer</td><td class="mono">.dlg, .consequences, .drawer</td><td class="mono">Dialog, ConfirmDialog, Drawer</td><td class="wrap">Блок «Что произойдёт» — слот message</td></tr>
+        <tr><td class="cell-main">Тост, подсказка, меню, уведомления</td><td class="mono">.toast, .tip, .opts[role=menu], .notif</td><td class="mono">Toast, Tooltip, Menu, Popover</td><td class="wrap">Toast position="bottom-right"</td></tr>
+        <tr><td class="cell-main">Вкладки, аккордеон, степпер</td><td class="mono">.tabs, .acc, .stepper</td><td class="mono">Tabs, Accordion, Stepper</td><td class="wrap"></td></tr>
+        <tr><td class="cell-main">KPI, графики</td><td class="mono">.kpi, js/charts.js</td><td class="mono">Card, Chart</td><td class="wrap">Chart.js допустим при тех же цветах и правилах</td></tr>
+        <tr><td class="cell-main">Баннер, скелетон, пусто</td><td class="mono">.banner, .skel, .empty</td><td class="mono">Message, Skeleton</td><td class="wrap">Пустое состояние — свой компонент</td></tr>
+      </tbody>
+    </table></div></div>
+  </section>
+</main>
+
+<!-- ---------- Модалка с формой ---------- -->
+<dialog class="dlg" id="dlg-form" aria-labelledby="dlg-form-t" data-static>
+  <form class="dlg__inner" method="dialog" novalidate id="form-goods">
+    <div class="dlg__head"><div><h2 class="dlg__title" id="dlg-form-t">Новый товар</h2><p class="dlg__sub">Справочник «Товары» · ООО «Демо-Ойл»</p></div>
+      <button class="icon-btn" type="button" data-close aria-label="Закрыть"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <div class="dlg__body">
+      <div class="form-grid">
+        <div class="fld span-8"><label class="fld__label" for="g1">Наименование <span class="fld__req" aria-hidden="true">*</span></label><input class="in" id="g1" required data-autofocus><span class="fld__err"></span></div>
+        <div class="fld span-4"><label class="fld__label" for="g2">Код <span class="fld__req" aria-hidden="true">*</span></label><input class="in in--mono" id="g2" required pattern="[0-9]{1,8}" data-err="Только цифры, до 8 знаков"><span class="fld__err"></span></div>
+        <div class="fld span-6"><label class="fld__label" for="g3">Цена, ₽</label><input class="in in--mono" id="g3" inputmode="decimal" placeholder="0,00"></div>
+        <div class="fld span-6"><label class="fld__label" for="g4">Единица</label><input class="in" id="g4" value="шт"></div>
+        <div class="fld span-12"><label class="fld__label" for="g5">Комментарий</label><textarea class="in" id="g5"></textarea></div>
+      </div>
+    </div>
+    <div class="dlg__foot"><button class="btn btn--ghost btn--sm" type="button" data-close>Отмена</button><button class="btn btn--primary btn--sm" type="submit"><span>Добавить товар</span></button></div>
+  </form>
+</dialog>
+
+<!-- ---------- Подтверждение ---------- -->
+<dialog class="dlg dlg--sm" id="dlg-confirm" aria-labelledby="dlg-c-t" aria-describedby="dlg-c-d" role="alertdialog">
+  <form class="dlg__inner" method="dialog" novalidate id="form-confirm">
+    <div class="dlg__head" style="border-bottom:0;padding-bottom:0">
+      <span class="confirm__ico"><svg class="ico" aria-hidden="true"><use href="#i-warn"/></svg></span>
+      <div><h2 class="dlg__title" id="dlg-c-t">Отключить выбранные ТО?</h2><p class="dlg__sub" id="dlg-c-d">3 точки обслуживания</p></div>
+      <button class="icon-btn" type="button" data-close aria-label="Закрыть"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="dlg__body">
+      <div class="consequences"><span class="consequences__title">Что произойдёт</span>
+        <ul><li>Точки перестанут принимать заявки мобильных сервисов</li><li>Данные мониторинга сохранятся, новые поступать не будут</li><li>Включить точки обратно можно в любой момент</li></ul></div>
+      <div class="fld"><label class="fld__label" for="c1">Комментарий <span class="fld__req" aria-hidden="true">*</span></label><textarea class="in" id="c1" required minlength="5" placeholder="Причина отключения" style="min-height:72px"></textarea><span class="fld__err"></span></div>
+    </div>
+    <div class="dlg__foot"><button class="btn btn--ghost btn--sm" type="button" data-close data-autofocus>Отмена</button><button class="btn btn--primary btn--sm" type="submit"><span>Отключить 3 ТО</span></button></div>
+  </form>
+</dialog>
+
+<!-- ---------- Drawer ---------- -->
+<dialog class="drawer" id="drawer-req" aria-labelledby="drw-t">
+  <div class="dlg__inner">
+    <div class="dlg__head"><div><h2 class="dlg__title" id="drw-t">Заявка <span class="mono">№ 58 214</span></h2><p class="dlg__sub"><span class="st st--err">Проблемная</span></p></div>
+      <button class="icon-btn" type="button" data-close aria-label="Закрыть"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <div class="dlg__body">
+      <dl class="row-detail__inner" style="padding:0;grid-template-columns:1fr 1fr">
+        <div class="kv"><dt>ТО</dt><dd>АЗС № 14</dd></div><div class="kv"><dt>ТРК / пистолет</dt><dd class="mono">3 / 2</dd></div>
+        <div class="kv"><dt>Топливо</dt><dd>АИ-95</dd></div><div class="kv"><dt>Тип</dt><dd>На сумму</dd></div>
+        <div class="kv"><dt>Заказано</dt><dd class="mono">1 500,00 ₽</dd></div><div class="kv"><dt>Отпущено</dt><dd class="mono">0,00 л</dd></div>
+      </dl>
+      <div class="kit-sub" style="font-size:14px">Этапы</div>
+      <ol class="timeline">
+        <li class="kv"><span class="kv__k mono">14:02:11 · Сервис СНК</span><span class="kv__v">Заявка создана</span></li>
+        <li class="kv"><span class="kv__k mono">14:02:13 · АЗС</span><span class="kv__v">ТРК зарезервирована</span></li>
+        <li class="kv is-err"><span class="kv__k mono">14:04:40 · АЗС</span><span class="kv__v">Нет ответа от ТРК</span></li>
+      </ol>
+    </div>
+    <div class="dlg__foot"><button class="btn btn--ghost btn--sm" type="button" data-close>Закрыть</button><button class="btn btn--outline btn--sm" type="button" data-demo-toast="ok|Заявка завершена вручную"><span>Завершить вручную</span></button></div>
+  </div>
+</dialog>
+
+<script>
+  /* Демо-строки таблицы (данные вымышлены) */
+  (() => {
+    const orgs = ['ООО «Демо-Ойл»', 'ООО «Пример-Трейд»', 'АО «Тестовая сеть»', 'ИП Образцов'];
+    const st = [['ok', 'В сети'], ['ok', 'В сети'], ['ok', 'В сети'], ['warn', 'Нестабильно'], ['off', 'Не в сети'], ['err', 'Нет лицензии']];
+    const ver = ['4.12.0', '4.11.3', '4.11.3', '4.10.8'];
+    const ago = ['только что', '12 с', '40 с', '2 мин', '18 мин', '3 ч'];
+    const agoS = [0, 12, 40, 120, 1080, 10800];
+    let html = '';
+    for (let i = 0; i < 24; i++) {
+      const s = st[(i * 5 + 1) % st.length];
+      const a = s[0] === 'off' ? 4 + (i % 2) : (s[0] === 'warn' ? 3 : i % 3);
+      const sum = s[0] === 'off' ? 0 : 40000 + ((i * 7919) % 260000);
+      const code = `ТО-${String(100 + i * 7).padStart(4, '0')}`;
+      html += `<tr>
+        <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ${code}"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+        <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о ${code}"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+        <td class="cell-main"><a href="#table">АЗС № ${i + 3}</a><span class="cell-sub mono">${code}</span></td>
+        <td>${orgs[i % 4]}</td>
+        <td data-v="${s[0]}"><span class="st st--${s[0]}">${s[1]}</span></td>
+        <td class="mono">${ver[i % 4]}</td>
+        <td class="num-cell" data-v="${sum}">${sum ? new Intl.NumberFormat('ru-RU', { minimumFractionDigits: 2 }).format(sum) : '—'}</td>
+        <td class="mono" data-v="${agoS[a]}">${ago[a]}</td>
+        <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" aria-label="Действия с ${code}" data-tip="Действия"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+      </tr>
+      <tr class="row-detail" hidden><td colspan="9"><dl class="row-detail__inner">
+        <div class="kv"><dt>Адрес</dt><dd>ул. Демонстрационная, ${i + 1}</dd></div>
+        <div class="kv"><dt>Терминал</dt><dd class="mono">T-${1000 + i}</dd></div>
+        <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">${(783000 + i * 13)}</dd></div>
+        <div class="kv"><dt>Последняя смена</dt><dd class="mono">№ ${412 + i}</dd></div>
+      </dl></td></tr>`;
+    }
+    document.getElementById('demo-rows').innerHTML = html;
+    document.querySelectorAll('.js-indet').forEach(c => { c.indeterminate = true; });
+  })();
+</script>
+<script src="js/app.js"></script>
+<script src="js/charts.js"></script>
+<script>
+  /* Демо: графики, спарклайны, живое обновление, формы в модалках */
+  (() => {
+    const { charts, toast, dialog } = window.SNC;
+    const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
+    const done = [4, 2, 1, 1, 2, 6, 18, 42, 61, 58, 49, 52, 64, 57, 50, 48, 55, 71, 76, 60, 41, 27, 14, 8];
+    charts.bar(document.getElementById('ch-hours'), { title: 'Заявки по часам, сегодня', labels: hours, labelTitle: 'Час', values: done, name: 'Заявки', unit: 'шт' });
+    charts.donut(document.getElementById('ch-status'), {
+      title: 'Заявки по статусу', unit: 'шт', centerLabel: 'заявок',
+      items: [
+        // группы заявок — это статусы, поэтому статусные цвета и знаки, а не серии
+        { label: 'Завершены', value: 1106, status: 'ok', color: 'var(--st-ok)' },
+        { label: 'Без пролива', value: 121, status: 'off', color: 'var(--st-off)' },
+        { label: 'Проблемные', value: 17, status: 'err', color: 'var(--st-err)' },
+        { label: 'Остальные', value: 40, status: 'info', color: 'var(--st-info)' }
+      ]
+    });
+    const days = Array.from({ length: 30 }, (_, i) => { const d = new Date(2026, 8, i + 1); return d.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' }); });
+    const wave = (b, a, p) => days.map((_, i) => Math.round(b + a * Math.sin(i / p) + ((i * 37) % 11) * a / 12 + (i % 7 === 5 ? a * .6 : 0)));
+    charts.line(document.getElementById('ch-line'), {
+      title: 'Динамика реализации за 30 дней, литры', unit: 'л', labelTitle: 'Дата', labels: days,
+      series: [{ name: 'АИ-92', values: wave(9200, 900, 3) }, { name: 'АИ-95', values: wave(6400, 700, 4) }, { name: 'ДТ', values: wave(4100, 600, 5) }]
+    });
+    document.querySelectorAll('[data-spark]').forEach(s => charts.spark(s, s.dataset.spark.split(',').map(Number)));
+
+    // KPI-плитки как фильтр
+    document.querySelectorAll('.kpis button.kpi').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('.kpis button.kpi').forEach(x => { x.classList.toggle('is-active', x === b); x.setAttribute('aria-pressed', String(x === b)); });
+    }));
+    // Сегменты-переключатели
+    document.querySelectorAll('.seg:not([data-dt-density])').forEach(g => g.addEventListener('click', e => {
+      const b = e.target.closest('.seg__btn'); if (!b) return;
+      g.querySelectorAll('.seg__btn').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    }));
+
+    // Живые данные: время в штампе и «На связи» в таблице (TODO: NATS в боевой версии)
+    const stamp = document.querySelector('.kit-shell .tblock__cell:nth-child(2) .tblock__v');
+    setInterval(() => {
+      if (stamp) stamp.lastChild.textContent = new Date().toLocaleTimeString('ru-RU');
+      const cells = [...document.querySelectorAll('#demo-rows tr:not([hidden]) td:nth-child(8)')];
+      const c = cells[Math.floor(Math.random() * cells.length)];
+      if (c && !c.closest('tr').querySelector('.st--off')) { c.textContent = 'только что'; c.dataset.v = '0'; c.classList.remove('is-changed'); void c.offsetWidth; c.classList.add('is-changed'); }
+    }, 4000);
+
+    // Формы в модалках
+    const goods = document.getElementById('form-goods');
+    goods.addEventListener('submit', e => {
+      if (!SNC.validate(goods)) { e.preventDefault(); return; }
+      toast({ type: 'ok', title: 'Товар добавлен', text: goods.querySelector('#g1').value });
+      goods.reset();
+    });
+    const conf = document.getElementById('form-confirm');
+    conf.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!SNC.validate(conf)) return;
+      const b = conf.querySelector('[type="submit"]');
+      b.dataset.loading = 'true'; b.insertAdjacentHTML('beforeend', '<span class="spinner" aria-hidden="true"></span>');
+      setTimeout(() => {
+        delete b.dataset.loading; b.querySelector('.spinner')?.remove();
+        dialog.close('dlg-confirm'); conf.reset();
+        toast({ type: 'ok', title: '3 ТО отключены', action: { label: 'Вернуть', onClick: () => toast({ type: 'info', title: 'ТО снова включены' }) } });
+      }, 900);
+    });
+  })();
+</script>
+</body>
+</html>

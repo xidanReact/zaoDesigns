@@ -7,3 +7,6 @@ skills-lock.json
 /snc-service-prod/
 /sncard-prod/
 /zao-sncard-prod/
+
+# большие архивы
+*.zip

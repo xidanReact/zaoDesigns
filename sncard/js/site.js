@@ -15,6 +15,22 @@
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const FINE = mq('(hover: hover) and (pointer: fine)');
 
+  /* ---------- Яндекс.Метрика (счётчик 22525165, как на old.sncard.ru) ----------
+     Грузится только после согласия на аналитические cookies: слушатель стоит
+     до баннера, поэтому ранее сохранённый выбор тоже сюда доходит. */
+  const YM_ID = 22525165;
+  let ymOn = false;
+  document.addEventListener('snc:cookie-consent', e => {
+    if (ymOn || !e.detail.analytics) return;
+    ymOn = true;
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
+      m[i].l = 1 * new Date();
+      k = e.createElement(t); a = e.getElementsByTagName(t)[0]; k.async = 1; k.src = r; a.parentNode.insertBefore(k, a);
+    })(window, document, 'script', `https://mc.yandex.ru/metrika/tag.js?id=${YM_ID}`, 'ym');
+    window.ym(YM_ID, 'init', { ssr: true, webvisor: true, clickmap: true, accurateTrackBounce: true, trackLinks: true });
+  });
+
   /* ---------- Cookie-баннер: одинаковый на трёх сайтах группы, стили — designs/styles.css ----------
      Выбор хранится в localStorage «snc-cookie-consent»: { v: 'all' | 'necessary', t: дата }.
      Аналитику подключать только при window.SNC_COOKIES.analytics === true

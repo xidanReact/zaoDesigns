@@ -432,8 +432,7 @@ function footer(r) {
     </div>
   </div>
 </footer>
-
-<div class="cursor" aria-hidden="true"><span class="cursor__ring"></span><span class="cursor__dot"></span></div>`;
+`;
 }
 
 const SPRITE = (() => {
@@ -703,7 +702,7 @@ function newsBlock(r, n) {
           <span class="tag">${esc(n.tag)}</span>
         </div>
         <h2 class="nblock__title">${esc(n.title)}</h2>
-        <div class="nblock__body" data-lenis-prevent>
+        <div class="nblock__body">
 ${body}
         </div>
       </article>`;

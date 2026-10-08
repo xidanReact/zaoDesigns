@@ -405,37 +405,8 @@
   }
 
   /* =========================================================
-     Курсор и магнитные кнопки (только pointer: fine)
+     Магнитные кнопки (только pointer: fine)
      ========================================================= */
-  const cursorEl = $('.cursor');
-  const cursorState = (name, on) => cursorEl?.classList.toggle(`is-${name}`, on);
-
-  function customCursor() {
-    if (!cursorEl) return;
-    document.documentElement.classList.add('has-cursor');
-    const dot = $('.cursor__dot', cursorEl), ring = $('.cursor__ring', cursorEl);
-    const p = { x: -100, y: -100 }, d = { x: -100, y: -100 }, r = { x: -100, y: -100 };
-    let seen = false;
-    window.addEventListener('pointermove', e => {
-      if (e.pointerType !== 'mouse') return;
-      p.x = e.clientX; p.y = e.clientY;
-      if (!seen) { seen = true; d.x = r.x = p.x; d.y = r.y = p.y; cursorState('hidden', false); }
-    }, { passive: true });
-    document.documentElement.addEventListener('mouseleave', () => cursorState('hidden', true));
-    document.documentElement.addEventListener('mouseenter', () => cursorState('hidden', false));
-    document.addEventListener('pointerover', e => {
-      cursorState('hover', !!e.target.closest('a, button, input, label, summary, .node, [tabindex="0"], [role="button"]'));
-    });
-    cursorState('hidden', true);
-    onTick(dt => {
-      const kd = damp(40, dt), kr = damp(12, dt);
-      d.x += (p.x - d.x) * kd; d.y += (p.y - d.y) * kd;
-      r.x += (p.x - r.x) * kr; r.y += (p.y - r.y) * kr;
-      dot.style.transform = `translate3d(${d.x.toFixed(1)}px, ${d.y.toFixed(1)}px, 0)`;
-      ring.style.transform = `translate3d(${r.x.toFixed(1)}px, ${r.y.toFixed(1)}px, 0)`;
-    });
-  }
-
   function magnetic() {
     const R = 80, MAX = 8;
     const els = $$('.magnetic').map(el => ({
@@ -469,14 +440,14 @@
   if (ON) {
     navIndicator();
     footerFx();
-    if (FINE) { customCursor(); magnetic(); }
+    if (FINE) magnetic();
     document.fonts?.ready.then(() => ST.refresh());
     window.addEventListener('load', () => ST.refresh());
   }
 
   window.SNCFX = {
     $, $$, NS, clamp, damp, RM, FINE, SMALL, ON, G, ST, EASE, DRAW,
-    onTick, watch, isVis, lenis, cursorState,
+    onTick, watch, isVis, lenis,
     splitWords, lineReveal, explodePath, collectDraw, drawInto, createPackets,
     odometer, revealHeading, revealGroup,
     inlineIcons, bentoCards, ctaReveal, officeReveal,

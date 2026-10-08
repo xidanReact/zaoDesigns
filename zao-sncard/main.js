@@ -19,6 +19,22 @@
   const RM = false;
   const FINE = mq('(hover: hover) and (pointer: fine)');
 
+  /* ---------- Яндекс.Метрика (счётчик 22525165, как на old.sncard.ru) ----------
+     Грузится только после согласия на аналитические cookies: слушатель стоит
+     до баннера, поэтому ранее сохранённый выбор тоже сюда доходит. */
+  const YM_ID = 22525165;
+  let ymOn = false;
+  document.addEventListener('snc:cookie-consent', e => {
+    if (ymOn || !e.detail.analytics) return;
+    ymOn = true;
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments); };
+      m[i].l = 1 * new Date();
+      k = e.createElement(t); a = e.getElementsByTagName(t)[0]; k.async = 1; k.src = r; a.parentNode.insertBefore(k, a);
+    })(window, document, 'script', `https://mc.yandex.ru/metrika/tag.js?id=${YM_ID}`, 'ym');
+    window.ym(YM_ID, 'init', { ssr: true, webvisor: true, clickmap: true, accurateTrackBounce: true, trackLinks: true });
+  });
+
   /* ---------- Cookie-баннер: одинаковый на трёх сайтах группы, стили — designs/styles.css ----------
      Выбор хранится в localStorage «snc-cookie-consent»: { v: 'all' | 'necessary', t: дата }.
      Аналитику подключать только при window.SNC_COOKIES.analytics === true
@@ -1155,8 +1171,6 @@
   }
 
   /* ---------- Новости: drag-scroll с инерцией, курсор «Тяни» (из designs/) ---------- */
-  const cursorEl = $('.cursor');
-  const cursorState = (name, on) => cursorEl?.classList.toggle(`is-${name}`, on);
   function newsDrag() {
     const vp = $('.news__viewport');
     const cur = $('.drag-cursor');
@@ -1197,8 +1211,8 @@
     vp.addEventListener('pointercancel', up);
     vp.addEventListener('click', e => { if (moved > 5) { e.preventDefault(); e.stopPropagation(); } }, true);
     vp.addEventListener('dragstart', e => e.preventDefault());
-    vp.addEventListener('pointerenter', e => { pos.x = cpos.x = e.clientX; pos.y = cpos.y = e.clientY; cur.classList.add('is-on'); cursorState('drag', true); });
-    vp.addEventListener('pointerleave', () => { cur.classList.remove('is-on'); cursorState('drag', false); });
+    vp.addEventListener('pointerenter', e => { pos.x = cpos.x = e.clientX; pos.y = cpos.y = e.clientY; cur.classList.add('is-on'); });
+    vp.addEventListener('pointerleave', () => { cur.classList.remove('is-on'); });
     onTick(dt => {
       if (Math.abs(v) > 5 && !down) { vp.scrollLeft += v * dt; v *= Math.pow(0.05, dt); }
       if (cur.classList.contains('is-on')) {
@@ -1225,31 +1239,7 @@
     G.fromTo(mark, { y: 80 }, { y: 0, ease: 'none', scrollTrigger: { trigger: '.footer', start: 'top bottom', end: 'bottom bottom', scrub: true } });
   }
 
-  /* ---------- Курсор и магнитные кнопки (из designs/) ---------- */
-  function customCursor() {
-    document.documentElement.classList.add('has-cursor');
-    const dot = $('.cursor__dot', cursorEl), ring = $('.cursor__ring', cursorEl);
-    const pt = { x: -100, y: -100 }, d = { x: -100, y: -100 }, r = { x: -100, y: -100 };
-    let seen = false;
-    window.addEventListener('pointermove', e => {
-      if (e.pointerType !== 'mouse') return;
-      pt.x = e.clientX; pt.y = e.clientY;
-      if (!seen) { seen = true; d.x = r.x = pt.x; d.y = r.y = pt.y; cursorState('hidden', false); }
-    }, { passive: true });
-    document.documentElement.addEventListener('mouseleave', () => cursorState('hidden', true));
-    document.documentElement.addEventListener('mouseenter', () => cursorState('hidden', false));
-    document.addEventListener('pointerover', e => {
-      cursorState('hover', !!e.target.closest('a, button, input, label, summary, .mk-icon:not(.mk-icon--hub), [tabindex="0"]'));
-    });
-    cursorState('hidden', true);
-    onTick(dt => {
-      const kd = damp(40, dt), kr = damp(12, dt);
-      d.x += (pt.x - d.x) * kd; d.y += (pt.y - d.y) * kd;
-      r.x += (pt.x - r.x) * kr; r.y += (pt.y - r.y) * kr;
-      dot.style.transform = `translate3d(${d.x.toFixed(1)}px, ${d.y.toFixed(1)}px, 0)`;
-      ring.style.transform = `translate3d(${r.x.toFixed(1)}px, ${r.y.toFixed(1)}px, 0)`;
-    });
-  }
+  /* ---------- Магнитные кнопки (из designs/) ---------- */
   function magnetic() {
     const R = 80, MAX = 8;
     const els = $$('.magnetic').map(el => ({
@@ -1285,7 +1275,7 @@
   sectionReveals();
   newsDrag();
   footerFx();
-  if (FINE) { customCursor(); magnetic(); }
+  if (FINE) magnetic();
   document.fonts?.ready.then(() => ST.refresh());
   window.addEventListener('load', () => ST.refresh());
 })();

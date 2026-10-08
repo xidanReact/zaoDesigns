@@ -1,0 +1,1312 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Мониторинг ТО · Управление продуктами СНК</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../../sncard/favicon.svg" type="image/svg+xml">
+  <!-- Дизайн-система: эталон в designs/, здесь только компоненты кабинета -->
+  <link rel="stylesheet" href="../../designs/styles.css">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="app" data-product="azs">
+<!-- @sprite:start -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-chevron" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 16 16"><path d="M10 4L6 8l4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 16 16"><path d="M3 8h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 16l4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2h-14zM10 20.5a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-sidebar" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 4.5v15M15.5 10l-2 2 2 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5M6 9.5V19h4.5v-5h3v5H18V9.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><path d="M3.5 12h4l2-5 4 10 2-5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-station" viewBox="0 0 24 24"><path d="M5 20V5.5A1.5 1.5 0 0 1 6.5 4h6A1.5 1.5 0 0 1 14 5.5V20M3.5 20h12M7.5 7.5h4v3.5h-4zM14 9h2.5a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 0 3 0V8l-2.5-2.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-requests" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 3v2.5h6V3M8.5 11h7M8.5 14.5h7M8.5 18h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16M7 16.5V11M11.5 16.5V6.5M16 16.5v-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-shift" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 9.5h16M8.5 3v4M15.5 3v4M8 13.5h3M8 16.5h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H19v14H6.5A1.5 1.5 0 0 0 5 19.5zM5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3M9 8h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M4 8l8-4 8 4v8.5l-8 4-8-4zM4 8l8 4 8-4M12 12v8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-report" viewBox="0 0 24 24"><path d="M7 3.5h7l4.5 4.5v12.5H7zM14 3.5V8h4.5M10 13h5M10 16.5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-org" viewBox="0 0 24 24"><path d="M4 20.5h16M6 20.5V6.5L12 3.5l6 3v14M9.5 9h1M13.5 9h1M9.5 12.5h1M13.5 12.5h1M10.5 20.5v-4h3v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9.5" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 19.5a6 6 0 0 1 12 0M16 5.2a3.5 3.5 0 0 1 0 6.6M17.5 14.2a6 6 0 0 1 3 5.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 12l8-8M16 7l2.5 2.5M14 9l2 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-update" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v4h-4M12 8.5V12l2.5 1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-log" viewBox="0 0 24 24"><path d="M8 6h11M8 12h11M8 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 3.5v2.2M12 18.3v2.2M20.5 12h-2.2M5.7 12H3.5M18 6l-1.6 1.6M7.6 16.4 6 18M18 18l-1.6-1.6M7.6 7.6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.8 9.5a2.3 2.3 0 1 1 3.3 2.1c-.7.4-1.1.9-1.1 1.7v.4M12 16.8h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M14 4.5H6.5A1.5 1.5 0 0 0 5 6v12a1.5 1.5 0 0 0 1.5 1.5H14M10 12h10M16.5 8.5 20 12l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 19.5a6.5 6.5 0 0 1 13 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 16 16"><path d="M2.5 3.5h11L9.5 8.5v4l-3 1.5V8.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <symbol id="i-columns" viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 4.5v15M14.5 4.5v15" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5M5 19.5h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M5 19l1-4 10-10 3 3-10 10zM14 7l3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V4.5h4V7M7 7l1 13h8l1-13M10.5 11v5M13.5 11v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19 12a7 7 0 0 1-12.2 4.7M5 12a7 7 0 0 1 12.2-4.7M17.5 3.5v4h-4M6.5 20.5v-4h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M3.5 6.5 9 4.5l6 2 5.5-2v13l-5.5 2-6-2-5.5 2zM9 4.5v13M15 6.5v13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-table" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 10h16M4 14.5h16M10 10v9" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 12.3l2.7 2.7L16 9.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7.5v5.5M12 16.3h.01" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4 21 19.5H3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 10v4.5M12 17h.01" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5.5M12 7.7h.01" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M4 4l16 16M8.5 13.5a5 5 0 0 1 5.5-1M5 10.3a9.5 9.5 0 0 1 4-2M12.5 7.6a9.5 9.5 0 0 1 6.5 2.7M12 17.5h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-file" viewBox="0 0 48 48"><path d="M13 5h15l9 9v29H13zM28 5v9h9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M24 36V22M18.5 27.5 24 22l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M12 3.5s-5.5 6-5.5 10a5.5 5.5 0 0 0 11 0c0-4-5.5-10-5.5-10z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M4 4l16 16M9.9 5.8A9.7 9.7 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-3 3.7M6.3 7.5A16 16 0 0 0 2.5 12S6 18.5 12 18.5a9.3 9.3 0 0 0 4.3-1M9.9 9.9a3 3 0 0 0 4.2 4.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M13.5 4.5h6v6M19.5 4.5l-8 8M17.5 13.5v5a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 18.5v-10A1.5 1.5 0 0 1 6 7h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+<!-- @sprite:end -->
+<a class="skip-link" href="#main">К содержимому</a>
+<div class="app-shell">
+<!-- @sidebar:start -->
+<aside class="sb" id="sidebar" aria-label="Разделы">
+  <a class="sb__brand" href="../dashboard.html" aria-label="Управление продуктами СНК — главная">
+    <svg viewBox="0 0 120 48" aria-hidden="true"><path d="M38 11H22.5A12.5 12.5 0 0 0 10 23.5v1A12.5 12.5 0 0 0 22.5 37H38 M48 11v26 M72 11v26 M48 24h24 M84 11v26 M106 11L86.5 24 106 37" fill="none" stroke="#D32F2F" stroke-width="6" stroke-linecap="square"/></svg>
+    <b class="sb__label">Управление<br>продуктами</b>
+  </a>
+  <nav class="sb__products" aria-label="Продукт">
+    <a class="sb__product" href="../azs/monitoring.html" aria-current="true"><span class="sb__code" aria-hidden="true">АЗС</span><span class="sb__label">СНК-АЗС</span></a>
+    <a class="sb__product" href="../office/shift.html"><span class="sb__code" aria-hidden="true">ОФ</span><span class="sb__label">СНК-Офис</span></a>
+    <a class="sb__product" href="../admin/organizations.html"><span class="sb__code" aria-hidden="true">АДМ</span><span class="sb__label">Администрирование</span></a>
+  </nav>
+  <nav class="sb__nav" aria-label="Разделы СНК-АЗС">
+    <div class="sb__group">
+      <a class="sb__link" href="../dashboard.html"><svg class="ico" aria-hidden="true"><use href="#i-home"/></svg><span class="sb__label">Главная</span></a>
+    </div>
+    <div class="sb__group">
+      <span class="sb__title">Точки обслуживания</span>
+      <a class="sb__link" href="../azs/monitoring.html" aria-current="page"><svg class="ico" aria-hidden="true"><use href="#i-monitor"/></svg><span class="sb__label">Мониторинг ТО</span><span class="sb__count">10</span></a>
+      <a class="sb__link" href="../azs/information.html"><svg class="ico" aria-hidden="true"><use href="#i-station"/></svg><span class="sb__label">Информация по ТО</span></a>
+    </div>
+    <div class="sb__group">
+      <span class="sb__title">Мобильные сервисы</span>
+      <a class="sb__link" href="../azs/services-activity.html"><svg class="ico" aria-hidden="true"><use href="#i-activity"/></svg><span class="sb__label">Активность ТО</span></a>
+      <a class="sb__link" href="../azs/requests.html"><svg class="ico" aria-hidden="true"><use href="#i-requests"/></svg><span class="sb__label">Контроль заявок</span></a>
+      <a class="sb__link" href="../azs/statistic.html"><svg class="ico" aria-hidden="true"><use href="#i-chart"/></svg><span class="sb__label">Статистика</span></a>
+    </div>
+  </nav>
+  <div class="sb__foot">
+    <a class="sb__link" href="../ui-kit.html"><svg class="ico" aria-hidden="true"><use href="#i-help"/></svg><span class="sb__label">Инструкция</span></a>
+    <button class="sb__link sb__collapse" type="button" data-sb-collapse aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#i-sidebar"/></svg><span class="sb__label">Свернуть меню</span></button>
+  </div>
+</aside>
+<!-- @sidebar:end -->
+  <div class="app-main">
+<!-- @top:start -->
+<header class="top">
+  <button class="icon-btn top__burger" type="button" data-sb-open aria-controls="sidebar" aria-expanded="false" aria-label="Открыть меню"><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg></button>
+  <nav class="crumbs" aria-label="Вы здесь"><a href="../azs/monitoring.html">СНК-АЗС</a><span class="crumbs__sep" aria-hidden="true">/</span><span class="crumbs__group">Точки обслуживания</span><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Мониторинг ТО</span></nav>
+  <div class="sel orgsw" id="org-switch" data-placeholder="Все организации">
+    <button class="sel__btn orgsw__btn" type="button" data-pop="lb-orgsw" aria-expanded="false" aria-controls="lb-orgsw" aria-label="Организация: все"><svg class="ico orgsw__ico" aria-hidden="true"><use href="#i-org"/></svg><span class="sel__value"></span><svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+    <div class="pop" id="lb-orgsw">
+      <div class="opts__search"><input class="in" type="search" placeholder="Название организации" aria-label="Поиск организации"></div>
+      <div class="opts" role="listbox" aria-label="Организация, с которой вы работаете">
+        <div class="opt" role="option" data-value="0" data-label="Все организации" aria-selected="true"><span class="opt__text">Все организации</span><small>все данные</small></div>
+        <div role="group" aria-label="Клиенты"><div class="opts__group" aria-hidden="true">Клиенты</div><div class="opt" role="option" data-value="1" data-type="1" data-label="Демо-Ойл" aria-selected="false"><span class="opt__text">ООО «Демо-Ойл»</span><small>Агент</small></div><div class="opt" role="option" data-value="2" data-type="2" data-label="Пример-Трейд" aria-selected="false"><span class="opt__text">ООО «Пример-Трейд»</span><small>Продавец</small></div><div class="opt" role="option" data-value="3" data-type="1" data-label="Тестовая сеть" aria-selected="false"><span class="opt__text">АО «Тестовая сеть»</span><small>Агент</small></div><div class="opt" role="option" data-value="4" data-type="2" data-label="ИП Образцов" aria-selected="false"><span class="opt__text">ИП Образцов</span><small>Продавец</small></div></div>
+        <div role="group" aria-label="Партнёры"><div class="opts__group" aria-hidden="true">Партнёры</div><div class="opt" role="option" data-value="5" data-type="4" data-label="Демо-Заправка" aria-selected="false"><span class="opt__text">ООО «Демо-Заправка»</span><small>Партнёр</small></div></div>
+        <div role="group" aria-label="Сервисы"><div class="opts__group" aria-hidden="true">Сервисы</div><div class="opt" role="option" data-value="6" data-type="3" data-label="Пример-Pay" aria-selected="false"><span class="opt__text">ООО «Пример-Pay»</span><small>Сервис</small></div></div>
+      </div>
+      <p class="orgsw__hint">Данные всех разделов показываются по выбранной организации.</p>
+    </div>
+  </div>
+  <div class="top__right">
+    <label class="gsearch"><span class="sr-only">Поиск по разделам</span><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><input class="gsearch__input" type="search" placeholder="Поиск по разделам" data-gsearch list="gsearch-list" autocomplete="off"><span class="kbd" aria-hidden="true">/</span></label>
+    <datalist id="gsearch-list"><option value="Мониторинг ТО" data-href="../azs/monitoring.html"></option><option value="Информация по ТО" data-href="../azs/information.html"></option><option value="Активность ТО" data-href="../azs/services-activity.html"></option><option value="Контроль заявок" data-href="../azs/requests.html"></option><option value="Статистика" data-href="../azs/statistic.html"></option><option value="Информация по смене" data-href="../office/shift.html"></option><option value="Точки обслуживания" data-href="../office/catalogue/service-points.html"></option><option value="Товары" data-href="../office/catalogue/goods.html"></option><option value="Юридические лица" data-href="../office/catalogue/legal-entities.html"></option><option value="Ведомости" data-href="../office/catalogue/statements.html"></option><option value="Инкассаторы" data-href="../office/catalogue/cash-collectors.html"></option><option value="Направления инкассации" data-href="../office/catalogue/cash-collection-directions.html"></option><option value="Операторы" data-href="../office/catalogue/operators.html"></option><option value="Поставщики" data-href="../office/catalogue/contractors.html"></option><option value="Грузоперевозчики" data-href="../office/catalogue/cargo-carriers.html"></option><option value="Грузоотправители (грузополучатели)" data-href="../office/catalogue/shippers.html"></option><option value="Поставки ТМЦ" data-href="../office/warehouse/orders.html"></option><option value="Перемещение ТМЦ" data-href="../office/warehouse/movements.html"></option><option value="Списание ТМЦ" data-href="../office/warehouse/write-offs.html"></option><option value="Оприходование ТМЦ" data-href="../office/warehouse/postings.html"></option><option value="Прайс-листы" data-href="../office/warehouse/price-lists.html"></option><option value="Динамика реализации" data-href="../office/analytics.html"></option><option value="Отчёты" data-href="../office/reports.html"></option><option value="Организации" data-href="../admin/organizations.html"></option><option value="Пользователи" data-href="../admin/users.html"></option><option value="Эмитенты" data-href="../admin/issuers.html"></option><option value="Внешние ТО" data-href="../admin/services.html"></option><option value="Лицензии" data-href="../admin/licenses.html"></option><option value="Справочник сервисов" data-href="../admin/catalogues.html"></option><option value="Выпуск обновления" data-href="../admin/version-release.html"></option><option value="Загрузка обновления" data-href="../admin/upload-release.html"></option><option value="Обновление приложения" data-href="../admin/app-update.html"></option><option value="Журнал изменений" data-href="../admin/change-log.html"></option><option value="Создание новости" data-href="../admin/create-news.html"></option><option value="Конфигурация" data-href="../admin/config.html"></option><option value="Главная" data-href="../dashboard.html"></option><option value="Профиль пользователя" data-href="../profile.html"></option><option value="Карточка организации" data-href="../admin/organization.html"></option><option value="Спецификация" data-href="../admin/specification.html"></option><option value="Привилегии пользователя" data-href="../admin/permissions.html"></option><option value="Документ" data-href="../office/warehouse/document.html"></option><option value="Страница не найдена" data-href="../404.html"></option></datalist>
+    <div style="position:relative">
+      <button class="icon-btn" type="button" data-pop="pop-notif" aria-expanded="false" aria-controls="pop-notif" aria-label="Уведомления, 3 новых"><svg class="ico" aria-hidden="true"><use href="#i-bell"/></svg><span class="badge" aria-hidden="true">3</span></button>
+      <div class="pop pop--right notif" id="pop-notif">
+        <div class="notif__head"><b>Уведомления</b><span class="mono muted" style="font-size:12px">3 новых</span><button class="btn btn--ghost btn--xs" type="button" data-notif-read>Прочитать все</button></div>
+        <div class="notif__list"><a class="notif__item is-unread" href="../azs/information.html"><div><p>АЗС № 19 (ТО-0212): нестабильное подключение</p><time>Сегодня, 14:05</time></div></a><a class="notif__item is-unread" href="../azs/information.html"><div><p>АЗС № 20 (ТО-0219): нестабильное подключение</p><time>Сегодня, 13:04</time></div></a><a class="notif__item is-unread" href="../azs/information.html"><div><p>АЗС № 28 (ТО-0275): отсутствует лицензия</p><time>Сегодня, 12:03</time></div></a></div>
+      </div>
+    </div>
+    <div style="position:relative">
+      <button class="user-btn" type="button" data-pop="pop-user" aria-expanded="false" aria-controls="pop-user">
+        <span class="avatar" aria-hidden="true">ИП</span>
+        <span class="user-btn__name">И. Петров<small>ООО «Демо-Ойл»</small></span>
+      </button>
+      <div class="pop pop--right" id="pop-user" style="min-width:230px">
+        <div class="opts" role="menu" aria-label="Профиль">
+          <a class="opt" role="menuitem" href="../profile.html"><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg>Профиль</a>
+          <a class="opt" role="menuitem" href="../ui-kit.html"><svg class="ico" aria-hidden="true"><use href="#i-help"/></svg>Инструкция пользователя</a>
+          <div class="opt-sep" role="separator"></div>
+          <a class="opt" role="menuitem" href="../index.html"><svg class="ico" aria-hidden="true"><use href="#i-logout"/></svg>Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- @top:end -->
+    <div id="banners" aria-live="polite"></div>
+    <main class="app-content" id="main">
+
+      <div class="phead">
+        <div>
+          <h1 class="phead__title">Мониторинг ТО</h1>
+          <p class="phead__sub">Состояние точек обслуживания в реальном времени. Данные демонстрационные.</p>
+        </div>
+        <div class="tblock" aria-label="Паспорт раздела">
+          <div class="tblock__cell"><span class="tblock__k">Раздел</span><span class="tblock__v">АЗС-01</span></div>
+          <div class="tblock__cell"><span class="tblock__k">Обновлено</span><span class="tblock__v"><span class="live" data-live aria-hidden="true"><span class="live__dot"></span></span><span data-clock>14:05:00</span></span></div>
+          <div class="tblock__cell"><span class="tblock__k">Точек</span><span class="tblock__v" data-count-total>48</span></div>
+        </div>
+        <div class="phead__actions">
+          <div class="seg" role="group" aria-label="Вид">
+            <button class="seg__btn" type="button" aria-pressed="true" data-view="table"><svg class="ico" aria-hidden="true"><use href="#i-table"/></svg>Таблица</button>
+            <button class="seg__btn" type="button" aria-pressed="false" data-view="map"><svg class="ico" aria-hidden="true"><use href="#i-map"/></svg>Карта</button>
+          </div>
+          <button class="btn btn--outline btn--sm" type="button" data-export><svg class="ico" aria-hidden="true"><use href="#i-download"/></svg><span>Выгрузить в Excel</span></button>
+        </div>
+      </div>
+
+      <!-- Плитки — это и сводка, и быстрый фильтр по состоянию -->
+      <div class="kpis" role="group" aria-label="Фильтр по состоянию">
+        <button class="kpi is-active" type="button" aria-pressed="true" data-kpi="all"><span class="kpi__label">Все ТО</span><span class="kpi__value" data-kpi-n="all">48</span><span class="kpi__foot">в 4 организациях</span></button>
+        <button class="kpi" type="button" aria-pressed="false" data-kpi="ok"><span class="kpi__label"><span class="st st--ok">В сети</span></span><span class="kpi__value" data-kpi-n="ok">38</span><span class="kpi__foot" data-kpi-share="ok">79%</span></button>
+        <button class="kpi" type="button" aria-pressed="false" data-kpi="warn"><span class="kpi__label"><span class="st st--warn">Требуют внимания</span></span><span class="kpi__value" data-kpi-n="warn">5</span><span class="kpi__foot">связь, терминал, чужая система</span></button>
+        <button class="kpi" type="button" aria-pressed="false" data-kpi="err"><span class="kpi__label"><span class="st st--err">Нет лицензии</span></span><span class="kpi__value" data-kpi-n="err">1</span><span class="kpi__foot">продажи остановлены</span></button>
+        <button class="kpi" type="button" aria-pressed="false" data-kpi="off"><span class="kpi__label"><span class="st st--off">Не в сети</span></span><span class="kpi__value" data-kpi-n="off">4</span><span class="kpi__foot">включая отключённые</span></button>
+      </div>
+
+      <section class="dt" data-table data-page-size="12" aria-label="Точки обслуживания" id="to-table">
+        <div class="dt__bar">
+          <label class="in-wrap"><span class="sr-only">Поиск по таблице</span><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg><input class="in" type="search" placeholder="Название, код или адрес" data-dt-search></label>
+          <div class="sel" data-select data-multi data-placeholder="Все организации" data-chips="1" style="width:220px" id="f-org">
+            <button class="sel__btn" type="button" data-pop="lb-org" aria-expanded="false" aria-controls="lb-org" aria-label="Фильтр по организации"><span class="sel__value"></span><svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+            <div class="pop" id="lb-org" style="min-width:260px">
+              <div class="opts" role="listbox" aria-label="Организации">
+                <div class="opt" role="option" data-value="1" aria-selected="false"><span class="opt__text">ООО «Демо-Ойл»</span></div>
+                <div class="opt" role="option" data-value="2" aria-selected="false"><span class="opt__text">ООО «Пример-Трейд»</span></div>
+                <div class="opt" role="option" data-value="3" aria-selected="false"><span class="opt__text">АО «Тестовая сеть»</span></div>
+                <div class="opt" role="option" data-value="4" aria-selected="false"><span class="opt__text">ИП Образцов</span></div>
+              </div>
+              <div class="opts__foot"><button class="btn btn--ghost btn--xs" type="button" data-clear>Сбросить</button><button class="btn btn--ghost btn--xs" type="button" data-all>Выбрать все</button></div>
+            </div>
+          </div>
+          <div class="sel" data-select data-placeholder="Все версии" style="width:170px" id="f-ver">
+            <button class="sel__btn" type="button" data-pop="lb-ver" aria-expanded="false" aria-controls="lb-ver" aria-label="Фильтр по версии СНК-АЗС"><span class="sel__value"></span><svg class="ico" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+            <div class="pop" id="lb-ver">
+              <div class="opts" role="listbox" aria-label="Версия СНК-АЗС">
+                <div class="opt" role="option" data-value="" aria-selected="true"><span class="opt__text">Все версии</span></div>
+                <div class="opt" role="option" data-value="4.12.0" aria-selected="false"><span class="opt__text mono">4.12.0</span><small>актуальная</small></div>
+                <div class="opt" role="option" data-value="4.11.3" aria-selected="false"><span class="opt__text mono">4.11.3</span></div>
+                <div class="opt" role="option" data-value="4.10.8" aria-selected="false"><span class="opt__text mono">4.10.8</span><small>устарела</small></div>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn--ghost btn--xs" type="button" data-reset-filters hidden>Сбросить фильтры</button>
+          <span class="dt__spacer"></span>
+          <div class="seg" role="group" aria-label="Плотность строк" data-dt-density>
+            <button class="seg__btn" type="button" aria-pressed="true" data-density="normal">Обычно</button>
+            <button class="seg__btn" type="button" aria-pressed="false" data-density="compact">Плотно</button>
+          </div>
+          <div style="position:relative" data-dt-cols>
+            <button class="btn btn--outline btn--xs" type="button" data-pop="pop-cols" aria-expanded="false" aria-controls="pop-cols"><svg class="ico" aria-hidden="true"><use href="#i-columns"/></svg><span>Колонки</span></button>
+            <div class="pop pop--right" id="pop-cols" style="min-width:230px"><div class="opts" style="display:grid;gap:6px;padding:12px 14px" role="group" aria-label="Видимые колонки">
+              <label class="check" style="font-size:14px;color:var(--text)"><input type="checkbox" data-col="3" checked><span class="check__box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>Населённый пункт</label>
+              <label class="check" style="font-size:14px;color:var(--text)"><input type="checkbox" data-col="4" checked><span class="check__box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>Организация</label>
+              <label class="check" style="font-size:14px;color:var(--text)"><input type="checkbox" data-col="6" checked><span class="check__box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>ТРК</label>
+              <label class="check" style="font-size:14px;color:var(--text)"><input type="checkbox" data-col="7" checked><span class="check__box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>Версия СНК-АЗС</label>
+              <label class="check" style="font-size:14px;color:var(--text)"><input type="checkbox" data-col="8" checked><span class="check__box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>Смена</label>
+              <label class="check" style="font-size:14px;color:var(--text)"><input type="checkbox" data-col="9" checked><span class="check__box" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>Продажи за смену</label>
+            </div></div>
+          </div>
+        </div>
+        <div class="dt__bulk" hidden>
+          <span class="mono" data-dt-count>Выбрано: 0</span>
+          <button class="btn btn--outline btn--xs" type="button" data-bulk="restart"><svg class="ico" aria-hidden="true"><use href="#i-refresh"/></svg><span>Перезапустить сервис</span></button>
+          <button class="btn btn--outline btn--xs" type="button" data-bulk="update"><svg class="ico" aria-hidden="true"><use href="#i-update"/></svg><span>Назначить обновление</span></button>
+          <button class="btn btn--danger btn--xs" type="button" data-bulk="disable"><span>Отключить сервис</span></button>
+          <button class="btn btn--ghost btn--xs" type="button" data-dt-clear style="margin-left:auto">Снять выбор</button>
+        </div>
+
+        <div data-view-panel="table">
+          <div class="dt__scroll" style="--dt-max-h:calc(100svh - 220px)">
+            <table class="table table--pin">
+              <caption class="sr-only">Точки обслуживания (демо-данные). Столбцы сортируются.</caption>
+              <thead><tr>
+                <th class="col-check" scope="col"><label class="cb"><input type="checkbox" aria-label="Выбрать все на странице"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></th>
+                <th class="col-expand" scope="col"><span class="sr-only">Подробнее</span></th>
+                <th scope="col" data-sort="num">Точка обслуживания</th>
+                <th scope="col" data-sort="text">Населённый пункт</th>
+                <th scope="col" data-sort="text">Организация</th>
+                <th scope="col" data-sort="text">Состояние</th>
+                <th scope="col" data-sort="num">ТРК</th>
+                <th scope="col" data-sort="text">Версия</th>
+                <th scope="col" data-sort="num">Смена</th>
+                <th scope="col" class="num-cell" data-sort="num">Продажи за смену, ₽</th>
+                <th scope="col" data-sort="num">На связи</th>
+                <th class="col-actions" scope="col"><span class="sr-only">Действия</span></th>
+              </tr></thead>
+              <tbody>
+<!-- gen:monitoring-rows -->
+<tr data-id="100" data-state="1" data-st="ok" data-org="1" data-version="4.10.8">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0100"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 3"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="100"><a href="../azs/information.html?to=100">АЗС № 3</a><span class="cell-sub mono">ТО-0100</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">ул. Макетная, 31</span></td>
+  <td>ООО «Демо-Ойл»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — остановлена, ТРК 2 — свободна" data-tip="ТРК 1 — остановлена, ТРК 2 — свободна"><i class="pump pump--warn" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">1/2</span></span></td>
+  <td class="mono">4.10.8</td>
+  <td class="mono" data-v="458">№ 458</td>
+  <td class="num-cell" data-v="151330" data-cell="sales">151 330,00</td>
+  <td class="mono" data-v="1" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 3"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, ул. Макетная, 31</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1000</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783000</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.4784, 84.9674</dd></div>
+</dl></td></tr>
+<tr data-id="107" data-state="1" data-st="ok" data-org="2" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0107"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 4"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="107"><a href="../azs/information.html?to=107">АЗС № 4</a><span class="cell-sub mono">ТО-0107</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">ул. Тестовая, 86</span></td>
+  <td>ООО «Пример-Трейд»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="4"><span class="pumps" role="img" aria-label="ТРК 1 — работает, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — работает" data-tip="ТРК 1 — работает, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — работает"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--info" aria-hidden="true">4</i><span class="pumps__n mono" aria-hidden="true">4/4</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="389">№ 389</td>
+  <td class="num-cell" data-v="296380" data-cell="sales">296 380,00</td>
+  <td class="mono" data-v="24" data-cell="seen">24 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 4"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, ул. Тестовая, 86</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1001</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783013</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.5099, 84.9752</dd></div>
+</dl></td></tr>
+<tr data-id="114" data-state="1" data-st="ok" data-org="3" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0114"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 5"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="114"><a href="../azs/information.html?to=114">АЗС № 5</a><span class="cell-sub mono">ТО-0114</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">ул. Тестовая, 3</span></td>
+  <td>АО «Тестовая сеть»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="6"><span class="pumps" role="img" aria-label="ТРК 1 — заблокирована, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — свободна, ТРК 5 — работает, ТРК 6 — свободна" data-tip="ТРК 1 — заблокирована, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — свободна, ТРК 5 — работает, ТРК 6 — свободна"><i class="pump pump--err" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--ok" aria-hidden="true">4</i><i class="pump pump--info" aria-hidden="true">5</i><i class="pump pump--ok" aria-hidden="true">6</i><span class="pumps__n mono" aria-hidden="true">5/6</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="425">№ 425</td>
+  <td class="num-cell" data-v="300270" data-cell="sales">300 270,00</td>
+  <td class="mono" data-v="44" data-cell="seen">44 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 5"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, ул. Тестовая, 3</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1002</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783026</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.5216, 84.9499</dd></div>
+</dl></td></tr>
+<tr data-id="121" data-state="1" data-st="ok" data-org="4" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0121"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 6"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="121"><a href="../azs/information.html?to=121">АЗС № 6</a><span class="cell-sub mono">ТО-0121</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">тракт Проектный, 118</span></td>
+  <td>ИП Образцов</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — пистолет снят, ТРК 2 — работает" data-tip="ТРК 1 — пистолет снят, ТРК 2 — работает"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">2/2</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="394">№ 394</td>
+  <td class="num-cell" data-v="64680" data-cell="sales">64 680,00</td>
+  <td class="mono" data-v="16" data-cell="seen">16 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 6"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, тракт Проектный, 118</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1003</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783039</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.4680, 84.9340</dd></div>
+</dl></td></tr>
+<tr data-id="128" data-state="1" data-st="ok" data-org="1" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0128"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 7"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="128"><a href="../azs/information.html?to=128">АЗС № 7</a><span class="cell-sub mono">ТО-0128</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">ул. Тестовая, 50</span></td>
+  <td>ООО «Демо-Ойл»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="6"><span class="pumps" role="img" aria-label="ТРК 1 — работает, ТРК 2 — работает, ТРК 3 — работает, ТРК 4 — работает, ТРК 5 — пистолет снят, ТРК 6 — свободна" data-tip="ТРК 1 — работает, ТРК 2 — работает, ТРК 3 — работает, ТРК 4 — работает, ТРК 5 — пистолет снят, ТРК 6 — свободна"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><i class="pump pump--info" aria-hidden="true">3</i><i class="pump pump--info" aria-hidden="true">4</i><i class="pump pump--info" aria-hidden="true">5</i><i class="pump pump--ok" aria-hidden="true">6</i><span class="pumps__n mono" aria-hidden="true">6/6</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="397">№ 397</td>
+  <td class="num-cell" data-v="145110" data-cell="sales">145 110,00</td>
+  <td class="mono" data-v="37" data-cell="seen">37 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 7"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, ул. Тестовая, 50</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1004</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783052</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.5257, 84.9704</dd></div>
+</dl></td></tr>
+<tr data-id="135" data-state="1" data-st="ok" data-org="2" data-version="4.10.8">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0135"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 8"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="135"><a href="../azs/information.html?to=135">АЗС № 8</a><span class="cell-sub mono">ТО-0135</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">тракт Проектный, 4</span></td>
+  <td>ООО «Пример-Трейд»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — свободна" data-tip="ТРК 1 — свободна, ТРК 2 — свободна"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">2/2</span></span></td>
+  <td class="mono">4.10.8</td>
+  <td class="mono" data-v="383">№ 383</td>
+  <td class="num-cell" data-v="60520" data-cell="sales">60 520,00</td>
+  <td class="mono" data-v="36" data-cell="seen">36 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 8"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, тракт Проектный, 4</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1005</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783065</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.5396, 85.0167</dd></div>
+</dl></td></tr>
+<tr data-id="142" data-state="6" data-st="off" data-org="3" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0142"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 9"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="142"><a href="../azs/information.html?to=142">АЗС № 9</a><span class="cell-sub mono">ТО-0142</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">ул. Тестовая, 101</span></td>
+  <td>АО «Тестовая сеть»</td>
+  <td data-v="off6" data-cell="state"><span class="st st--off">Сервис отключен</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — отключена, ТРК 2 — отключена" data-tip="ТРК 1 — отключена, ТРК 2 — отключена"><i class="pump pump--off" aria-hidden="true">1</i><i class="pump pump--off" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">0/2</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="314">№ 314 <span class="muted">закрыта</span></td>
+  <td class="num-cell" data-v="0" data-cell="sales">—</td>
+  <td class="mono" data-v="69427" data-cell="seen">19 ч</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 9"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, ул. Тестовая, 101</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1006</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783078</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.5310, 84.9420</dd></div>
+</dl></td></tr>
+<tr data-id="149" data-state="1" data-st="ok" data-org="4" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0149"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 10"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="149"><a href="../azs/information.html?to=149">АЗС № 10</a><span class="cell-sub mono">ТО-0149</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">тракт Проектный, 16</span></td>
+  <td>ИП Образцов</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="5"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — пистолет снят, ТРК 3 — пистолет снят, ТРК 4 — пистолет снят, ТРК 5 — свободна" data-tip="ТРК 1 — свободна, ТРК 2 — пистолет снят, ТРК 3 — пистолет снят, ТРК 4 — пистолет снят, ТРК 5 — свободна"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><i class="pump pump--info" aria-hidden="true">3</i><i class="pump pump--info" aria-hidden="true">4</i><i class="pump pump--ok" aria-hidden="true">5</i><span class="pumps__n mono" aria-hidden="true">5/5</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="447">№ 447</td>
+  <td class="num-cell" data-v="247700" data-cell="sales">247 700,00</td>
+  <td class="mono" data-v="19" data-cell="seen">19 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 10"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, тракт Проектный, 16</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1007</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783091</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.4949, 84.9523</dd></div>
+</dl></td></tr>
+<tr data-id="156" data-state="1" data-st="ok" data-org="1" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0156"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 11"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="156"><a href="../azs/information.html?to=156">АЗС № 11</a><span class="cell-sub mono">ТО-0156</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">ул. Макетная, 114</span></td>
+  <td>ООО «Демо-Ойл»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — работает, ТРК 2 — свободна" data-tip="ТРК 1 — работает, ТРК 2 — свободна"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">2/2</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="388">№ 388</td>
+  <td class="num-cell" data-v="286220" data-cell="sales">286 220,00</td>
+  <td class="mono" data-v="46" data-cell="seen">46 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 11"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, ул. Макетная, 114</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1008</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783104</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.5355, 84.9170</dd></div>
+</dl></td></tr>
+<tr data-id="163" data-state="3" data-st="warn" data-org="2" data-version="4.10.8">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0163"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 12"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="163"><a href="../azs/information.html?to=163">АЗС № 12</a><span class="cell-sub mono">ТО-0163</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">пр. Образцовый, 114</span></td>
+  <td>ООО «Пример-Трейд»</td>
+  <td data-v="warn3" data-cell="state"><span class="st st--warn">Чужая система</span></td>
+  <td data-v="4"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — пистолет снят" data-tip="ТРК 1 — свободна, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — пистолет снят"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--info" aria-hidden="true">4</i><span class="pumps__n mono" aria-hidden="true">4/4</span></span></td>
+  <td class="mono">4.10.8</td>
+  <td class="mono" data-v="460">№ 460</td>
+  <td class="num-cell" data-v="119060" data-cell="sales">119 060,00</td>
+  <td class="mono" data-v="5" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 12"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, пр. Образцовый, 114</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1009</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783117</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.4620, 84.9869</dd></div>
+</dl></td></tr>
+<tr data-id="170" data-state="1" data-st="ok" data-org="3" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0170"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 13"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="170"><a href="../azs/information.html?to=170">АЗС № 13</a><span class="cell-sub mono">ТО-0170</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">тракт Проектный, 29</span></td>
+  <td>АО «Тестовая сеть»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="6"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — пистолет снят, ТРК 4 — свободна, ТРК 5 — работает, ТРК 6 — работает" data-tip="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — пистолет снят, ТРК 4 — свободна, ТРК 5 — работает, ТРК 6 — работает"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--info" aria-hidden="true">3</i><i class="pump pump--ok" aria-hidden="true">4</i><i class="pump pump--info" aria-hidden="true">5</i><i class="pump pump--info" aria-hidden="true">6</i><span class="pumps__n mono" aria-hidden="true">6/6</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="394">№ 394</td>
+  <td class="num-cell" data-v="154170" data-cell="sales">154 170,00</td>
+  <td class="mono" data-v="23" data-cell="seen">23 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 13"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, тракт Проектный, 29</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1010</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783130</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.4766, 85.0431</dd></div>
+</dl></td></tr>
+<tr data-id="177" data-state="1" data-st="ok" data-org="4" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0177"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 14"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="177"><a href="../azs/information.html?to=177">АЗС № 14</a><span class="cell-sub mono">ТО-0177</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">ул. Примерная, 80</span></td>
+  <td>ИП Образцов</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="3"><span class="pumps" role="img" aria-label="ТРК 1 — работает, ТРК 2 — свободна, ТРК 3 — заблокирована" data-tip="ТРК 1 — работает, ТРК 2 — свободна, ТРК 3 — заблокирована"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--err" aria-hidden="true">3</i><span class="pumps__n mono" aria-hidden="true">2/3</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="459">№ 459</td>
+  <td class="num-cell" data-v="253760" data-cell="sales">253 760,00</td>
+  <td class="mono" data-v="29" data-cell="seen">29 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 14"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, ул. Примерная, 80</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1011</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783143</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.4717, 84.9593</dd></div>
+</dl></td></tr>
+<tr data-id="184" data-state="1" data-st="ok" data-org="1" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0184"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 15"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="184"><a href="../azs/information.html?to=184">АЗС № 15</a><span class="cell-sub mono">ТО-0184</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">тракт Проектный, 78</span></td>
+  <td>ООО «Демо-Ойл»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — работает" data-tip="ТРК 1 — свободна, ТРК 2 — работает"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">2/2</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="459">№ 459</td>
+  <td class="num-cell" data-v="267160" data-cell="sales">267 160,00</td>
+  <td class="mono" data-v="32" data-cell="seen">32 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 15"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, тракт Проектный, 78</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1012</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783156</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.4647, 84.8958</dd></div>
+</dl></td></tr>
+<tr data-id="191" data-state="1" data-st="ok" data-org="2" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0191"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 16"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="191"><a href="../azs/information.html?to=191">АЗС № 16</a><span class="cell-sub mono">ТО-0191</span></td>
+  <td data-v="Томск">Томск<span class="cell-sub">ул. Демонстрационная, 20</span></td>
+  <td>ООО «Пример-Трейд»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — пистолет снят" data-tip="ТРК 1 — свободна, ТРК 2 — пистолет снят"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">2/2</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="411">№ 411</td>
+  <td class="num-cell" data-v="243030" data-cell="sales">243 030,00</td>
+  <td class="mono" data-v="11" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 16"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Томск, ул. Демонстрационная, 20</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1013</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783169</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.5013, 84.9498</dd></div>
+</dl></td></tr>
+<tr data-id="198" data-state="1" data-st="ok" data-org="3" data-version="4.10.8">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0198"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 17"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="198"><a href="../azs/information.html?to=198">АЗС № 17</a><span class="cell-sub mono">ТО-0198</span></td>
+  <td data-v="Северск">Северск<span class="cell-sub">пр. Образцовый, 33</span></td>
+  <td>АО «Тестовая сеть»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="5"><span class="pumps" role="img" aria-label="ТРК 1 — работает, ТРК 2 — свободна, ТРК 3 — работает, ТРК 4 — свободна, ТРК 5 — свободна" data-tip="ТРК 1 — работает, ТРК 2 — свободна, ТРК 3 — работает, ТРК 4 — свободна, ТРК 5 — свободна"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--info" aria-hidden="true">3</i><i class="pump pump--ok" aria-hidden="true">4</i><i class="pump pump--ok" aria-hidden="true">5</i><span class="pumps__n mono" aria-hidden="true">5/5</span></span></td>
+  <td class="mono">4.10.8</td>
+  <td class="mono" data-v="397">№ 397</td>
+  <td class="num-cell" data-v="243280" data-cell="sales">243 280,00</td>
+  <td class="mono" data-v="20" data-cell="seen">20 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 17"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Северск, пр. Образцовый, 33</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1014</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783182</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.6718, 84.8128</dd></div>
+</dl></td></tr>
+<tr data-id="205" data-state="1" data-st="ok" data-org="4" data-version="4.10.8">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0205"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 18"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="205"><a href="../azs/information.html?to=205">АЗС № 18</a><span class="cell-sub mono">ТО-0205</span></td>
+  <td data-v="Северск">Северск<span class="cell-sub">ул. Демонстрационная, 106</span></td>
+  <td>ИП Образцов</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="4"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — пистолет снят, ТРК 3 — работает, ТРК 4 — работает" data-tip="ТРК 1 — свободна, ТРК 2 — пистолет снят, ТРК 3 — работает, ТРК 4 — работает"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><i class="pump pump--info" aria-hidden="true">3</i><i class="pump pump--info" aria-hidden="true">4</i><span class="pumps__n mono" aria-hidden="true">4/4</span></span></td>
+  <td class="mono">4.10.8</td>
+  <td class="mono" data-v="460">№ 460</td>
+  <td class="num-cell" data-v="191650" data-cell="sales">191 650,00</td>
+  <td class="mono" data-v="40" data-cell="seen">40 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 18"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Северск, ул. Демонстрационная, 106</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1015</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783195</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.6556, 84.8875</dd></div>
+</dl></td></tr>
+<tr data-id="212" data-state="2" data-st="warn" data-org="1" data-version="4.10.8">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0212"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 19"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="212"><a href="../azs/information.html?to=212">АЗС № 19</a><span class="cell-sub mono">ТО-0212</span></td>
+  <td data-v="Северск">Северск<span class="cell-sub">ул. Макетная, 29</span></td>
+  <td>ООО «Демо-Ойл»</td>
+  <td data-v="warn2" data-cell="state"><span class="st st--warn">Нестабильно</span></td>
+  <td data-v="3"><span class="pumps" role="img" aria-label="ТРК 1 — заблокирована, ТРК 2 — работает, ТРК 3 — свободна" data-tip="ТРК 1 — заблокирована, ТРК 2 — работает, ТРК 3 — свободна"><i class="pump pump--err" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><span class="pumps__n mono" aria-hidden="true">2/3</span></span></td>
+  <td class="mono">4.10.8</td>
+  <td class="mono" data-v="393">№ 393</td>
+  <td class="num-cell" data-v="229960" data-cell="sales">229 960,00</td>
+  <td class="mono" data-v="488" data-cell="seen">8 мин</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 19"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Северск, ул. Макетная, 29</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1016</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783208</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.5921, 84.8316</dd></div>
+</dl></td></tr>
+<tr data-id="219" data-state="2" data-st="warn" data-org="2" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0219"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 20"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="219"><a href="../azs/information.html?to=219">АЗС № 20</a><span class="cell-sub mono">ТО-0219</span></td>
+  <td data-v="Северск">Северск<span class="cell-sub">ул. Примерная, 37</span></td>
+  <td>ООО «Пример-Трейд»</td>
+  <td data-v="warn2" data-cell="state"><span class="st st--warn">Нестабильно</span></td>
+  <td data-v="3"><span class="pumps" role="img" aria-label="ТРК 1 — нет ответа, ТРК 2 — свободна, ТРК 3 — работает" data-tip="ТРК 1 — нет ответа, ТРК 2 — свободна, ТРК 3 — работает"><i class="pump pump--err" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--info" aria-hidden="true">3</i><span class="pumps__n mono" aria-hidden="true">2/3</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="393">№ 393</td>
+  <td class="num-cell" data-v="86090" data-cell="sales">86 090,00</td>
+  <td class="mono" data-v="202" data-cell="seen">3 мин</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 20"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Северск, ул. Примерная, 37</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1017</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783221</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.6011, 84.8448</dd></div>
+</dl></td></tr>
+<tr data-id="226" data-state="1" data-st="ok" data-org="3" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0226"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 21"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="226"><a href="../azs/information.html?to=226">АЗС № 21</a><span class="cell-sub mono">ТО-0226</span></td>
+  <td data-v="Асино">Асино<span class="cell-sub">ул. Макетная, 44</span></td>
+  <td>АО «Тестовая сеть»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="3"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — пистолет снят" data-tip="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — пистолет снят"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--info" aria-hidden="true">3</i><span class="pumps__n mono" aria-hidden="true">3/3</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="421">№ 421</td>
+  <td class="num-cell" data-v="94630" data-cell="sales">94 630,00</td>
+  <td class="mono" data-v="40" data-cell="seen">40 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 21"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Асино, ул. Макетная, 44</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1018</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783234</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">57.0556, 86.0671</dd></div>
+</dl></td></tr>
+<tr data-id="233" data-state="1" data-st="ok" data-org="4" data-version="4.10.8">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0233"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 22"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="233"><a href="../azs/information.html?to=233">АЗС № 22</a><span class="cell-sub mono">ТО-0233</span></td>
+  <td data-v="Асино">Асино<span class="cell-sub">ул. Макетная, 36</span></td>
+  <td>ИП Образцов</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="6"><span class="pumps" role="img" aria-label="ТРК 1 — заблокирована, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — свободна, ТРК 5 — свободна, ТРК 6 — работает" data-tip="ТРК 1 — заблокирована, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — свободна, ТРК 5 — свободна, ТРК 6 — работает"><i class="pump pump--err" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--ok" aria-hidden="true">4</i><i class="pump pump--ok" aria-hidden="true">5</i><i class="pump pump--info" aria-hidden="true">6</i><span class="pumps__n mono" aria-hidden="true">5/6</span></span></td>
+  <td class="mono">4.10.8</td>
+  <td class="mono" data-v="393">№ 393</td>
+  <td class="num-cell" data-v="81690" data-cell="sales">81 690,00</td>
+  <td class="mono" data-v="3" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 22"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Асино, ул. Макетная, 36</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1019</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783247</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.9894, 86.0490</dd></div>
+</dl></td></tr>
+<tr data-id="240" data-state="1" data-st="ok" data-org="1" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0240"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 23"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="240"><a href="../azs/information.html?to=240">АЗС № 23</a><span class="cell-sub mono">ТО-0240</span></td>
+  <td data-v="Асино">Асино<span class="cell-sub">ул. Макетная, 14</span></td>
+  <td>ООО «Демо-Ойл»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="6"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — работает, ТРК 4 — свободна, ТРК 5 — остановлена, ТРК 6 — свободна" data-tip="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — работает, ТРК 4 — свободна, ТРК 5 — остановлена, ТРК 6 — свободна"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--info" aria-hidden="true">3</i><i class="pump pump--ok" aria-hidden="true">4</i><i class="pump pump--warn" aria-hidden="true">5</i><i class="pump pump--ok" aria-hidden="true">6</i><span class="pumps__n mono" aria-hidden="true">5/6</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="428">№ 428</td>
+  <td class="num-cell" data-v="228450" data-cell="sales">228 450,00</td>
+  <td class="mono" data-v="0" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 23"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Асино, ул. Макетная, 14</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1020</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783260</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">57.0342, 86.0354</dd></div>
+</dl></td></tr>
+<tr data-id="247" data-state="1" data-st="ok" data-org="2" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0247"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 24"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="247"><a href="../azs/information.html?to=247">АЗС № 24</a><span class="cell-sub mono">ТО-0247</span></td>
+  <td data-v="Колпашево">Колпашево<span class="cell-sub">пр. Образцовый, 82</span></td>
+  <td>ООО «Пример-Трейд»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="6"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — работает, ТРК 5 — пистолет снят, ТРК 6 — работает" data-tip="ТРК 1 — свободна, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — работает, ТРК 5 — пистолет снят, ТРК 6 — работает"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--info" aria-hidden="true">4</i><i class="pump pump--info" aria-hidden="true">5</i><i class="pump pump--info" aria-hidden="true">6</i><span class="pumps__n mono" aria-hidden="true">6/6</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="380">№ 380</td>
+  <td class="num-cell" data-v="86890" data-cell="sales">86 890,00</td>
+  <td class="mono" data-v="5" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 24"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Колпашево, пр. Образцовый, 82</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1021</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783273</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">58.3400, 82.8217</dd></div>
+</dl></td></tr>
+<tr data-id="254" data-state="1" data-st="ok" data-org="3" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0254"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 25"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="254"><a href="../azs/information.html?to=254">АЗС № 25</a><span class="cell-sub mono">ТО-0254</span></td>
+  <td data-v="Колпашево">Колпашево<span class="cell-sub">ул. Макетная, 99</span></td>
+  <td>АО «Тестовая сеть»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="3"><span class="pumps" role="img" aria-label="ТРК 1 — работает, ТРК 2 — свободна, ТРК 3 — пистолет снят" data-tip="ТРК 1 — работает, ТРК 2 — свободна, ТРК 3 — пистолет снят"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--info" aria-hidden="true">3</i><span class="pumps__n mono" aria-hidden="true">3/3</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="401">№ 401</td>
+  <td class="num-cell" data-v="310550" data-cell="sales">310 550,00</td>
+  <td class="mono" data-v="43" data-cell="seen">43 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 25"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Колпашево, ул. Макетная, 99</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1022</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783286</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">58.2377, 82.8845</dd></div>
+</dl></td></tr>
+<tr data-id="261" data-state="1" data-st="ok" data-org="4" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0261"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 26"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="261"><a href="../azs/information.html?to=261">АЗС № 26</a><span class="cell-sub mono">ТО-0261</span></td>
+  <td data-v="Колпашево">Колпашево<span class="cell-sub">тракт Проектный, 6</span></td>
+  <td>ИП Образцов</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="4"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — свободна" data-tip="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — свободна"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--ok" aria-hidden="true">4</i><span class="pumps__n mono" aria-hidden="true">4/4</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="398">№ 398</td>
+  <td class="num-cell" data-v="97450" data-cell="sales">97 450,00</td>
+  <td class="mono" data-v="7" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 26"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Колпашево, тракт Проектный, 6</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1023</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783299</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">58.3468, 82.7625</dd></div>
+</dl></td></tr>
+<tr data-id="268" data-state="1" data-st="ok" data-org="1" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0268"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 27"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="268"><a href="../azs/information.html?to=268">АЗС № 27</a><span class="cell-sub mono">ТО-0268</span></td>
+  <td data-v="Стрежевой">Стрежевой<span class="cell-sub">ул. Макетная, 32</span></td>
+  <td>ООО «Демо-Ойл»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="5"><span class="pumps" role="img" aria-label="ТРК 1 — работает, ТРК 2 — свободна, ТРК 3 — работает, ТРК 4 — работает, ТРК 5 — свободна" data-tip="ТРК 1 — работает, ТРК 2 — свободна, ТРК 3 — работает, ТРК 4 — работает, ТРК 5 — свободна"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--info" aria-hidden="true">3</i><i class="pump pump--info" aria-hidden="true">4</i><i class="pump pump--ok" aria-hidden="true">5</i><span class="pumps__n mono" aria-hidden="true">5/5</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="401">№ 401</td>
+  <td class="num-cell" data-v="244520" data-cell="sales">244 520,00</td>
+  <td class="mono" data-v="22" data-cell="seen">22 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 27"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Стрежевой, ул. Макетная, 32</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1024</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783312</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">60.7589, 77.7175</dd></div>
+</dl></td></tr>
+<tr data-id="275" data-state="5" data-st="err" data-org="2" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0275"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 28"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="275"><a href="../azs/information.html?to=275">АЗС № 28</a><span class="cell-sub mono">ТО-0275</span></td>
+  <td data-v="Стрежевой">Стрежевой<span class="cell-sub">ул. Тестовая, 93</span></td>
+  <td>ООО «Пример-Трейд»</td>
+  <td data-v="err5" data-cell="state"><span class="st st--err">Нет лицензии</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — работает" data-tip="ТРК 1 — свободна, ТРК 2 — работает"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">2/2</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="421">№ 421</td>
+  <td class="num-cell" data-v="291370" data-cell="sales">291 370,00</td>
+  <td class="mono" data-v="11" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 28"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Стрежевой, ул. Тестовая, 93</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1025</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783325</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">60.6865, 77.5096</dd></div>
+</dl></td></tr>
+<tr data-id="282" data-state="1" data-st="ok" data-org="3" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0282"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 29"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="282"><a href="../azs/information.html?to=282">АЗС № 29</a><span class="cell-sub mono">ТО-0282</span></td>
+  <td data-v="Стрежевой">Стрежевой<span class="cell-sub">ул. Макетная, 51</span></td>
+  <td>АО «Тестовая сеть»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="6"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — пистолет снят, ТРК 5 — работает, ТРК 6 — пистолет снят" data-tip="ТРК 1 — свободна, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — пистолет снят, ТРК 5 — работает, ТРК 6 — пистолет снят"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--info" aria-hidden="true">4</i><i class="pump pump--info" aria-hidden="true">5</i><i class="pump pump--info" aria-hidden="true">6</i><span class="pumps__n mono" aria-hidden="true">6/6</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="423">№ 423</td>
+  <td class="num-cell" data-v="130100" data-cell="sales">130 100,00</td>
+  <td class="mono" data-v="35" data-cell="seen">35 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 29"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Стрежевой, ул. Макетная, 51</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1026</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783338</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">60.7620, 77.6077</dd></div>
+</dl></td></tr>
+<tr data-id="289" data-state="1" data-st="ok" data-org="4" data-version="4.10.8">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0289"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 30"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="289"><a href="../azs/information.html?to=289">АЗС № 30</a><span class="cell-sub mono">ТО-0289</span></td>
+  <td data-v="Кедровый">Кедровый<span class="cell-sub">ул. Макетная, 33</span></td>
+  <td>ИП Образцов</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — свободна" data-tip="ТРК 1 — свободна, ТРК 2 — свободна"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">2/2</span></span></td>
+  <td class="mono">4.10.8</td>
+  <td class="mono" data-v="425">№ 425</td>
+  <td class="num-cell" data-v="254400" data-cell="sales">254 400,00</td>
+  <td class="mono" data-v="27" data-cell="seen">27 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 30"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Кедровый, ул. Макетная, 33</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1027</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783351</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">57.5007, 79.5446</dd></div>
+</dl></td></tr>
+<tr data-id="296" data-state="2" data-st="warn" data-org="1" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0296"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 31"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="296"><a href="../azs/information.html?to=296">АЗС № 31</a><span class="cell-sub mono">ТО-0296</span></td>
+  <td data-v="Кожевниково">Кожевниково<span class="cell-sub">ул. Макетная, 11</span></td>
+  <td>ООО «Демо-Ойл»</td>
+  <td data-v="warn2" data-cell="state"><span class="st st--warn">Нестабильно</span></td>
+  <td data-v="6"><span class="pumps" role="img" aria-label="ТРК 1 — нет ответа, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — пистолет снят, ТРК 5 — работает, ТРК 6 — свободна" data-tip="ТРК 1 — нет ответа, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — пистолет снят, ТРК 5 — работает, ТРК 6 — свободна"><i class="pump pump--err" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--info" aria-hidden="true">4</i><i class="pump pump--info" aria-hidden="true">5</i><i class="pump pump--ok" aria-hidden="true">6</i><span class="pumps__n mono" aria-hidden="true">5/6</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="400">№ 400</td>
+  <td class="num-cell" data-v="154770" data-cell="sales">154 770,00</td>
+  <td class="mono" data-v="831" data-cell="seen">13 мин</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 31"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Кожевниково, ул. Макетная, 11</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1028</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783364</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.1863, 83.9356</dd></div>
+</dl></td></tr>
+<tr data-id="303" data-state="1" data-st="ok" data-org="2" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0303"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 32"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="303"><a href="../azs/information.html?to=303">АЗС № 32</a><span class="cell-sub mono">ТО-0303</span></td>
+  <td data-v="Кожевниково">Кожевниково<span class="cell-sub">ул. Демонстрационная, 43</span></td>
+  <td>ООО «Пример-Трейд»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="4"><span class="pumps" role="img" aria-label="ТРК 1 — пистолет снят, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — пистолет снят" data-tip="ТРК 1 — пистолет снят, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — пистолет снят"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--info" aria-hidden="true">4</i><span class="pumps__n mono" aria-hidden="true">4/4</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="429">№ 429</td>
+  <td class="num-cell" data-v="85450" data-cell="sales">85 450,00</td>
+  <td class="mono" data-v="35" data-cell="seen">35 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 32"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Кожевниково, ул. Демонстрационная, 43</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1029</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783377</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.1959, 83.9240</dd></div>
+</dl></td></tr>
+<tr data-id="310" data-state="1" data-st="ok" data-org="3" data-version="4.10.8">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0310"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 33"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="310"><a href="../azs/information.html?to=310">АЗС № 33</a><span class="cell-sub mono">ТО-0310</span></td>
+  <td data-v="Мельниково">Мельниково<span class="cell-sub">ул. Демонстрационная, 5</span></td>
+  <td>АО «Тестовая сеть»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="6"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — свободна, ТРК 5 — работает, ТРК 6 — свободна" data-tip="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — свободна, ТРК 5 — работает, ТРК 6 — свободна"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--ok" aria-hidden="true">4</i><i class="pump pump--info" aria-hidden="true">5</i><i class="pump pump--ok" aria-hidden="true">6</i><span class="pumps__n mono" aria-hidden="true">6/6</span></span></td>
+  <td class="mono">4.10.8</td>
+  <td class="mono" data-v="403">№ 403</td>
+  <td class="num-cell" data-v="231010" data-cell="sales">231 010,00</td>
+  <td class="mono" data-v="34" data-cell="seen">34 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 33"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Мельниково, ул. Демонстрационная, 5</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1030</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783390</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.4843, 84.0638</dd></div>
+</dl></td></tr>
+<tr data-id="317" data-state="1" data-st="ok" data-org="4" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0317"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 34"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="317"><a href="../azs/information.html?to=317">АЗС № 34</a><span class="cell-sub mono">ТО-0317</span></td>
+  <td data-v="Мельниково">Мельниково<span class="cell-sub">пр. Образцовый, 101</span></td>
+  <td>ИП Образцов</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="4"><span class="pumps" role="img" aria-label="ТРК 1 — работает, ТРК 2 — свободна, ТРК 3 — заблокирована, ТРК 4 — свободна" data-tip="ТРК 1 — работает, ТРК 2 — свободна, ТРК 3 — заблокирована, ТРК 4 — свободна"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--err" aria-hidden="true">3</i><i class="pump pump--ok" aria-hidden="true">4</i><span class="pumps__n mono" aria-hidden="true">3/4</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="419">№ 419</td>
+  <td class="num-cell" data-v="306840" data-cell="sales">306 840,00</td>
+  <td class="mono" data-v="6" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 34"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Мельниково, пр. Образцовый, 101</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1031</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783403</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.4862, 83.9595</dd></div>
+</dl></td></tr>
+<tr data-id="324" data-state="1" data-st="ok" data-org="1" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0324"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 35"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="324"><a href="../azs/information.html?to=324">АЗС № 35</a><span class="cell-sub mono">ТО-0324</span></td>
+  <td data-v="Бакчар">Бакчар<span class="cell-sub">ул. Примерная, 119</span></td>
+  <td>ООО «Демо-Ойл»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — пистолет снят" data-tip="ТРК 1 — свободна, ТРК 2 — пистолет снят"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">2/2</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="445">№ 445</td>
+  <td class="num-cell" data-v="284780" data-cell="sales">284 780,00</td>
+  <td class="mono" data-v="27" data-cell="seen">27 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 35"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Бакчар, ул. Примерная, 119</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1032</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783416</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">57.0516, 82.1303</dd></div>
+</dl></td></tr>
+<tr data-id="331" data-state="1" data-st="ok" data-org="2" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0331"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 36"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="331"><a href="../azs/information.html?to=331">АЗС № 36</a><span class="cell-sub mono">ТО-0331</span></td>
+  <td data-v="Первомайское">Первомайское<span class="cell-sub">ул. Демонстрационная, 64</span></td>
+  <td>ООО «Пример-Трейд»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — работает, ТРК 2 — свободна" data-tip="ТРК 1 — работает, ТРК 2 — свободна"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">2/2</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="391">№ 391</td>
+  <td class="num-cell" data-v="186450" data-cell="sales">186 450,00</td>
+  <td class="mono" data-v="43" data-cell="seen">43 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 36"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Первомайское, ул. Демонстрационная, 64</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1033</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783429</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">57.0133, 86.2894</dd></div>
+</dl></td></tr>
+<tr data-id="338" data-state="0" data-st="off" data-org="3" data-version="4.10.8">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0338"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 37"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="338"><a href="../azs/information.html?to=338">АЗС № 37</a><span class="cell-sub mono">ТО-0338</span></td>
+  <td data-v="Первомайское">Первомайское<span class="cell-sub">ул. Примерная, 15</span></td>
+  <td>АО «Тестовая сеть»</td>
+  <td data-v="off0" data-cell="state"><span class="st st--off">Не в сети</span></td>
+  <td data-v="4"><span class="pumps" role="img" aria-label="ТРК 1 — отключена, ТРК 2 — отключена, ТРК 3 — отключена, ТРК 4 — отключена" data-tip="ТРК 1 — отключена, ТРК 2 — отключена, ТРК 3 — отключена, ТРК 4 — отключена"><i class="pump pump--off" aria-hidden="true">1</i><i class="pump pump--off" aria-hidden="true">2</i><i class="pump pump--off" aria-hidden="true">3</i><i class="pump pump--off" aria-hidden="true">4</i><span class="pumps__n mono" aria-hidden="true">0/4</span></span></td>
+  <td class="mono">4.10.8</td>
+  <td class="mono" data-v="320">№ 320 <span class="muted">закрыта</span></td>
+  <td class="num-cell" data-v="0" data-cell="sales">—</td>
+  <td class="mono" data-v="32036" data-cell="seen">8 ч</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 37"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Первомайское, ул. Примерная, 15</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1034</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783442</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">57.0954, 86.3738</dd></div>
+</dl></td></tr>
+<tr data-id="345" data-state="1" data-st="ok" data-org="4" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0345"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 38"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="345"><a href="../azs/information.html?to=345">АЗС № 38</a><span class="cell-sub mono">ТО-0345</span></td>
+  <td data-v="Зырянское">Зырянское<span class="cell-sub">тракт Проектный, 73</span></td>
+  <td>ИП Образцов</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="5"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — свободна, ТРК 5 — остановлена" data-tip="ТРК 1 — свободна, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — свободна, ТРК 5 — остановлена"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--ok" aria-hidden="true">4</i><i class="pump pump--warn" aria-hidden="true">5</i><span class="pumps__n mono" aria-hidden="true">4/5</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="428">№ 428</td>
+  <td class="num-cell" data-v="99620" data-cell="sales">99 620,00</td>
+  <td class="mono" data-v="4" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 38"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Зырянское, тракт Проектный, 73</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1035</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783455</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">56.8215, 86.4957</dd></div>
+</dl></td></tr>
+<tr data-id="352" data-state="1" data-st="ok" data-org="1" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0352"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 39"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="352"><a href="../azs/information.html?to=352">АЗС № 39</a><span class="cell-sub mono">ТО-0352</span></td>
+  <td data-v="Каргасок">Каргасок<span class="cell-sub">ул. Демонстрационная, 53</span></td>
+  <td>ООО «Демо-Ойл»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="3"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — работает, ТРК 3 — работает" data-tip="ТРК 1 — свободна, ТРК 2 — работает, ТРК 3 — работает"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><i class="pump pump--info" aria-hidden="true">3</i><span class="pumps__n mono" aria-hidden="true">3/3</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="432">№ 432</td>
+  <td class="num-cell" data-v="79110" data-cell="sales">79 110,00</td>
+  <td class="mono" data-v="12" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 39"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Каргасок, ул. Демонстрационная, 53</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1036</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783468</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">59.0872, 80.7830</dd></div>
+</dl></td></tr>
+<tr data-id="359" data-state="1" data-st="ok" data-org="2" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0359"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 40"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="359"><a href="../azs/information.html?to=359">АЗС № 40</a><span class="cell-sub mono">ТО-0359</span></td>
+  <td data-v="Каргасок">Каргасок<span class="cell-sub">ул. Демонстрационная, 2</span></td>
+  <td>ООО «Пример-Трейд»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="3"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — пистолет снят" data-tip="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — пистолет снят"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--info" aria-hidden="true">3</i><span class="pumps__n mono" aria-hidden="true">3/3</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="381">№ 381</td>
+  <td class="num-cell" data-v="315960" data-cell="sales">315 960,00</td>
+  <td class="mono" data-v="16" data-cell="seen">16 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 40"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Каргасок, ул. Демонстрационная, 2</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1037</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783481</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">59.0835, 80.7818</dd></div>
+</dl></td></tr>
+<tr data-id="366" data-state="1" data-st="ok" data-org="3" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0366"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 41"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="366"><a href="../azs/information.html?to=366">АЗС № 41</a><span class="cell-sub mono">ТО-0366</span></td>
+  <td data-v="Молчаново">Молчаново<span class="cell-sub">тракт Проектный, 9</span></td>
+  <td>АО «Тестовая сеть»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="5"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — работает, ТРК 5 — работает" data-tip="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — свободна, ТРК 4 — работает, ТРК 5 — работает"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--info" aria-hidden="true">4</i><i class="pump pump--info" aria-hidden="true">5</i><span class="pumps__n mono" aria-hidden="true">5/5</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="396">№ 396</td>
+  <td class="num-cell" data-v="272620" data-cell="sales">272 620,00</td>
+  <td class="mono" data-v="10" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 41"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Молчаново, тракт Проектный, 9</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1038</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783494</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">57.6162, 83.7033</dd></div>
+</dl></td></tr>
+<tr data-id="373" data-state="1" data-st="ok" data-org="4" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0373"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 42"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="373"><a href="../azs/information.html?to=373">АЗС № 42</a><span class="cell-sub mono">ТО-0373</span></td>
+  <td data-v="Молчаново">Молчаново<span class="cell-sub">тракт Проектный, 103</span></td>
+  <td>ИП Образцов</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — пистолет снят, ТРК 2 — пистолет снят" data-tip="ТРК 1 — пистолет снят, ТРК 2 — пистолет снят"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">2/2</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="409">№ 409</td>
+  <td class="num-cell" data-v="273020" data-cell="sales">273 020,00</td>
+  <td class="mono" data-v="5" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 42"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Молчаново, тракт Проектный, 103</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1039</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783507</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">57.6094, 83.6772</dd></div>
+</dl></td></tr>
+<tr data-id="380" data-state="1" data-st="ok" data-org="1" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0380"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 43"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="380"><a href="../azs/information.html?to=380">АЗС № 43</a><span class="cell-sub mono">ТО-0380</span></td>
+  <td data-v="Тегульдет">Тегульдет<span class="cell-sub">ул. Макетная, 22</span></td>
+  <td>ООО «Демо-Ойл»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — пистолет снят" data-tip="ТРК 1 — свободна, ТРК 2 — пистолет снят"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">2/2</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="444">№ 444</td>
+  <td class="num-cell" data-v="236970" data-cell="sales">236 970,00</td>
+  <td class="mono" data-v="22" data-cell="seen">22 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 43"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Тегульдет, ул. Макетная, 22</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1040</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783520</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">57.3574, 88.3002</dd></div>
+</dl></td></tr>
+<tr data-id="387" data-state="1" data-st="ok" data-org="2" data-version="4.10.8">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0387"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 44"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="387"><a href="../azs/information.html?to=387">АЗС № 44</a><span class="cell-sub mono">ТО-0387</span></td>
+  <td data-v="Белый Яр">Белый Яр<span class="cell-sub">ул. Тестовая, 51</span></td>
+  <td>ООО «Пример-Трейд»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="5"><span class="pumps" role="img" aria-label="ТРК 1 — работает, ТРК 2 — заблокирована, ТРК 3 — свободна, ТРК 4 — работает, ТРК 5 — работает" data-tip="ТРК 1 — работает, ТРК 2 — заблокирована, ТРК 3 — свободна, ТРК 4 — работает, ТРК 5 — работает"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--err" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--info" aria-hidden="true">4</i><i class="pump pump--info" aria-hidden="true">5</i><span class="pumps__n mono" aria-hidden="true">4/5</span></span></td>
+  <td class="mono">4.10.8</td>
+  <td class="mono" data-v="449">№ 449</td>
+  <td class="num-cell" data-v="105140" data-cell="sales">105 140,00</td>
+  <td class="mono" data-v="24" data-cell="seen">24 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 44"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Белый Яр, ул. Тестовая, 51</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1041</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783533</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">58.4072, 85.1677</dd></div>
+</dl></td></tr>
+<tr data-id="394" data-state="4" data-st="warn" data-org="3" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0394"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 45"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="394"><a href="../azs/information.html?to=394">АЗС № 45</a><span class="cell-sub mono">ТО-0394</span></td>
+  <td data-v="Белый Яр">Белый Яр<span class="cell-sub">тракт Проектный, 80</span></td>
+  <td>АО «Тестовая сеть»</td>
+  <td data-v="warn4" data-cell="state"><span class="st st--warn">Нет терминала</span></td>
+  <td data-v="3"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — свободна" data-tip="ТРК 1 — свободна, ТРК 2 — свободна, ТРК 3 — свободна"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--ok" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><span class="pumps__n mono" aria-hidden="true">3/3</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="419">№ 419</td>
+  <td class="num-cell" data-v="270910" data-cell="sales">270 910,00</td>
+  <td class="mono" data-v="2" data-cell="seen">только что</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 45"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Белый Яр, тракт Проектный, 80</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1042</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783546</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">58.3790, 85.0828</dd></div>
+</dl></td></tr>
+<tr data-id="401" data-state="1" data-st="ok" data-org="4" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0401"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 46"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="401"><a href="../azs/information.html?to=401">АЗС № 46</a><span class="cell-sub mono">ТО-0401</span></td>
+  <td data-v="Подгорное">Подгорное<span class="cell-sub">ул. Макетная, 98</span></td>
+  <td>ИП Образцов</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="5"><span class="pumps" role="img" aria-label="ТРК 1 — пистолет снят, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — свободна, ТРК 5 — работает" data-tip="ТРК 1 — пистолет снят, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — свободна, ТРК 5 — работает"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--ok" aria-hidden="true">4</i><i class="pump pump--info" aria-hidden="true">5</i><span class="pumps__n mono" aria-hidden="true">5/5</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="432">№ 432</td>
+  <td class="num-cell" data-v="81640" data-cell="sales">81 640,00</td>
+  <td class="mono" data-v="21" data-cell="seen">21 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 46"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Подгорное, ул. Макетная, 98</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1043</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783559</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">57.7403, 82.7536</dd></div>
+</dl></td></tr>
+<tr data-id="408" data-state="1" data-st="ok" data-org="1" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0408"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 47"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="408"><a href="../azs/information.html?to=408">АЗС № 47</a><span class="cell-sub mono">ТО-0408</span></td>
+  <td data-v="Парабель">Парабель<span class="cell-sub">ул. Макетная, 23</span></td>
+  <td>ООО «Демо-Ойл»</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — свободна, ТРК 2 — работает" data-tip="ТРК 1 — свободна, ТРК 2 — работает"><i class="pump pump--ok" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">2/2</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="423">№ 423</td>
+  <td class="num-cell" data-v="139420" data-cell="sales">139 420,00</td>
+  <td class="mono" data-v="25" data-cell="seen">25 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 47"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Парабель, ул. Макетная, 23</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1044</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783572</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">58.7680, 81.5829</dd></div>
+</dl></td></tr>
+<tr data-id="415" data-state="0" data-st="off" data-org="2" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0415"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 48"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="415"><a href="../azs/information.html?to=415">АЗС № 48</a><span class="cell-sub mono">ТО-0415</span></td>
+  <td data-v="Парабель">Парабель<span class="cell-sub">ул. Демонстрационная, 40</span></td>
+  <td>ООО «Пример-Трейд»</td>
+  <td data-v="off0" data-cell="state"><span class="st st--off">Не в сети</span></td>
+  <td data-v="3"><span class="pumps" role="img" aria-label="ТРК 1 — отключена, ТРК 2 — отключена, ТРК 3 — отключена" data-tip="ТРК 1 — отключена, ТРК 2 — отключена, ТРК 3 — отключена"><i class="pump pump--off" aria-hidden="true">1</i><i class="pump pump--off" aria-hidden="true">2</i><i class="pump pump--off" aria-hidden="true">3</i><span class="pumps__n mono" aria-hidden="true">0/3</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="341">№ 341 <span class="muted">закрыта</span></td>
+  <td class="num-cell" data-v="0" data-cell="sales">—</td>
+  <td class="mono" data-v="33031" data-cell="seen">9 ч</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 48"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Парабель, ул. Демонстрационная, 40</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1045</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783585</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">58.6780, 81.3626</dd></div>
+</dl></td></tr>
+<tr data-id="422" data-state="0" data-st="off" data-org="3" data-version="4.11.3">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0422"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 49"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="422"><a href="../azs/information.html?to=422">АЗС № 49</a><span class="cell-sub mono">ТО-0422</span></td>
+  <td data-v="Кривошеино">Кривошеино<span class="cell-sub">ул. Тестовая, 101</span></td>
+  <td>АО «Тестовая сеть»</td>
+  <td data-v="off0" data-cell="state"><span class="st st--off">Не в сети</span></td>
+  <td data-v="2"><span class="pumps" role="img" aria-label="ТРК 1 — отключена, ТРК 2 — отключена" data-tip="ТРК 1 — отключена, ТРК 2 — отключена"><i class="pump pump--off" aria-hidden="true">1</i><i class="pump pump--off" aria-hidden="true">2</i><span class="pumps__n mono" aria-hidden="true">0/2</span></span></td>
+  <td class="mono">4.11.3</td>
+  <td class="mono" data-v="316">№ 316 <span class="muted">закрыта</span></td>
+  <td class="num-cell" data-v="0" data-cell="sales">—</td>
+  <td class="mono" data-v="69513" data-cell="seen">19 ч</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 49"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Кривошеино, ул. Тестовая, 101</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1046</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783598</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">57.2647, 83.8229</dd></div>
+</dl></td></tr>
+<tr data-id="429" data-state="1" data-st="ok" data-org="4" data-version="4.12.0">
+  <td class="col-check"><label class="cb"><input type="checkbox" aria-label="Выбрать ТО-0429"><span class="cb__box"><svg viewBox="0 0 12 12"><path class="cb__tick" d="M2.5 6.2l2.3 2.3L9.5 3.5"/><path class="cb__dash" d="M3 6h6"/></svg></span></label></td>
+  <td class="col-expand"><button class="row-toggle" type="button" aria-expanded="false" aria-label="Подробнее о АЗС № 50"><svg aria-hidden="true"><use href="#i-chevron-right"/></svg></button></td>
+  <td class="cell-main" data-v="429"><a href="../azs/information.html?to=429">АЗС № 50</a><span class="cell-sub mono">ТО-0429</span></td>
+  <td data-v="Кривошеино">Кривошеино<span class="cell-sub">пр. Образцовый, 103</span></td>
+  <td>ИП Образцов</td>
+  <td data-v="ok1" data-cell="state"><span class="st st--ok">В сети</span></td>
+  <td data-v="6"><span class="pumps" role="img" aria-label="ТРК 1 — пистолет снят, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — свободна, ТРК 5 — пистолет снят, ТРК 6 — свободна" data-tip="ТРК 1 — пистолет снят, ТРК 2 — работает, ТРК 3 — свободна, ТРК 4 — свободна, ТРК 5 — пистолет снят, ТРК 6 — свободна"><i class="pump pump--info" aria-hidden="true">1</i><i class="pump pump--info" aria-hidden="true">2</i><i class="pump pump--ok" aria-hidden="true">3</i><i class="pump pump--ok" aria-hidden="true">4</i><i class="pump pump--info" aria-hidden="true">5</i><i class="pump pump--ok" aria-hidden="true">6</i><span class="pumps__n mono" aria-hidden="true">6/6</span></span></td>
+  <td class="mono">4.12.0</td>
+  <td class="mono" data-v="432">№ 432</td>
+  <td class="num-cell" data-v="132270" data-cell="sales">132 270,00</td>
+  <td class="mono" data-v="36" data-cell="seen">36 с</td>
+  <td class="col-actions"><button class="icon-btn icon-btn--sm" type="button" data-row-menu aria-label="Действия с АЗС № 50"><svg class="ico" aria-hidden="true"><use href="#i-more"/></svg></button></td>
+</tr>
+<tr class="row-detail" hidden><td colspan="12"><dl class="row-detail__inner">
+  <div class="kv"><dt>Адрес</dt><dd>Кривошеино, пр. Образцовый, 103</dd></div>
+  <div class="kv"><dt>Терминал</dt><dd class="mono">T-1047</dd></div>
+  <div class="kv"><dt>Hasp-ключ</dt><dd class="mono">783611</dd></div>
+  <div class="kv"><dt>Топливо</dt><dd>АИ-92, АИ-95, АИ-100, ДТ</dd></div>
+  <div class="kv"><dt>Координаты</dt><dd class="mono">57.2702, 83.8329</dd></div>
+</dl></td></tr>
+<!-- /gen:monitoring-rows -->
+              </tbody>
+            </table>
+          </div>
+          <div class="pager"></div>
+        </div>
+
+        <div data-view-panel="map" hidden>
+          <div class="map" id="to-map" aria-label="Карта-схема точек обслуживания"></div>
+        </div>
+
+        <template data-row-menu-tpl>
+          <div class="opts" role="menu" aria-label="Действия с ТО">
+            <button class="opt" role="menuitem" type="button" data-action="open"><svg class="ico" aria-hidden="true"><use href="#i-station"/></svg>Открыть карточку ТО</button>
+            <button class="opt" role="menuitem" type="button" data-action="copy"><svg class="ico" aria-hidden="true"><use href="#i-copy"/></svg>Скопировать код</button>
+            <button class="opt" role="menuitem" type="button" data-action="restart"><svg class="ico" aria-hidden="true"><use href="#i-refresh"/></svg>Перезапустить сервис</button>
+            <div class="opt-sep" role="separator"></div>
+            <button class="opt opt--danger" role="menuitem" type="button" data-action="disable"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Отключить сервис</button>
+          </div>
+        </template>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- Подтверждение отключения -->
+<dialog class="dlg dlg--sm" id="dlg-disable" aria-labelledby="dlg-d-t" aria-describedby="dlg-d-d" role="alertdialog">
+  <form class="dlg__inner" method="dialog" novalidate id="form-disable">
+    <div class="dlg__head" style="border-bottom:0;padding-bottom:0">
+      <span class="confirm__ico"><svg class="ico" aria-hidden="true"><use href="#i-warn"/></svg></span>
+      <div><h2 class="dlg__title" id="dlg-d-t">Отключить сервис?</h2><p class="dlg__sub" id="dlg-d-d" data-disable-who>1 точка обслуживания</p></div>
+      <button class="icon-btn" type="button" data-close aria-label="Закрыть"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="dlg__body">
+      <div class="consequences"><span class="consequences__title">Что произойдёт</span>
+        <ul><li>Точка перестанет принимать заявки мобильных сервисов</li><li>История мониторинга сохранится, новые данные поступать не будут</li><li>Включить сервис обратно можно в любой момент</li></ul></div>
+      <div class="fld"><label class="fld__label" for="dis-c">Комментарий <span class="fld__req" aria-hidden="true">*</span></label><textarea class="in" id="dis-c" required minlength="5" data-err="Напишите причину — от 5 символов" placeholder="Причина отключения" style="min-height:72px"></textarea><span class="fld__err"></span></div>
+    </div>
+    <div class="dlg__foot"><button class="btn btn--ghost btn--sm" type="button" data-close data-autofocus>Отмена</button><button class="btn btn--primary btn--sm" type="submit"><span data-disable-cta>Отключить сервис</span></button></div>
+  </form>
+</dialog>
+
+<script src="../data/demo.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/monitoring.js"></script>
+</body>
+</html>

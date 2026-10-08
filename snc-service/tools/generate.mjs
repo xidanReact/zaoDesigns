@@ -220,8 +220,7 @@ function footer(r) {
     </div>
   </div>
 </footer>
-
-<div class="cursor" aria-hidden="true"><span class="cursor__ring"></span><span class="cursor__dot"></span></div>`;
+`;
 }
 
 const SPRITE = (() => {

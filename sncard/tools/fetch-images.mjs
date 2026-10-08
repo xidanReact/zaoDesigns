@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /* =========================================================
-   СНК · sncard.ru — докачка картинок и файлов с sncard.ru в sncard/img/ и sncard/files/.
+   СНК · sncard.ru — докачка картинок и файлов с sncard.ru в sncard/img/ и sncard/images/files/.
    Запуск:  node sncard/tools/fetch-images.mjs [--force]
 
    Что делает: читает data/images.json (карта «путь на sncard.ru → файл в img/»)
-   и data/files.json (документы, архивы: «путь → файл в files/», null — файла
+   и data/files.json (документы, архивы: «путь → файл в images/files/», null — файла
    нет и на старом сайте, генератор убирает такие ссылки), скачивает то,
    чего ещё нет, и пропускает уже скачанное.
    После загрузки нужно пересобрать страницы: node sncard/tools/generate.mjs
