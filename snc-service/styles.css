@@ -835,6 +835,8 @@ html:not(.js) .btn--add, html:not(.js) .qty { display: none; }
 .docsec__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
 .docsec__count { font-size: 13px; color: var(--text-muted); }
 .docsec__groups { columns: 2; column-gap: var(--gap); }
+.docsec__groups.is-split { columns: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gap); align-items: start; }
+.docsec__col { display: flex; flex-direction: column; min-width: 0; }
 .docgroup {
   break-inside: avoid; margin-bottom: var(--gap);
   border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--bg);
@@ -847,6 +849,19 @@ html:not(.js) .btn--add, html:not(.js) .qty { display: none; }
 .doclist { padding: 6px 0; }
 .docsub { padding: 14px 22px 6px; font-size: 11.5px; color: var(--accent); letter-spacing: .06em; }
 .docitem[hidden], .docsub[hidden] { display: none; }
+/* Сворачивание категорий: кнопку, шеврон и обёртку списка добавляет pages.js */
+.docgroup.is-collapsible .docgroup__head { cursor: pointer; align-items: center; padding-bottom: 20px; border-bottom-color: transparent; transition: border-color var(--t-ui) ease, background-color var(--t-ui) ease; }
+.docgroup.is-open .docgroup__head { border-bottom-color: var(--line); }
+.docgroup__toggle { all: unset; cursor: pointer; }
+.docgroup__head:has(.docgroup__toggle:focus-visible) { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: var(--r-lg) var(--r-lg) 0 0; }
+.docgroup.is-collapsible .docgroup__count { padding-top: 0; margin-left: auto; }
+.docgroup__chev { flex: none; width: 18px; height: 18px; margin-left: -6px; color: var(--text-muted); transition: transform 280ms var(--ease), color var(--t-ui) ease; }
+.docgroup__head:hover { background: var(--bg); }
+.docgroup__head:hover .docgroup__chev { color: var(--accent); }
+.docgroup.is-open .docgroup__chev { transform: rotate(180deg); }
+.docgroup__body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 280ms var(--ease); }
+.docgroup.is-open .docgroup__body { grid-template-rows: 1fr; }
+.docgroup__inner { min-height: 0; overflow: hidden; }
 .docitem__link {
   display: grid; grid-template-columns: 44px 1fr auto 20px; align-items: center; gap: 12px;
   padding: 10px 22px; font-size: 15px; line-height: 1.4;
@@ -1022,6 +1037,8 @@ html:not(.js) .stepper { display: none; }
   .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .lightbox__btn--prev { left: 8px; } .lightbox__btn--next { right: 8px; }
   .docsec__groups { columns: 1; }
+  .docsec__groups.is-split { display: flex; flex-direction: column; }
+  .docsec__col { display: contents; }
   .toc { grid-column: 1 / -1; position: static; margin-bottom: 32px; }
   .policy { grid-column: 1 / -1; }
   .checkout__main, .summary { grid-column: 1 / -1; }
@@ -1060,7 +1077,7 @@ html:not(.js) .stepper { display: none; }
   .docitem__link { grid-template-columns: 40px 1fr 18px; padding: 10px 16px; }
   .docitem__size { grid-column: 2; grid-row: 2; }
   .docitem__ic { grid-column: 3; grid-row: 1 / span 2; }
-  .docgroup__head { padding: 16px; }
+  .docgroup__head, .docgroup.is-collapsible .docgroup__head { padding: 16px; }
   .docsub { padding-inline: 16px; }
   .policy__p, .policy ul { padding-left: 0; }
   .policy__n { position: static; display: block; margin-bottom: 2px; }

@@ -61,6 +61,47 @@
   });
 
   /* =========================================================
+     Документация: категории свёрнуты, раскрываются по клику на заголовок.
+     Без JS списки видны целиком: кнопку и обёртку списка добавляем здесь
+     ========================================================= */
+  const openGroups = new Set(); // раскрытые пользователем
+  const setGroupOpen = (g, open) => {
+    g.classList.toggle('is-open', open);
+    $('.docgroup__toggle', g).setAttribute('aria-expanded', open);
+    $('.docgroup__body', g).inert = !open;
+  };
+  $$('.docgroup').forEach((g, i) => {
+    const head = $('.docgroup__head', g), title = $('.docgroup__title', g), list = $('.doclist', g);
+    const id = `docgroup-${i + 1}`;
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'docgroup__toggle'; btn.setAttribute('aria-controls', id);
+    btn.append(...title.childNodes);
+    title.append(btn);
+    head.insertAdjacentHTML('beforeend', '<svg class="docgroup__chev" aria-hidden="true"><use href="#i-chevron"/></svg>');
+    const body = document.createElement('div'), inner = document.createElement('div');
+    body.className = 'docgroup__body'; body.id = id; inner.className = 'docgroup__inner';
+    list.before(body); body.append(inner); inner.append(list);
+    // высота страницы изменилась — пересчитать точки появления блоков ниже
+    if (ON) body.addEventListener('transitionend', e => { if (e.target === body) ST.refresh(); });
+    g.classList.add('is-collapsible');
+    setGroupOpen(g, false);
+    // кликабельна вся шапка категории; кнопка внутри — для клавиатуры и скринридеров
+    head.addEventListener('click', () => {
+      const open = !g.classList.contains('is-open');
+      if (open) openGroups.add(g); else openGroups.delete(g);
+      setGroupOpen(g, open);
+    });
+  });
+  // Две независимые колонки: раскрытие слева не сдвигает правую. Категории идут
+  // поочерёдно (1, 3, 5… слева; 2, 4, 6… справа), в одну колонку — исходный порядок через order
+  $$('.docsec__groups').forEach(box => {
+    const cols = [document.createElement('div'), document.createElement('div')];
+    $$('.docgroup', box).forEach((g, i) => { g.style.order = i; cols[i % 2].append(g); });
+    cols.forEach(c => { c.className = 'docsec__col'; box.append(c); });
+    box.classList.add('is-split');
+  });
+
+  /* =========================================================
      Документация: поиск, текущий раздел
      ========================================================= */
   const docInput = $('#doc-q');
@@ -87,6 +128,8 @@
         });
         subs.forEach(s => { s.hidden = !!words.length; });
         g.hidden = n === 0; shown += n;
+        // при поиске найденное раскрыто, после сброса — как оставил пользователь
+        setGroupOpen(g, words.length > 0 || openGroups.has(g));
       });
       $$('.docsec').forEach(sec => { sec.hidden = !$$('[data-doc-group]:not([hidden])', sec).length; });
       empty.hidden = shown > 0;
